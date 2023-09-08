@@ -3,7 +3,7 @@ import Scanner from './scanner.tsx';
 
 export default function App() {
 
-    const onNewScanResult = (decodedText: string, decodedResult: string) => {
+    const onNewScanResult = (_decodedText: string, _decodedResult: string) => {
         // handle decoded results here
     };
 
