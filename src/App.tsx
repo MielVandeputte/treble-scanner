@@ -46,7 +46,7 @@ export default function App() {
     }
 
     return (
-        <main className='overflow-hidden h-screen bg-zinc-950 absolute top-0 w-screen'>
+        <main className='overflow-hidden h-screen bg-zinc-950 absolute top-0 w-screen select-none'>
             <video id='viewFinder' className='object-cover w-full h-[100dvh]'/>
 
             <section className={clsx('fixed border-t-2 overflow-hidden z-50 transition duration-200 w-full h-1/3 bg-opacity-95 bottom-0 flex items-center p-5', result == 'success' && 'bg-green-800 border-green-900', result == 'alreadyScanned' && 'bg-yellow-800 border-yellow-900', result == 'noTicket' && 'bg-red-800 border-red-900', result == '' && 'bg-zinc-900 border-zinc-950')}>
