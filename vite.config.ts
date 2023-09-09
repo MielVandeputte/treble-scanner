@@ -10,7 +10,7 @@ export default defineConfig({
             registerType: 'autoUpdate',
             manifest: {
                 name: 'Glow Scanner',
-                short_name: 'Scanner',
+                short_name: 'Glow Scanner',
                 description: 'Scan QR-codes van Glow Events',
                 theme_color: '#18181B',
                 icons: [
