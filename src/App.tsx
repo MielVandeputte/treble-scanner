@@ -9,9 +9,9 @@ export default function App() {
     return (
         <div>
             <Scanner
-                fps={10}
-                qrbox={250}
-                disableFlip={false}
+                fps={30}
+                qrbox={500}
+                disableFlip={true}
                 qrCodeSuccessCallback={onNewScanResult}
             />
         </div>
