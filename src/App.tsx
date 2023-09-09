@@ -22,7 +22,7 @@ export default function App() {
                 <QrReader onResult={handleScan} constraints={{facingMode: 'environment'}} className='w-full'/>
             </main>
 
-            <aside className='fixed z-50 w-full h-1/4 bg-zinc-900 bg-opacity-95 bottom-0 flex justify-center items-center p-5'>
+            <aside className='fixed overflow-hidden z-50 w-full h-1/3 bg-zinc-900 bg-opacity-95 bottom-0 flex justify-center items-center p-5'>
                 <h1 className='text-zinc-400 logo text-7xl'>glow</h1>
             </aside>
         </div>
