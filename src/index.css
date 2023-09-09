@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .logo {
+        font-family: 'Proza Libre', sans-serif;
+    }
+}

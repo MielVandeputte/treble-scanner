@@ -1,6 +1,7 @@
 import { QrReader } from 'react-qr-reader';
 import { createClient } from '@supabase/supabase-js';
 import { Database } from '../types/supabase.ts';
+import '@fontsource/proza-libre/600.css';
 
 const supabase = createClient<Database>(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY, {auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false}});
 
@@ -16,10 +17,14 @@ export default function App() {
     }
 
     return (
-        <div className='h-screen overflow-hidden bg-zinc-950'>
-            <div className='p-5 rounded-sm'>
-                <QrReader onResult={handleScan} constraints={{facingMode: 'environment'}} className='w-full' />
-            </div>
+        <div className='overflow-hidden h-screen bg-zinc-950 absolute top-0 w-screen'>
+            <main className='absolute -top-48 w-full h-full'>
+                <QrReader onResult={handleScan} constraints={{facingMode: 'environment'}} className='w-full'/>
+            </main>
+
+            <aside className='fixed z-50 w-full h-1/4 bg-zinc-900 bg-opacity-95 bottom-0 flex justify-center items-center p-5'>
+                <h1 className='text-zinc-400 logo text-7xl'>glow</h1>
+            </aside>
         </div>
     );
 }
