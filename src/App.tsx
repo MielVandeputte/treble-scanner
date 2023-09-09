@@ -18,7 +18,7 @@ export default function App() {
     return (
         <div className='h-screen overflow-hidden bg-zinc-950'>
             <div className='p-5 rounded-sm'>
-                <QrReader onResult={handleScan} constraints={ {facingMode: 'environment'} } />
+                <QrReader onResult={handleScan} constraints={{facingMode: 'environment'}} className='w-full' />
             </div>
         </div>
     );
