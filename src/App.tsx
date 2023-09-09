@@ -1,19 +1,18 @@
-import Scanner from './scanner.tsx';
+import { QrReader } from "react-qr-reader";
 
 export default function App() {
 
-    const onNewScanResult = (_decodedText: string, _decodedResult: string) => {
-        // handle decoded results here
-    };
+    const handleScan = (result: any) => {
+        if (result) {
+            console.log(result.text)
+        }
+    }
+
 
     return (
-        <div>
-            <Scanner
-                fps={30}
-                qrbox={500}
-                disableFlip={true}
-                qrCodeSuccessCallback={onNewScanResult}
+        <>
+            <QrReader onResult={handleScan} constraints={ {facingMode: 'user'} }        
             />
-        </div>
+        </>
     );
 }
