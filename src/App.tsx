@@ -1,4 +1,3 @@
-import './App.css';
 import Scanner from './scanner.tsx';
 
 export default function App() {
