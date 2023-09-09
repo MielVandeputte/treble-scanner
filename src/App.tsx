@@ -8,7 +8,7 @@ export default function App() {
     };
 
     return (
-        <div className="App">
+        <div>
             <Scanner
                 fps={10}
                 qrbox={250}

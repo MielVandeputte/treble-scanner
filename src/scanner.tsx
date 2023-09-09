@@ -3,7 +3,7 @@
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import { useEffect } from 'react';
 
-const qrcodeRegionId = "html5qr-code-full-region";
+const qrcodeRegionId = 'html5qr-code-full-region';
 
 // Creates the configuration object for Html5QrcodeScanner.
 const createConfig = (props) => {
@@ -30,7 +30,7 @@ export default function Scanner(props) {
         const verbose = props.verbose === true;
         // Suceess callback is required.
         if (!(props.qrCodeSuccessCallback)) {
-            throw "qrCodeSuccessCallback is required callback.";
+            throw 'qrCodeSuccessCallback is required callback.';
         }
         const html5QrcodeScanner = new Html5QrcodeScanner(qrcodeRegionId, config, verbose);
         html5QrcodeScanner.render(props.qrCodeSuccessCallback, props.qrCodeErrorCallback);
@@ -38,7 +38,7 @@ export default function Scanner(props) {
         // cleanup function when component will unmount
         return () => {
             html5QrcodeScanner.clear().catch(error => {
-                console.error("Failed to clear html5QrcodeScanner. ", error);
+                console.error('Failed to clear html5QrcodeScanner. ', error);
             });
         };
     }, []);
