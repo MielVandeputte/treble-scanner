@@ -6,4 +6,19 @@
     .logo {
         font-family: 'Proza Libre', sans-serif;
     }
+
+    .fade-in {
+        opacity: 0.9;
+        transition: opacity 200ms ease-in-out;
+    }
+
+    .fade-in {
+        opacity: 1;
+        transition: opacity 200ms ease-in-out;
+    }
+      
+    .fade-out {
+        opacity: 0;
+        transition: opacity 200ms ease-in-out;
+    }
 }
