@@ -6,7 +6,8 @@ import { VitePWA } from 'vite-plugin-pwa'
 export default defineConfig({
     plugins: [
         react(),
-        VitePWA({ 
+        VitePWA({
+            registerType: 'autoUpdate',
             manifest: {
                 name: 'Glow Scanner',
                 short_name: 'Glow Scanner',
