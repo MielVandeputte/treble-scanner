@@ -60,13 +60,16 @@ export default function App() {
         }
     }
 
-    const turnOn = () => {
+    const toggleFlash = () => {
         const func = async () => {
-            const a = await qrScanner?.toggleFlash();
-
-            console.log(a)
+            if (qrScanner) {
+                if (qrScanner.isFlashOn()) {
+                    await qrScanner.turnFlashOn();
+                } else {
+                    await qrScanner.turnFlashOff();
+                }
+            }
         }
-
         func();
     }
 
@@ -76,7 +79,7 @@ export default function App() {
 
             <div id='overlay' className={clsx('border-[8px] border-solid rounded-md border-opacity-90 transition duration-200', result == 'success' && 'border-green-800', result == 'alreadyScanned' && 'border-yellow-800', result == 'noTicket' && 'border-red-800', result == '' && 'border-zinc-900')}/>
 
-            <button className='absolute top-5' onClick={turnOn}>
+            <button className='absolute top-5' onClick={toggleFlash}>
                 {
                     qrScanner && hasFlash?
                         (qrScanner as QrScanner).isFlashOn()?
