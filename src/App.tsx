@@ -64,9 +64,9 @@ export default function App() {
         const func = async () => {
             if (qrScanner) {
                 if (qrScanner.isFlashOn()) {
-                    await qrScanner.turnFlashOn();
-                } else {
                     await qrScanner.turnFlashOff();
+                } else {
+                    await qrScanner.turnFlashOn();
                 }
             }
         }
