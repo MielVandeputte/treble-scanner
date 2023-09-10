@@ -76,6 +76,25 @@ export default function App() {
         func();
     }
 
+    const toggleCamera = () => {
+        const func = async () => {
+            if (qrScanner && listCameras) {
+                let newIndex = 0;
+
+                if (cameraIndex + 1 < listCameras.length) {
+                    newIndex = cameraIndex + 1;
+                }
+                
+                console.log(newIndex)
+                console.log(listCameras[cameraIndex].label)
+
+                setCameraIndex(newIndex);
+                await qrScanner.setCamera(listCameras[cameraIndex].id);
+            }
+        }
+        func();
+    }
+
     return (
         <main className='overflow-hidden h-screen bg-zinc-950 absolute top-0 w-screen select-none'>
             <video id='viewFinder' className='object-cover w-full h-[100dvh]'/>
@@ -99,7 +118,7 @@ export default function App() {
                         }
                     </button>
 
-                    <button className='' onClick={toggleFlash}>
+                    <button className='' onClick={toggleCamera}>
                         {
                             listCameras && listCameras.length > 1?
                                 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='#999999' className='w-6 h-6'>
