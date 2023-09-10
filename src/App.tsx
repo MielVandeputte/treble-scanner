@@ -16,11 +16,15 @@ function calculateScanRegion(video: HTMLVideoElement): QrScanner.ScanRegion {
     } as QrScanner.ScanRegion;
 }
 
-export default function App() {
+export default async function App() {
     let viewFinder: HTMLVideoElement | null = null;
     let overlay: HTMLDivElement | null = null;
 
     let active = true;
+    const listCameras = await QrScanner.listCameras();
+
+    console.log(listCameras)
+
     const [qrScanner, setQrScanner] = useState<QrScanner | null>(null);
     const [hasFlash, setHasFlash] = useState<boolean>(false);
     const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
@@ -37,7 +41,9 @@ export default function App() {
         );
 
         setQrScanner(qrScanner);
-        qrScanner.start().then(()=>{ qrScanner.hasFlash().then((_result) => {setHasFlash(true)}); });
+        qrScanner.start().then(() => {
+            qrScanner.hasFlash().then((_result) => {setHasFlash(true)});
+        });
     }, []);
     
     const handleScan = async (result: QrScanner.ScanResult) => {
