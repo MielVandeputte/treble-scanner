@@ -26,6 +26,7 @@ export default function App() {
     const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
     const [listCameras, setListCameras] = useState<QrScanner.Camera[] | null>(null);
     const [environmentState, setEnvironmentState] = useState<boolean>(true);
+    const [switchingCameras, setSwitchingCameras] = useState<boolean>(false);
     const [result, setResult] = useState<string>(''); 
 
     useEffect(() => {
@@ -40,8 +41,8 @@ export default function App() {
 
         setQrScanner(qrScanner);
         qrScanner.start().then(() => {
-            qrScanner.hasFlash().then((_result) => {setHasFlash(true)});
-            QrScanner.listCameras().then((_result) => {setListCameras(_result); console.log(_result)});
+            qrScanner.hasFlash().then((result) => {setHasFlash(result)});
+            QrScanner.listCameras().then((result) => {setListCameras(result);});
         });
     }, []);
     
@@ -78,16 +79,18 @@ export default function App() {
 
     const toggleCamera = () => {
         const func = async () => {
-            if (qrScanner) {
+            if (qrScanner && !switchingCameras) {
+                setSwitchingCameras(true);
                 if (environmentState) {
-                    setEnvironmentState(false);
                     await qrScanner.setCamera('user');
-                    console.log('false')
                 } else {
-                    setEnvironmentState(true);
                     await qrScanner.setCamera('environment');
-                    console.log('true')
                 }
+
+                qrScanner.hasFlash().then((result) => {setHasFlash(result)});
+
+                setEnvironmentState(!environmentState);
+                setSwitchingCameras(false);
             }
         }
         func();
@@ -116,7 +119,7 @@ export default function App() {
                         }
                     </button>
 
-                    <button className='' onClick={toggleCamera}>
+                    <button className='' onClick={toggleCamera} disabled={switchingCameras}>
                         {
                             listCameras && listCameras.length > 1?
                                 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='#999999' className='w-6 h-6'>
