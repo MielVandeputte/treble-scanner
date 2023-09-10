@@ -66,7 +66,7 @@ export default function App() {
 
             <div id='overlay' className={clsx('border-[8px] border-solid rounded-md border-opacity-90 transition duration-200', result == 'success' && 'border-green-800', result == 'alreadyScanned' && 'border-yellow-800', result == 'noTicket' && 'border-red-800', result == '' && 'border-zinc-900')}/>
 
-            <button className='absolute top-5' onClick={qrScanner?.toggleFlash}>
+            <button className='absolute top-5' onClick={qrScanner?.turnFlashOn}>
                 {
                     qrScanner && hasFlash?
                         (qrScanner as QrScanner).isFlashOn()?
