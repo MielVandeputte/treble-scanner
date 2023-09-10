@@ -66,7 +66,7 @@ export default function App() {
 
             <div id='overlay' className={clsx('border-[8px] border-solid rounded-md border-opacity-90 transition duration-200', result == 'success' && 'border-green-800', result == 'alreadyScanned' && 'border-yellow-800', result == 'noTicket' && 'border-red-800', result == '' && 'border-zinc-900')}/>
 
-            <div className='absolute top-5'>
+            <button className='absolute top-5' onClick={qrScanner?.toggleFlash}>
                 {
                     qrScanner && hasFlash?
                         (qrScanner as QrScanner).isFlashOn()?
@@ -79,7 +79,7 @@ export default function App() {
                             </svg>:
                         <></>
                 }
-            </div>
+            </button>
 
             <section className={clsx('fixed border-t-2 overflow-hidden z-50 transition duration-200 w-full h-1/3 bg-opacity-95 bottom-0 flex items-center p-5', result == 'success' && 'bg-green-800 border-green-900', result == 'alreadyScanned' && 'bg-yellow-800 border-yellow-900', result == 'noTicket' && 'bg-red-800 border-red-900', result == '' && 'bg-zinc-900 border-zinc-950')}>
                 <h1 className={clsx('absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 text-center text-white font-sans font-bold text-7xl', result == 'success'? 'fade-in': 'fade-out')}>Success</h1>
