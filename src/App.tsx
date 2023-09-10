@@ -60,13 +60,21 @@ export default function App() {
         }
     }
 
+    const turnOn = () => {
+        const func = async () => {
+            await qrScanner?.turnFlashOn();
+        }
+
+        func();
+    }
+
     return (
         <main className='overflow-hidden h-screen bg-zinc-950 absolute top-0 w-screen select-none'>
             <video id='viewFinder' className='object-cover w-full h-[100dvh]'/>
 
             <div id='overlay' className={clsx('border-[8px] border-solid rounded-md border-opacity-90 transition duration-200', result == 'success' && 'border-green-800', result == 'alreadyScanned' && 'border-yellow-800', result == 'noTicket' && 'border-red-800', result == '' && 'border-zinc-900')}/>
 
-            <button className='absolute top-5' onClick={qrScanner?.turnFlashOn}>
+            <button className='absolute top-5' onClick={turnOn}>
                 {
                     qrScanner && hasFlash?
                         (qrScanner as QrScanner).isFlashOn()?
