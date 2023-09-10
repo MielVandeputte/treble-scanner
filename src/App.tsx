@@ -25,7 +25,7 @@ export default function App() {
     const [hasFlash, setHasFlash] = useState<boolean>(false);
     const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
     const [listCameras, setListCameras] = useState<QrScanner.Camera[] | null>(null);
-    const [cameraIndex, setCameraIndex] = useState<number>(0);
+    const [environmentState, setEnvironmentState] = useState<boolean>(true);
     const [result, setResult] = useState<string>(''); 
 
     useEffect(() => {
@@ -78,18 +78,14 @@ export default function App() {
 
     const toggleCamera = () => {
         const func = async () => {
-            if (qrScanner && listCameras) {
-                let newIndex = 0;
-
-                if (cameraIndex + 1 < listCameras.length) {
-                    newIndex = cameraIndex + 1;
+            if (qrScanner) {
+                if (environmentState) {
+                    setEnvironmentState(false);
+                    await qrScanner.setCamera('user');
+                } else {
+                    setEnvironmentState(true);
+                    await qrScanner.setCamera('environment');
                 }
-                
-                console.log(newIndex)
-                console.log(listCameras[cameraIndex].label)
-
-                setCameraIndex(newIndex);
-                await qrScanner.setCamera(listCameras[cameraIndex].id);
             }
         }
         func();
