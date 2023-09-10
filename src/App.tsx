@@ -7,33 +7,43 @@ import QrScanner from 'qr-scanner';
 
 const supabase = createClient<Database>(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY, {auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false}});
 
-
+function calculateScanRegion(video: HTMLVideoElement): QrScanner.ScanRegion {
+    return {
+        width: 400,
+        height: 400,
+        x: video.videoWidth/2 - 200,
+        y: video.videoHeight * 2/6 - 200,
+    } as QrScanner.ScanRegion;
+}
 
 export default function App() {
     let qrScanner: QrScanner | null = null;
+    let viewFinder: HTMLVideoElement | null = null;
+    let overlay: HTMLDivElement | null = null;
 
-    const [result, setResult] = useState<string>(''); 
     let active = true;
+    const [result, setResult] = useState<string>(''); 
 
     useEffect(() => {
-        const viewFinder: HTMLVideoElement = document.getElementById('viewFinder') as HTMLVideoElement;
+        viewFinder = document.getElementById('viewFinder') as HTMLVideoElement;
+        overlay = document.getElementById('overlay') as HTMLDivElement;
 
         qrScanner = new QrScanner(
-            viewFinder!,
+            viewFinder,
             result => { handleScan(result); },
-            { /* your options or returnDetailedScanResult: true if you're not specifying any other options */ },
+            { maxScansPerSecond: 1, preferredCamera: 'environment', calculateScanRegion: calculateScanRegion, highlightScanRegion: true, overlay: overlay},
         );
 
-        qrScanner.setCamera('environment');
         qrScanner.start();
     }, []);
     
     const handleScan = async (result: QrScanner.ScanResult) => {
-        if (result?.data && active) {
+        if (result && result.data && active) {
             active = false;
+            console.log(result)
 
             const scanTicketRPC = await supabase.rpc('scanTicket', {'eventIdArg': 'minimaxi2024', 'secretCodeArg': result.data});
-            
+                
             if (scanTicketRPC.data) {
                 setResult(scanTicketRPC.data);
 
@@ -48,6 +58,8 @@ export default function App() {
     return (
         <main className='overflow-hidden h-screen bg-zinc-950 absolute top-0 w-screen select-none'>
             <video id='viewFinder' className='object-cover w-full h-[100dvh]'/>
+
+            <div id='overlay' className='border-[8px] border-zinc-900 broder-solid rounded-md border-opacity-70' />
 
             <section className={clsx('fixed border-t-2 overflow-hidden z-50 transition duration-200 w-full h-1/3 bg-opacity-95 bottom-0 flex items-center p-5', result == 'success' && 'bg-green-800 border-green-900', result == 'alreadyScanned' && 'bg-yellow-800 border-yellow-900', result == 'noTicket' && 'bg-red-800 border-red-900', result == '' && 'bg-zinc-900 border-zinc-950')}>
                 <h1 className={clsx('absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 text-center text-white font-sans font-bold text-7xl', result == 'success'? 'fade-in': 'fade-out')}>Success</h1>
