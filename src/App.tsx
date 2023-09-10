@@ -82,9 +82,11 @@ export default function App() {
                 if (environmentState) {
                     setEnvironmentState(false);
                     await qrScanner.setCamera('user');
+                    console.log('false')
                 } else {
                     setEnvironmentState(true);
                     await qrScanner.setCamera('environment');
+                    console.log('true')
                 }
             }
         }
