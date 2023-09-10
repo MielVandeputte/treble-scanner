@@ -53,11 +53,13 @@ export default function App() {
             const scanTicketRPC = await supabase.rpc('scanTicket', {'eventIdArg': 'minimaxi2024', 'secretCodeArg': result.data});
                 
             if (scanTicketRPC.data) {
+                await qrScanner?.pause();
                 setResult(scanTicketRPC.data);
 
-                setTimeout(() => {
+                setTimeout(async () => {
                     setResult('');
                     active = true;
+                    await qrScanner?.start();
                 }, 5000);
             }
         }
