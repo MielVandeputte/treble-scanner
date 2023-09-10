@@ -16,18 +16,16 @@ function calculateScanRegion(video: HTMLVideoElement): QrScanner.ScanRegion {
     } as QrScanner.ScanRegion;
 }
 
-export default async function App() {
+export default function App() {
     let viewFinder: HTMLVideoElement | null = null;
     let overlay: HTMLDivElement | null = null;
 
     let active = true;
-    const listCameras = await QrScanner.listCameras();
-
-    console.log(listCameras)
-
     const [qrScanner, setQrScanner] = useState<QrScanner | null>(null);
     const [hasFlash, setHasFlash] = useState<boolean>(false);
     const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
+    const [listCameras, setListCameras] = useState<QrScanner.Camera[] | null>(null);
+    const [cameraIndex, setCameraIndex] = useState<number>(0);
     const [result, setResult] = useState<string>(''); 
 
     useEffect(() => {
@@ -43,6 +41,7 @@ export default async function App() {
         setQrScanner(qrScanner);
         qrScanner.start().then(() => {
             qrScanner.hasFlash().then((_result) => {setHasFlash(true)});
+            QrScanner.listCameras().then((_result) => {setListCameras(_result); console.log(_result)});
         });
     }, []);
     
@@ -102,16 +101,11 @@ export default async function App() {
 
                     <button className='' onClick={toggleFlash}>
                         {
-                            hasFlash || true?
-                                isFlashOn?
-                                    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='#999999' className='w-6 h-6'>
-                                        <path fill-rule='evenodd' d='M14.615 1.595a.75.75 0 01.359.852L12.982 9.75h7.268a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.913-.143z' clip-rule='evenodd' />
-                                    </svg>:
-
-                                    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='#999999' className='w-6 h-6'>
-                                        <path d='M20.798 11.012l-3.188 3.416L9.462 6.28l4.24-4.542a.75.75 0 011.272.71L12.982 9.75h7.268a.75.75 0 01.548 1.262zM3.202 12.988L6.39 9.572l8.148 8.148-4.24 4.542a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262zM3.53 2.47a.75.75 0 00-1.06 1.06l18 18a.75.75 0 101.06-1.06l-18-18z' />
-                                    </svg>:
-                                <></>
+                            listCameras && listCameras.length > 1?
+                                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='#999999' className='w-6 h-6'>
+                                    <path fillRule='evenodd' d='M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-3.183a.75.75 0 100 1.5h4.992a.75.75 0 00.75-.75V4.356a.75.75 0 00-1.5 0v3.18l-1.9-1.9A9 9 0 003.306 9.67a.75.75 0 101.45.388zm15.408 3.352a.75.75 0 00-.919.53 7.5 7.5 0 01-12.548 3.364l-1.902-1.903h3.183a.75.75 0 000-1.5H2.984a.75.75 0 00-.75.75v4.992a.75.75 0 001.5 0v-3.18l1.9 1.9a9 9 0 0015.059-4.035.75.75 0 00-.53-.918z' clipRule='evenodd' />
+                                </svg>:
+                            <></>
                         }
                     </button>
                 </section>
