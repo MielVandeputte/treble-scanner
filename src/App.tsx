@@ -62,7 +62,9 @@ export default function App() {
 
     const turnOn = () => {
         const func = async () => {
-            await qrScanner?.turnFlashOn();
+            const a = await qrScanner?.toggleFlash();
+
+            console.log(a)
         }
 
         func();
