@@ -22,8 +22,8 @@ export default function App() {
 
     let active = true;
     const [qrScanner, setQrScanner] = useState<QrScanner | null>(null);
-    const [hasFlash, setHasFlash] = useState<boolean>(false); 
-
+    const [hasFlash, setHasFlash] = useState<boolean>(false);
+    const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
     const [result, setResult] = useState<string>(''); 
 
     useEffect(() => {
@@ -68,6 +68,7 @@ export default function App() {
                 } else {
                     await qrScanner.turnFlashOn();
                 }
+                setIsFlashOn(qrScanner.isFlashOn());
             }
         }
         func();
@@ -81,8 +82,8 @@ export default function App() {
 
             <button className='absolute top-5' onClick={toggleFlash}>
                 {
-                    qrScanner && hasFlash?
-                        (qrScanner as QrScanner).isFlashOn()?
+                    hasFlash?
+                        isFlashOn?
                             <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor' className='w-6 h-6'>
                                 <path fill-rule='evenodd' d='M14.615 1.595a.75.75 0 01.359.852L12.982 9.75h7.268a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.913-.143z' clip-rule='evenodd' />
                             </svg>:
