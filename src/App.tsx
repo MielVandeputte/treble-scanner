@@ -46,11 +46,16 @@ export default function App() {
         if (result && result.data && active) {
             active = false;
             
-            const res = await fetch('https://www.glow-events.be/api/scan-ticket', {
+            const res = await fetch('https://www.glow-events.be/api/scan-ticket/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ eventId: 'minimaxi2024', secretCode: result.data }),
+                body: JSON.stringify({ "eventId": " ", "secretCode": " "})
             });
+    
+    
+            const json = await res.json();
+            console.log(json)
+
 
             if (res.ok) {
                 const data = await res.json();
@@ -62,6 +67,9 @@ export default function App() {
                     active = true;
                     await qrScanner?.start();
                 }, 5000);
+            } else {
+                active = true;
+                await qrScanner?.start();
             }
         }
     }
