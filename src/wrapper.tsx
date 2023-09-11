@@ -4,7 +4,6 @@ import Scanner from './scanner';
 import Menu from './menu';
 import Landing from './landing';
 import { createContext, useEffect, useState } from 'react';
-import localforage from 'localforage';
 import store from 'store2';
 
 export type Ticket = {
