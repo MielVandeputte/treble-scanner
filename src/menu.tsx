@@ -19,7 +19,9 @@ export default function Menu() {
         navigate('/');
     }
 
-    historyContext.history.sort((a,b) => b.timestamp.getTime() - a.timestamp.getTime())
+    console.log(historyContext.history)
+
+    historyContext.history.sort((a,b) => b.timestamp.getTime() - a.timestamp.getTime());
 
     return (
         <div className='bg-zinc-950 h-screen w-full overflow-x-hidden'>
