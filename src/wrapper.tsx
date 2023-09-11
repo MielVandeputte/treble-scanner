@@ -3,7 +3,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Scanner from './scanner';
 import Menu from './menu';
 import Landing from './landing';
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
+import localforage from 'localforage';
+import store from 'store2';
 
 export type Ticket = {
     timestamp: Date;
@@ -32,9 +34,17 @@ const router = createBrowserRouter([
     { path: 'menu', element: <Menu /> }
 ]);
 
-export default function Wrapper() {
-    const [scanSession, setScanSession] = useState<ScanSession|null>(null);
-    const [history, setHistory] = useState<Ticket[]>([]);
+export default function Wrapper() {   
+    const [scanSession, setScanSession] = useState<ScanSession|null>(store.get('scanSession'));
+    const [history, setHistory] = useState<Ticket[]>(store.get('history')? store.get('history'): []);
+
+    useEffect(() => {
+        store.set('scanSession', scanSession);
+    }, [scanSession]);
+
+    useEffect(() => {
+        store.set('history', history);
+    }, [history]);
 
     const addToHistory = (latestTicket: Ticket) => {
         setHistory(prevHistory => [...prevHistory, latestTicket]);
