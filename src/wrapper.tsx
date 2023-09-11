@@ -21,7 +21,7 @@ export type Ticket = {
 
 export type ScanSession = {
     eventId: string;
-    authorizationCode: string;
+    scanAuthorizationCode: string;
 }
 
 export const ScanSessionContext = createContext({ scanSession: null as ScanSession|null, setScanSession: (_scanSession: ScanSession|null) => {} });

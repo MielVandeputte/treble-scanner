@@ -67,7 +67,7 @@ export default function Scanner() {
             const res = await fetch('https://www.glow-events.be/api/scan-ticket', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 'eventId': scanSessionContext.scanSession.eventId, 'secretCode': result.data })
+                body: JSON.stringify({ 'eventId': scanSessionContext.scanSession.eventId, 'secretCode': result.data, 'scanAuthorizationCode': '952bf6c7edb188e66ae69e38af4f2b7b' })
             });
     
             if (res.ok) {

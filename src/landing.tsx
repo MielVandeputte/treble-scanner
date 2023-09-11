@@ -14,7 +14,7 @@ export default function Landing() {
 
     const a = () => {
 
-        scanSessionContext.setScanSession({ eventId: 'minimaxi2024', authorizationCode: '' });
+        scanSessionContext.setScanSession({ eventId: 'minimaxi2024', scanAuthorizationCode: '952bf6c7edb188e66ae69e38af4f2b7b' });
         navigate('scanner');
     }
 
