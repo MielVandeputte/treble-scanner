@@ -29,8 +29,8 @@ export const HistoryContext = createContext({ history: [] as Ticket[], addToHist
 
 const router = createBrowserRouter([
     { path: '/', element: <Landing /> },
-    { path: 'scanner', element: <Scanner /> },
-    { path: 'menu', element: <Menu /> }
+    { path: '/scanner', element: <Scanner /> },
+    { path: '/menu', element: <Menu /> }
 ]);
 
 export default function Wrapper() {   
