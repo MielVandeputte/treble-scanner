@@ -52,7 +52,7 @@ export default function Menu() {
                                         {ticket.ownerEmail}
                                     </div>
                                     <div className='text-zinc-200'>
-                                        { /*(ticket.timestamp instanceof Date)? ticket.timestamp.toTimeString().split(' ')[0]: new Date(ticket.timestamp).toTimeString().split(' ')[0]*/'uopiupoiupoiu' }
+                                        { (ticket.timestamp instanceof Date)? ticket.timestamp.toTimeString().split(' ')[0]: new Date(ticket.timestamp).toTimeString().split(' ')[0]}
                                     </div>
                                 </div>
                             )):
