@@ -137,7 +137,7 @@ export default function Scanner() {
 
             <div id='overlay' className={clsx('border-[8px] border-solid rounded-md border-opacity-90 transition duration-200', code == 'success' && 'border-green-800', code == 'alreadyScanned' && 'border-yellow-800', code == 'noTicket' && 'border-red-800', code == '' && 'border-zinc-900')}/>
 
-            <header className={clsx('absolute border-t-2 overflow-hidden z-50 transition duration-200 w-full h-1/3 bg-opacity-95 bottom-0 p-5', code == 'success' && 'bg-green-800 border-green-900', code == 'alreadyScanned' && 'bg-yellow-800 border-yellow-900', code == 'noTicket' && 'bg-red-800 border-red-900', code == '' && 'bg-zinc-900 border-zinc-950')}>
+            <header className={clsx('absolute overflow-hidden z-50 transition duration-200 w-full h-1/3 bg-opacity-95 bottom-0 p-5', code == 'success' && 'bg-green-800', code == 'alreadyScanned' && 'bg-yellow-800', code == 'noTicket' && 'bg-red-800', code == '' && 'bg-zinc-900')}>
                 <section className='flex w-full justify-around'>
                     {
                         hasFlash?            

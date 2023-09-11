@@ -38,7 +38,7 @@ export default function Menu() {
                     {
                         historyContext.history.length > 0?
                             historyContext.history.map((ticket: Ticket, index: number) => (
-                                <div className={clsx('p-5 border-b-2 border-zinc-800', (index < historyContext.history.length) && 'hidden')}>
+                                <div key={index} className={clsx('p-5 border-zinc-800', (index >= (historyContext.history.length - 1))? 'border-0': 'border-b-2')}>
                                     <div className='text-white font-semibold mb-1'>
                                         {ticket.ownerName} - {ticket.code == 'alreadyScanned'? 'Ticket al gescand': ticket.code == 'success'? 'Correct ticket': '' }
                                     </div>
@@ -52,7 +52,7 @@ export default function Menu() {
                                         {ticket.ownerEmail}
                                     </div>
                                     <div className='text-zinc-200'>
-                                        { (ticket.timestamp instanceof Date)? ticket.timestamp.toTimeString().split(' ')[0]: new Date(ticket.timestamp).toTimeString().split(' ')[0] }
+                                        { /*(ticket.timestamp instanceof Date)? ticket.timestamp.toTimeString().split(' ')[0]: new Date(ticket.timestamp).toTimeString().split(' ')[0]*/'uopiupoiupoiu' }
                                     </div>
                                 </div>
                             )):
