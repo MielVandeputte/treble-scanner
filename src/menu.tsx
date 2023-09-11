@@ -19,22 +19,40 @@ export default function Menu() {
         navigate('/');
     }
 
+    historyContext.history.sort((a,b) => b.timestamp.getTime() - a.timestamp.getTime())
+
     return (
-        <div className='bg-zinc-950 h-screen w-full'>
+        <div className='bg-zinc-950 h-screen w-full overflow-x-hidden'>
             <main className='px-5 pt-5'>
-                <h1 className='text-center pb-5 text-white text-3xl font-bold'>Scangeschiedenis</h1>
-                {
-                    historyContext.history.length > 0?
-                        historyContext.history.map((ticket: Ticket) => (
-                            <div className='text-white'>
-                                {ticket.qr}
-                            </div>
-                        )):
-                    
-                    <div className='text-zinc-200 text-xl font-semibold text-center w-full'>Nog geen tickets gescand</div>
-                }
+                <h1 className='text-center pb-5 text-white text-3xl font-bold select-none'>Scangeschiedenis</h1>
+                <div className='text-xl text-center'>
+                    {
+                        historyContext.history.length > 0?
+                            historyContext.history.map((ticket: Ticket) => (
+                                <div className='p-5 border-b-2 border-zinc-800'>
+                                    <div className='text-white font-semibold mb-1'>
+                                        {ticket.ownerName} - {ticket.code == 'alreadyScanned'? 'Ticket al gescand': ticket.code == 'success'? 'Correct ticket': '' }
+                                    </div>
+                                    <div className='text-zinc-200'>
+                                        {ticket.ticketTypeId} - {ticket.ticketTypeName}
+                                    </div>
+                                    <div className='text-zinc-200'>
+                                        {ticket.qr}
+                                    </div>
+                                    <div className='text-zinc-200'>
+                                        {ticket.ownerEmail}
+                                    </div>
+                                    <div className='text-zinc-200'>
+                                        {ticket.timestamp.toTimeString().split(' ')[0]}
+                                    </div>
+                                </div>
+                            )):
+                        
+                        <div className='text-zinc-200 text-xl font-semibold text-center w-full'>Nog geen tickets gescand</div>
+                    }
+                </div>
             </main>
-            <footer className='absolute bottom-0 w-full p-5 items-center flex'>
+            <footer className='absolute bottom-0 w-full p-5 items-center flex select-none'>
                 <Link className='mr-5 rounded-full aspect-square text-white h-20 bg-zinc-800 aria-selected:bg-zinc-700 border-2 border-transparent' to='/scanner'>
                     <div className='flex items-center justify-center h-full'>
                         <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2' stroke='#ffffff' className='w-6 h-6'>
