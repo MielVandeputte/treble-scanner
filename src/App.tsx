@@ -52,11 +52,9 @@ export default function App() {
                 body: JSON.stringify({ 'eventId': 'minimaxi2024', 'secretCode': result.data })
             });
     
-            const json = await res.json();
-            console.log(json)
-
             if (res.ok) {
                 const data = await res.json();
+
                 await qrScanner?.pause();
                 setCode(data.code);
 
