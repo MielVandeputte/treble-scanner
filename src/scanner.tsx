@@ -2,7 +2,8 @@ import '@fontsource/proza-libre/600.css';
 import { useContext, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import QrScanner from 'qr-scanner';
-import { HistoryContext, Ticket } from './app';
+import { HistoryContext, ScanSessionContext, Ticket } from './app';
+import { Link, useNavigate } from 'react-router-dom';
 
 function calculateScanRegion(video: HTMLVideoElement): QrScanner.ScanRegion {
     return {
@@ -33,33 +34,40 @@ export default function App() {
     const [ticketTypeName, setTicketTypeName] = useState<string>('');
 
     const historyContext = useContext(HistoryContext);
+    const scanSessionContext = useContext(ScanSessionContext);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
-        viewFinder = document.getElementById('viewFinder') as HTMLVideoElement;
-        overlay = document.getElementById('overlay') as HTMLDivElement;
+        if (scanSessionContext.scanSession == null) {
+            navigate('/'); 
+        } else {
+            viewFinder = document.getElementById('viewFinder') as HTMLVideoElement;
+            overlay = document.getElementById('overlay') as HTMLDivElement;
 
-        const qrScanner = new QrScanner(
-            viewFinder,
-            result => { handleScan(result); },
-            { maxScansPerSecond: 1, preferredCamera: 'environment', calculateScanRegion: calculateScanRegion, highlightScanRegion: true, overlay: overlay},
-        );
+            const qrScanner = new QrScanner(
+                viewFinder,
+                result => { handleScan(result); },
+                { maxScansPerSecond: 1, preferredCamera: 'environment', calculateScanRegion: calculateScanRegion, highlightScanRegion: true, overlay: overlay},
+            );
 
-        setQrScanner(qrScanner);
-        qrScanner.start().then(() => {
-            qrScanner.hasFlash().then((result) => {setHasFlash(result)});
-            QrScanner.listCameras().then((result) => {setListCameras(result)});
-        });
+            setQrScanner(qrScanner);
+            qrScanner.start().then(() => {
+                qrScanner.hasFlash().then((result) => {setHasFlash(result)});
+                QrScanner.listCameras().then((result) => {setListCameras(result)});
+            });
+        }
     }, []);
     
     const handleScan = async (result: QrScanner.ScanResult) => {
-        if (result && result.data && active) {
+        if (result && result.data && active && scanSessionContext.scanSession) {
             active = false;
             setQr(result.data);
 
             const res = await fetch('https://www.glow-events.be/api/scan-ticket', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 'eventId': 'minimaxi2024', 'secretCode': result.data })
+                body: JSON.stringify({ 'eventId': scanSessionContext.scanSession.eventId, 'secretCode': result.data })
             });
     
             if (res.ok) {
@@ -83,7 +91,6 @@ export default function App() {
                     active = true;
                     await qrScanner?.start();
                 }, 5000);
-
             } else {
                 active = true;
                 await qrScanner?.start();
@@ -159,11 +166,11 @@ export default function App() {
                         <></>
                     }
 
-                    <button>
+                    <Link to={'/menu'}>
                         <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill={code == ''? '#999999': '#ffffff'} className='w-6 h-6'>
                             <path fillRule='evenodd' d='M10.5 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm0 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm0 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z' clipRule='evenodd' />
                         </svg>
-                    </button>
+                    </Link>
                 </section>
                     
                 <section className='w-full h-full'>

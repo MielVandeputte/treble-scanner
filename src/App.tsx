@@ -23,19 +23,19 @@ export type ScanSession = {
     authorizationCode: string;
 }
 
-export const ScanSessionContext = createContext({ scanSession: null as ScanSession|null, setScanSession: (_scanSession: ScanSession) => {} });
+export const ScanSessionContext = createContext({ scanSession: null as ScanSession|null, setScanSession: (_scanSession: ScanSession|null) => {} });
 export const HistoryContext = createContext({ history: [] as Ticket[], addToHistory: (_latestTicket: Ticket) => {}, clearHistory: () => {} });
 
 const router = createBrowserRouter([
     { path: '/', element: <Landing/> },
-    { path: '/scanner', element: <Scanner/> },
-    { path: '/menu', element: <Menu/> }
+    { path: 'scanner', element: <Scanner/> },
+    { path: 'menu', element: <Menu/> }
 ]);
 
 export default function App() {
     const [scanSession, setScanSession] = useState<ScanSession|null>(null);
     const [history, setHistory] = useState<Ticket[]>([]);
-    
+
     const addToHistory = (latestTicket: Ticket) => {
         setHistory(prevHistory => [...prevHistory, latestTicket]);
     }
@@ -43,11 +43,11 @@ export default function App() {
     const clearHistory = () => {
         setHistory([]);
     }
-
+    
     return (
-        <ScanSessionContext.Provider value={{ scanSession, setScanSession }}>
+        <ScanSessionContext.Provider value={{ scanSession: scanSession, setScanSession: setScanSession }}>
             <HistoryContext.Provider value={{ history: history, addToHistory: addToHistory, clearHistory: clearHistory }}>
-                <RouterProvider router={router} />
+                <RouterProvider router={router}/>
             </HistoryContext.Provider>
         </ScanSessionContext.Provider>
     );
