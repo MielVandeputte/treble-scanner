@@ -16,6 +16,7 @@
         "qr-scanner": "^1.4.2",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
+        "react-router-dom": "^6.15.0",
         "supabase": "^1.93.0"
     },
     "devDependencies": {
