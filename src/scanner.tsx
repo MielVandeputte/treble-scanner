@@ -2,7 +2,7 @@ import '@fontsource/proza-libre/600.css';
 import { useContext, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import QrScanner from 'qr-scanner';
-import { HistoryContext, ScanSessionContext, Ticket } from './app';
+import { HistoryContext, ScanSessionContext, Ticket } from './wrapper';
 import { Link, useNavigate } from 'react-router-dom';
 
 function calculateScanRegion(video: HTMLVideoElement): QrScanner.ScanRegion {
@@ -14,7 +14,7 @@ function calculateScanRegion(video: HTMLVideoElement): QrScanner.ScanRegion {
     } as QrScanner.ScanRegion;
 }
 
-export default function App() {
+export default function Scanner() {
     let viewFinder: HTMLVideoElement | null = null;
     let overlay: HTMLDivElement | null = null;
 

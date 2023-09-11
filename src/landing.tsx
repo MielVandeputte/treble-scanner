@@ -1,5 +1,5 @@
 import '@fontsource/proza-libre/600.css';
-import { ScanSessionContext } from './app';
+import { ScanSessionContext } from './wrapper';
 import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 

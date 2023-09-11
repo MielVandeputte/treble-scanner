@@ -1,8 +1,7 @@
 import '@fontsource/proza-libre/600.css';
-import { HistoryContext, ScanSessionContext, Ticket } from './app';
+import { HistoryContext, ScanSessionContext, Ticket } from './wrapper';
 import { useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
 
 export default function Menu() {
     const historyContext = useContext(HistoryContext);

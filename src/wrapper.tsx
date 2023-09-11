@@ -16,7 +16,7 @@ export type Ticket = {
 
     ticketTypeId: number;
     ticketTypeName: string;
-};
+}
 
 export type ScanSession = {
     eventId: string;
@@ -27,12 +27,12 @@ export const ScanSessionContext = createContext({ scanSession: null as ScanSessi
 export const HistoryContext = createContext({ history: [] as Ticket[], addToHistory: (_latestTicket: Ticket) => {}, clearHistory: () => {} });
 
 const router = createBrowserRouter([
-    { path: '/', element: <Landing/> },
-    { path: 'scanner', element: <Scanner/> },
-    { path: 'menu', element: <Menu/> }
+    { path: '/', element: <Landing /> },
+    { path: 'scanner', element: <Scanner /> },
+    { path: 'menu', element: <Menu /> }
 ]);
 
-export default function App() {
+export default function Wrapper() {
     const [scanSession, setScanSession] = useState<ScanSession|null>(null);
     const [history, setHistory] = useState<Ticket[]>([]);
 
