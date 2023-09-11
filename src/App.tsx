@@ -23,7 +23,13 @@ export default function App() {
     const [listCameras, setListCameras] = useState<QrScanner.Camera[] | null>(null);
     const [environmentState, setEnvironmentState] = useState<boolean>(true);
     const [switchingCameras, setSwitchingCameras] = useState<boolean>(false);
-    const [code, setCode] = useState<string>(''); 
+    
+    const [qr, setQr] = useState<string>('');
+    const [code, setCode] = useState<string>('');
+    const [ownerName, setOwnerName] = useState<string>('');
+    const [ownerEmail, setOwnerEmail] = useState<string>('');
+    const [ticketTypeId, setTicketTypeId] = useState<number>(0);
+    const [ticketTypeName, setTicketTypeName] = useState<string>('');
 
     useEffect(() => {
         viewFinder = document.getElementById('viewFinder') as HTMLVideoElement;
@@ -45,7 +51,8 @@ export default function App() {
     const handleScan = async (result: QrScanner.ScanResult) => {
         if (result && result.data && active) {
             active = false;
-            
+            setQr(result.data);
+
             const res = await fetch('https://www.glow-events.be/api/scan-ticket', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -53,9 +60,16 @@ export default function App() {
             });
     
             if (res.ok) {
+                await qrScanner?.pause();
                 const data = await res.json();
 
-                await qrScanner?.pause();
+                if (data.code != 'noTicket') {
+                    setOwnerName(data.ownerName);
+                    setOwnerEmail(data.ownerEmail);
+                    setTicketTypeId(data.ticketTypeId);
+                    setTicketTypeName(data.ticketTypeName);    
+                }
+
                 setCode(data.code);
 
                 setTimeout(async () => {
@@ -63,6 +77,7 @@ export default function App() {
                     active = true;
                     await qrScanner?.start();
                 }, 5000);
+
             } else {
                 active = true;
                 await qrScanner?.start();
@@ -88,6 +103,7 @@ export default function App() {
         const func = async () => {
             if (qrScanner && !switchingCameras) {
                 setSwitchingCameras(true);
+
                 if (environmentState) {
                     await qrScanner.setCamera('user');
                 } else {
@@ -149,6 +165,20 @@ export default function App() {
                     <h1 className={clsx('absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 text-center text-white font-sans font-bold text-7xl', code == 'noTicket'? 'fade-in': 'fade-out')}>Geen ticket</h1>
                     <h1 className={clsx('absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 text-center text-white font-sans font-bold text-7xl', code == 'alreadyScanned'? 'fade-in': 'fade-out')}>Al gescand</h1>
                     <h1 className={clsx('absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 text-center text-zinc-400 logo text-7xl', code == ''? 'fade-in': 'fade-out')}>glow</h1>
+                </section>
+
+                <section className={clsx('absolute bottom-0 w-full transition duration-200',!code && 'hidden')}>
+                    <div className='text-center'>
+                        <span className='text-white font-sans text-xl font-semibold'>QR: {qr}</span>
+                    </div>
+                    <div className='text-center'>
+                        <span className='text-white font-sans text-xl font-semibold mr-10'>Id Ticket: {ticketTypeId}</span>
+                        <span className='text-white font-sans text-xl font-semibold'>Naam Ticket: {ticketTypeName}</span>
+                    </div>
+                    <div className='text-center'>
+                        <span className='text-white font-sans text-xl font-semibold mr-10'>Naam: {ownerName}</span>
+                        <span className='text-white font-sans text-xl font-semibold'>Email: {ownerEmail}</span>
+                    </div>
                 </section>
             </header>
         </main>
