@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 let viewFinder: HTMLVideoElement | null = null;
 let overlay: HTMLDivElement | null = null;
 
+let qrScanner: QrScanner|null = null;
 let timer: NodeJS.Timeout|null = null;    
 
 let active = true;
@@ -25,7 +26,6 @@ function calculateScanRegion(video: HTMLVideoElement): QrScanner.ScanRegion {
 }
 
 export default function Scanner() {
-    const [qrScanner, setQrScanner] = useState<QrScanner | null>(null);
     const [hasFlash, setHasFlash] = useState<boolean>(false);
     const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
     const [listCameras, setListCameras] = useState<QrScanner.Camera[] | null>(null);
@@ -48,18 +48,21 @@ export default function Scanner() {
             viewFinder = document.getElementById('viewFinder') as HTMLVideoElement;
             overlay = document.getElementById('overlay') as HTMLDivElement;
 
-            const qrScanner = new QrScanner(
+            qrScanner = new QrScanner(
                 viewFinder,
                 result => { handleScan(result); },
                 { maxScansPerSecond: 1, preferredCamera: 'environment', calculateScanRegion: calculateScanRegion, highlightScanRegion: true, overlay: overlay},
             );
 
-            setQrScanner(qrScanner);
             qrScanner.start().then(() => {
-                qrScanner.hasFlash().then((result) => {setHasFlash(result)});
+                qrScanner?.hasFlash().then((result) => {setHasFlash(result)});
                 QrScanner.listCameras().then((result) => {setListCameras(result)});
             });
         }
+
+        return () => {
+            qrScanner?.destroy();
+        };
     }, []);
     
     const handleScan = async (result: QrScanner.ScanResult) => {
@@ -134,13 +137,13 @@ export default function Scanner() {
 
             if (environmentState) {
                 qrScanner.setCamera('user').then(() => {
-                    qrScanner.hasFlash().then((result) => { setHasFlash(result); });
+                    qrScanner?.hasFlash().then((result) => { setHasFlash(result); });
                     environmentState = false;
                     switchingCameras = false;
                 });
             } else {
                 qrScanner.setCamera('environment').then(() => {
-                    qrScanner.hasFlash().then((result) => { setHasFlash(result); });
+                    qrScanner?.hasFlash().then((result) => { setHasFlash(result); });
                     environmentState = true;
                     switchingCameras = false;
                 });
