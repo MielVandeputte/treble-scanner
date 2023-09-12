@@ -101,6 +101,7 @@ export default function Scanner() {
     }
 
     const toggleFlash = () => {
+        console.log('correctversion')
         if (qrScanner && !switchingCameras && !togglingFlash) {
             togglingFlash = true;
             if (qrScanner.isFlashOn()) {
