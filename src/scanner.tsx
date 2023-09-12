@@ -105,12 +105,12 @@ export default function Scanner() {
             togglingFlash = true;
             if (qrScanner.isFlashOn()) {
                 qrScanner.turnFlashOff().then(() => {
-                    setIsFlashOn(qrScanner.isFlashOn());
+                    setIsFlashOn(false);
                     togglingFlash = false;
                 });
             } else {
                 qrScanner.turnFlashOn().then(() => {
-                    setIsFlashOn(qrScanner.isFlashOn());
+                    setIsFlashOn(true);
                     togglingFlash = false;
                 });
             }
