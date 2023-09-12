@@ -34,16 +34,16 @@ export default function Menu() {
         <div className='bg-zinc-900 h-screen flex flex-col w-full overflow-x-hidden'>
             <main className='px-5 pt-10 flex-grow overflow-y-scroll'>
                 <h1 className='text-center pb-5 text-white text-4xl font-bold select-none'>Scangeschiedenis</h1>
-                <div className='text-xl text-center'>
+                <div className='text-center'>
                     {
                         historyContext.history.length > 0?
                             historyContext.history.map((ticket: Ticket, index: number) => (
                                 <div key={index} className={clsx('py-5 border-zinc-800', (index >= (historyContext.history.length - 1))? 'border-0': 'border-b-2')}>
-                                    <div className='text-white font-semibold mb-1'>
+                                    <div className='text-white text-xl font-semibold mb-1'>
                                         {ticket.ownerName} - {ticket.code == 'alreadyScanned'? 'Ticket al gescand': ticket.code == 'success'? 'Correct ticket': '' }
                                     </div>
                                     <div className='text-zinc-200'>
-                                        {ticket.ticketTypeId} - {ticket.ticketTypeName}
+                                        Type {ticket.ticketTypeId} | {ticket.ticketTypeName}
                                     </div>
                                     <div className='text-zinc-200'>
                                         {ticket.qr}
