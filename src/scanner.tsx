@@ -92,12 +92,21 @@ export default function Scanner() {
                     setCode('');
                     active = true;
                     await qrScanner?.start();
-                }, 5000);
+                }, 10_000);
             } else {
                 active = true;
                 await qrScanner?.start();
             }
         }
+    }
+
+    const removeCode = () => {
+        const func = async () => {
+            setCode('');
+            active = true;
+            await qrScanner?.start();
+        }
+        func();
     }
 
     const toggleFlash = () => {
@@ -181,7 +190,7 @@ export default function Scanner() {
                     </Link>
                 </section>
                     
-                <section className='w-full relative h-3/5'>
+                <section onClick={removeCode} className='w-full relative h-3/5'>
                     <h1 className={clsx('absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-5xl', code == 'success'? 'fade-in': 'fade-out')}>
                         Success
                     </h1>
