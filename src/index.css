@@ -7,6 +7,10 @@
         font-family: 'Proza Libre', sans-serif;
     }
 
+    .no-blue-box {
+        -webkit-tap-highlight-color: transparent;
+    }
+
     .fade-in {
         opacity: 0.9;
         transition: opacity 200ms ease-in-out;

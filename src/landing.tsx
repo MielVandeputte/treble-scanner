@@ -68,7 +68,7 @@ export default function Landing() {
                             <input type='text' id='eventscanAuthorizationCode' name='eventscanAuthorizationCode' autoComplete='off' maxLength={50} required className='py-3 px-5 w-full text-zinc-200 rounded-full bg-zinc-800 text-xl'/>
                         </div>
 
-                        <button type='submit' className={clsx(loading && 'active:outline-none pointer-events-none animate-pulse', 'bg-emerald-800 mt-10 border-2 border-transparent rounded-full whitespace-nowrap transition duration-200 text-white select-none h-14 w-full text-center font-semibold text-xl')}>
+                        <button type='submit' className={clsx(loading && 'pointer-events-none animate-pulse', 'bg-emerald-800 mt-10 border-2 border-transparent rounded-full whitespace-nowrap transition duration-200 text-white select-none h-14 w-full text-center font-semibold text-xl no-blue-box')}>
                             Start
                         </button>
                     </form>
