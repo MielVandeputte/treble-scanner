@@ -103,14 +103,11 @@ export default function Scanner() {
         }
     }
 
-    const removeCode = () => {
-        const func = async () => {
-            if (timer) { clearTimeout(timer); }
-            setCode('');
-            active = true;
-            await qrScanner?.start();
-        }
-        func();
+    const removeCode = async () => {
+        if (timer) { clearTimeout(timer); }
+        setCode('');
+        active = true;
+        await qrScanner?.start();
     }
 
     const toggleFlash = () => {
