@@ -18,6 +18,8 @@ export default function Scanner() {
     let viewFinder: HTMLVideoElement | null = null;
     let overlay: HTMLDivElement | null = null;
 
+    let timer: NodeJS.Timeout|null = null;    
+
     let active = true;
     let togglingFlash = false;
     let switchingCameras = false;
@@ -88,10 +90,11 @@ export default function Scanner() {
 
                 setCode(data.code);
 
-                setTimeout(async () => {
+                timer = setTimeout(async () => {
                     setCode('');
                     active = true;
                     await qrScanner?.start();
+                    timer = null;
                 }, 10_000);
             } else {
                 active = true;
@@ -102,6 +105,7 @@ export default function Scanner() {
 
     const removeCode = () => {
         const func = async () => {
+            if (timer) { clearTimeout(timer); }
             setCode('');
             active = true;
             await qrScanner?.start();
