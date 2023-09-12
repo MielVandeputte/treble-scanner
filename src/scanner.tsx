@@ -77,7 +77,6 @@ export default function Scanner() {
             });
     
             if (res.ok) {
-                await qrScanner?.pause();
                 const data = await res.json();
 
                 if (data.code != 'noTicket') {
@@ -95,12 +94,10 @@ export default function Scanner() {
                 timer = setTimeout(async () => {
                     setCode('');
                     active = true;
-                    await qrScanner?.start();
                     timer = null;
                 }, 10_000);
             } else {
                 active = true;
-                await qrScanner?.start();
             }
         }
     }
@@ -109,11 +106,9 @@ export default function Scanner() {
         if (timer) { clearTimeout(timer); }
         setCode('');
         active = true;
-        await qrScanner?.start();
     }
 
     const toggleFlash = () => {
-        console.log('correctversion')
         if (qrScanner && !switchingCameras && !togglingFlash) {
             togglingFlash = true;
             if (qrScanner.isFlashOn()) {
