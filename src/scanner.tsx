@@ -102,24 +102,24 @@ export default function Scanner() {
 
     const toggleFlash = () => {
         const func = async () => {
-            togglingFlash = true;
             if (qrScanner && !switchingCameras && !togglingFlash) {
+                togglingFlash = true;
                 if (qrScanner.isFlashOn()) {
                     await qrScanner.turnFlashOff();
                 } else {
                     await qrScanner.turnFlashOn();
                 }
                 setIsFlashOn(qrScanner.isFlashOn());
+                togglingFlash = false;
             }
-            togglingFlash = false;
         }
         func();
     }
 
     const toggleCamera = () => {
         const func = async () => {
-            switchingCameras = true;
             if (qrScanner && !switchingCameras) {
+                switchingCameras = true;
                 setIsFlashOn(false);
 
                 if (environmentState) {
@@ -130,8 +130,8 @@ export default function Scanner() {
 
                 qrScanner.hasFlash().then((result) => { setHasFlash(result); });
                 setEnvironmentState(!environmentState);
+                switchingCameras = false;
             }
-            switchingCameras = false;
         }
         func();
     }
