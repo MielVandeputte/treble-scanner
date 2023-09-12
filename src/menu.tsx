@@ -33,7 +33,7 @@ export default function Menu() {
     return (
         <div className='bg-zinc-900 h-screen flex flex-col w-full overflow-x-hidden'>
             <main className='px-5 pt-10 flex-grow overflow-y-scroll'>
-                <h1 className='text-center pb-5 text-white text-4xl font-bold select-none'>Scangeschiedenis</h1>
+                <h1 className='text-center pb-5 text-white text-3xl font-bold select-none'>Scangeschiedenis</h1>
                 <div className='text-center'>
                     {
                         historyContext.history.length > 0?
