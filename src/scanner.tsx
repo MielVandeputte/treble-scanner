@@ -209,7 +209,7 @@ export default function Scanner() {
                     </h1>
                 </section>
 
-                <section className={clsx('h-1/5 overflow-ellipsis whitespace-nowrap w-full transition duration-200',(!code || code === 'noTicket') && 'hidden')}>                    
+                <section onClick={(removeCode)} className={clsx('h-1/5 overflow-ellipsis whitespace-nowrap w-full transition duration-200',(!code || code === 'noTicket') && 'hidden')}>                    
                     <div className='text-white overflow-hidden whitespace-nowrap font-sans text-center font-semibold'>Type {ticketTypeId} | {ticketTypeName}</div>
                     <div className='text-white overflow-hidden whitespace-nowrap font-sans text-center font-semibold'>{ownerName} | {ownerEmail}</div>
                 </section>
