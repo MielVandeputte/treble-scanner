@@ -5,6 +5,7 @@ import Menu from './menu';
 import Landing from './landing';
 import { createContext, useEffect, useState } from 'react';
 import store from 'store2';
+import ManualAdd from './manual-add';
 
 export type Ticket = {
     timestamp: Date;
@@ -30,7 +31,8 @@ export const HistoryContext = createContext({ history: [] as Ticket[], addToHist
 const router = createBrowserRouter([
     { path: '/', element: <Landing /> },
     { path: '/scanner', element: <Scanner /> },
-    { path: '/menu', element: <Menu /> }
+    { path: '/menu', element: <Menu /> },
+    { path: '/manual-add', element: <ManualAdd /> }
 ]);
 
 export default function Wrapper() {   
