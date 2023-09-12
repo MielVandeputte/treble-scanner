@@ -26,7 +26,7 @@ export default function Scanner() {
     const [environmentState, setEnvironmentState] = useState<boolean>(true);
     const [switchingCameras, setSwitchingCameras] = useState<boolean>(false);
     
-    const [setQr] = useState<string>('');
+    const [_qr, setQr] = useState<string>('');
     const [code, setCode] = useState<string>('');
     const [ownerName, setOwnerName] = useState<string>('');
     const [ownerEmail, setOwnerEmail] = useState<string>('');
