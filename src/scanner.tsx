@@ -119,7 +119,10 @@ export default function Scanner() {
     }
 
     const toggleCamera = () => {
-        if (qrScanner && !switchingCameras) {
+
+        console.log(qrScanner?.isFlashOn())
+
+        /*if (qrScanner && !switchingCameras) {
             switchingCameras = true;
             setIsFlashOn(false);
 
@@ -136,7 +139,7 @@ export default function Scanner() {
                     switchingCameras = false;
                 });
             }
-        }
+        }*/
     }
 
     return (
