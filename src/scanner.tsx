@@ -21,12 +21,12 @@ export default function Scanner() {
     let active = true;
     let togglingFlash = false;
     let switchingCameras = false;
+    let environmentState = true;
 
     const [qrScanner, setQrScanner] = useState<QrScanner | null>(null);
     const [hasFlash, setHasFlash] = useState<boolean>(false);
     const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
     const [listCameras, setListCameras] = useState<QrScanner.Camera[] | null>(null);
-    //const [environmentState, setEnvironmentState] = useState<boolean>(true);
     
     const [_qr, setQr] = useState<string>('');
     const [code, setCode] = useState<string>('');
@@ -119,27 +119,24 @@ export default function Scanner() {
     }
 
     const toggleCamera = () => {
-
-        console.log(qrScanner?.isFlashOn())
-
-        /*if (qrScanner && !switchingCameras) {
+        if (qrScanner && !switchingCameras) {
             switchingCameras = true;
             setIsFlashOn(false);
 
             if (environmentState) {
                 qrScanner.setCamera('user').then(() => {
                     qrScanner.hasFlash().then((result) => { setHasFlash(result); });
-                    setEnvironmentState(!environmentState);
+                    environmentState = false;
                     switchingCameras = false;
                 });
             } else {
                 qrScanner.setCamera('environment').then(() => {
                     qrScanner.hasFlash().then((result) => { setHasFlash(result); });
-                    setEnvironmentState(!environmentState);
+                    environmentState = true;
                     switchingCameras = false;
                 });
             }
-        }*/
+        }
     }
 
     return (
