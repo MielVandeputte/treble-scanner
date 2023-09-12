@@ -123,7 +123,7 @@ export default function Scanner() {
                     await qrScanner.setCamera('environment');
                 }
 
-                qrScanner.hasFlash().then((result) => {setHasFlash(result)});
+                qrScanner.hasFlash().then((result) => { setHasFlash(result); setIsFlashOn(false); });
                 setEnvironmentState(!environmentState);
                 setSwitchingCameras(false);
             }
