@@ -27,7 +27,7 @@ export default function Scanner() {
     const [switchingCameras, setSwitchingCameras] = useState<boolean>(false);
     
     const [qr, setQr] = useState<string>('jkgjkwjtpoiuiopipoir');
-    const [code, setCode] = useState<string>('');
+    const [code, setCode] = useState<string>('alreadyScanned');
     const [ownerName, setOwnerName] = useState<string>('Miel Vandeputte');
     const [ownerEmail, setOwnerEmail] = useState<string>('vandeputte.miel@gmail.com');
     const [ticketTypeId, setTicketTypeId] = useState<number>(0);
@@ -174,23 +174,23 @@ export default function Scanner() {
                 </section>
                     
                 <section className='w-full relative h-3/5'>
-                    <h1 className={clsx('absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-7xl', code == 'success'? 'fade-in': 'fade-out')}>
+                    <h1 className={clsx('absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-5xl', code == 'success'? 'fade-in': 'fade-out')}>
                         Success
                     </h1>
-                    <h1 className={clsx('absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-7xl', code == 'noTicket'? 'fade-in': 'fade-out')}>
+                    <h1 className={clsx('absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-5xl', code == 'noTicket'? 'fade-in': 'fade-out')}>
                         Geen<br/>ticket
                     </h1>
-                    <h1 className={clsx('absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-7xl', code == 'alreadyScanned'? 'fade-in': 'fade-out')}>
+                    <h1 className={clsx('absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-5xl', code == 'alreadyScanned'? 'fade-in': 'fade-out')}>
                         Al<br/>gescand
                     </h1>
-                    <h1 className={clsx('absolute left-1/2 -translate-x-1/2 bottom-1/2 translate-y-[55%]  text-center text-zinc-400 logo text-7xl', code == ''? 'fade-in': 'fade-out')}>
+                    <h1 className={clsx('absolute left-1/2 -translate-x-1/2 bottom-1/2 translate-y-[55%]  text-center text-zinc-400 logo text-5xl', code == ''? 'fade-in': 'fade-out')}>
                         glow
                     </h1>
                 </section>
 
-                <section className={clsx('h-1/5 w-full transition duration-200',!code && 'hidden')}>                    
-                    <div className='text-white font-sans text-xl text-center font-semibold'>Type {ticketTypeId} | {ticketTypeName}</div>
-                    <div className='text-white font-sans text-xl text-center font-semibold'>{ownerName} | {ownerEmail}</div>
+                <section className={clsx('h-1/5 overflow-ellipsis whitespace-nowrap w-full transition duration-200',!code && 'hidden')}>                    
+                    <div className='text-white overflow-hidden whitespace-nowrap font-sans text-center font-semibold'>Type {ticketTypeId} | {ticketTypeName}</div>
+                    <div className='text-white overflow-hidden whitespace-nowrap font-sans text-center font-semibold'>{ownerName} | {ownerEmail}</div>
                 </section>
             </header>
         </main>
