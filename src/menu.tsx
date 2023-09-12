@@ -20,8 +20,6 @@ export default function Menu() {
         navigate('/');
     }
 
-    console.log(historyContext.history)
-
     historyContext.history.sort((a,b) => {
         if (b.timestamp instanceof Date) {
             return b.timestamp.getTime() - a.timestamp.getTime();

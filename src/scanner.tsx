@@ -91,7 +91,7 @@ export default function Scanner() {
 
                 setCode(data.code);
 
-                timer = setTimeout(async () => {
+                timer = setTimeout(() => {
                     setCode('');
                     active = true;
                     timer = null;
@@ -102,7 +102,7 @@ export default function Scanner() {
         }
     }
 
-    const removeCode = async () => {
+    const restartScanning = () => {
         if (timer) { clearTimeout(timer); }
         setCode('');
         active = true;
@@ -188,7 +188,7 @@ export default function Scanner() {
                     </Link>
                 </section>
                     
-                <section onClick={removeCode} className='w-full relative h-3/5'>
+                <section onClick={restartScanning} className='w-full relative h-3/5'>
                     <h1 className={clsx('absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-5xl', code == 'success'? 'fade-in': 'fade-out')}>
                         Success
                     </h1>
@@ -203,7 +203,7 @@ export default function Scanner() {
                     </h1>
                 </section>
 
-                <section onClick={(removeCode)} className={clsx('h-1/5 overflow-ellipsis whitespace-nowrap w-full transition duration-200',(!code || code === 'noTicket') && 'hidden')}>                    
+                <section onClick={restartScanning} className={clsx('h-1/5 overflow-ellipsis whitespace-nowrap w-full transition duration-200',(!code || code === 'noTicket') && 'hidden')}>                    
                     <div className='text-white overflow-hidden whitespace-nowrap font-sans text-center font-semibold'>Type {ticketTypeId} | {ticketTypeName}</div>
                     <div className='text-white overflow-hidden whitespace-nowrap font-sans text-center font-semibold'>{ownerName} | {ownerEmail}</div>
                 </section>
