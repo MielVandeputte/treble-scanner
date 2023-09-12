@@ -19,13 +19,14 @@ export default function Scanner() {
     let overlay: HTMLDivElement | null = null;
 
     let active = true;
+    let togglingFlash = false;
+    let switchingCameras = false;
+
     const [qrScanner, setQrScanner] = useState<QrScanner | null>(null);
     const [hasFlash, setHasFlash] = useState<boolean>(false);
     const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
-    const [togglingFlash, setTogglingFlash] = useState<boolean>(false);
     const [listCameras, setListCameras] = useState<QrScanner.Camera[] | null>(null);
     const [environmentState, setEnvironmentState] = useState<boolean>(true);
-    const [switchingCameras, setSwitchingCameras] = useState<boolean>(false);
     
     const [_qr, setQr] = useState<string>('');
     const [code, setCode] = useState<string>('');
@@ -101,7 +102,7 @@ export default function Scanner() {
 
     const toggleFlash = () => {
         const func = async () => {
-            setTogglingFlash(true);
+            togglingFlash = true;
             if (qrScanner && !switchingCameras && !togglingFlash) {
                 if (qrScanner.isFlashOn()) {
                     await qrScanner.turnFlashOff();
@@ -110,14 +111,14 @@ export default function Scanner() {
                 }
                 setIsFlashOn(qrScanner.isFlashOn());
             }
-            setTogglingFlash(false);
+            togglingFlash = false;
         }
         func();
     }
 
     const toggleCamera = () => {
         const func = async () => {
-            setSwitchingCameras(true);
+            switchingCameras = true;
             if (qrScanner && !switchingCameras) {
                 setIsFlashOn(false);
 
@@ -130,7 +131,7 @@ export default function Scanner() {
                 qrScanner.hasFlash().then((result) => { setHasFlash(result); });
                 setEnvironmentState(!environmentState);
             }
-            setSwitchingCameras(false);
+            switchingCameras = false;
         }
         func();
     }
