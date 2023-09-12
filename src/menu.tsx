@@ -12,6 +12,14 @@ export default function Menu() {
 
     useEffect(() => {
         if (scanSessionContext.scanSession == null) { navigate('/'); }
+
+        historyContext.history.sort((a, b) => {
+            if (b.timestamp instanceof Date) {
+                return b.timestamp.getTime() - a.timestamp.getTime();
+            } else {
+                return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
+            }
+        });
     }, []);
 
     const logout = () => {
@@ -19,14 +27,6 @@ export default function Menu() {
         scanSessionContext.setScanSession(null);
         navigate('/');
     }
-
-    historyContext.history.sort((a,b) => {
-        if (b.timestamp instanceof Date) {
-            return b.timestamp.getTime() - a.timestamp.getTime();
-        } else {
-            return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
-        }
-    });
 
     return (
         <div className='bg-zinc-900 h-screen flex flex-col w-full overflow-x-hidden'>
