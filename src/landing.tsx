@@ -8,7 +8,11 @@ export default function Landing() {
     const scanSessionContext = useContext(ScanSessionContext);
     const navigate = useNavigate();
 
+    const [eventId, setEventId] = useState<string>('');
+    const [eventscanAuthorizationCode, setEventscanAuthorizationCode] = useState<string>('');
+
     const [loading, setLoading] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<boolean>(false);
 
     useEffect(() => {
         if (scanSessionContext.scanSession != null) { navigate('/scanner'); }
@@ -33,14 +37,13 @@ export default function Landing() {
             if (result.data === true) {
                 scanSessionContext.setScanSession({ eventId: target.eventId.value, scanAuthorizationCode: target.eventscanAuthorizationCode.value });
                 navigate('/scanner');
+            } else if (result.data === false) {
+                setErrorMessage(true);
             }
 
             setLoading(false);
         });
     }
-
-    //minimaxi2024
-    //952bf6c7edb188e66ae69e38af4f2b7b
 
     return (
         <div className='bg-zinc-900 w-screen h-screen flex justify-center items-center p-5 select-none'>            
@@ -58,21 +61,22 @@ export default function Landing() {
                             <label className='text-zinc-200 text-xl font-semibold w-32'>
                                 event-id
                             </label>
-                            <input type='text' id='eventId' name='eventId' autoComplete='off' maxLength={50} required className='py-3 px-5 w-full text-zinc-200 rounded-full bg-zinc-800 text-xl'/>
+                            <input type='text' onChange={(event) => {setEventId(event.target.value)}} id='eventId' name='eventId' autoComplete='off' maxLength={50} required className='py-3 px-5 w-full text-zinc-200 rounded-full bg-zinc-800 text-xl'/>
                         </div>
 
                         <div className='flex items-center mt-5'>
                             <label className='text-zinc-200 text-xl font-semibold w-32'>
                                 code
                             </label>
-                            <input type='text' id='eventscanAuthorizationCode' name='eventscanAuthorizationCode' autoComplete='off' maxLength={50} required className='py-3 px-5 w-full text-zinc-200 rounded-full bg-zinc-800 text-xl'/>
+                            <input type='text' onChange={(event) => {setEventscanAuthorizationCode(event.target.value)}} id='eventscanAuthorizationCode' name='eventscanAuthorizationCode' autoComplete='off' maxLength={50} required className='py-3 px-5 w-full text-zinc-200 rounded-full bg-zinc-800 text-xl'/>
                         </div>
 
-                        <button type='submit' className={clsx(loading && 'pointer-events-none animate-pulse', 'bg-emerald-800 mt-10 border-2 border-transparent rounded-full whitespace-nowrap transition duration-200 text-white select-none h-14 w-full text-center font-semibold text-xl no-blue-box')}>
+                        <button type='submit' disabled={eventId === '' || eventscanAuthorizationCode === ''} className={clsx(loading && 'pointer-events-none animate-pulse', !loading && 'disabled:bg-transparent disabled:border-zinc-800 disabled:text-zinc-400', 'bg-emerald-800 mt-10 border-2 border-transparent rounded-full whitespace-nowrap transition duration-200 text-white select-none h-14 w-full text-center font-semibold text-xl no-blue-box')}>
                             Start
                         </button>
                     </form>
 
+                    <span className={clsx('text-xl mt-5', errorMessage && 'text-zinc-200', !errorMessage && 'text-transparent')}>event-id of code verkeerd</span>
                 </div>
             </main>
         </div>
