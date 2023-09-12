@@ -5,6 +5,16 @@ import QrScanner from 'qr-scanner';
 import { HistoryContext, ScanSessionContext, Ticket } from './wrapper';
 import { Link, useNavigate } from 'react-router-dom';
 
+let viewFinder: HTMLVideoElement | null = null;
+let overlay: HTMLDivElement | null = null;
+
+let timer: NodeJS.Timeout|null = null;    
+
+let active = true;
+let togglingFlash = false;
+let switchingCameras = false;
+let environmentState = true;
+
 function calculateScanRegion(video: HTMLVideoElement): QrScanner.ScanRegion {
     return {
         width: 400,
@@ -15,16 +25,6 @@ function calculateScanRegion(video: HTMLVideoElement): QrScanner.ScanRegion {
 }
 
 export default function Scanner() {
-    let viewFinder: HTMLVideoElement | null = null;
-    let overlay: HTMLDivElement | null = null;
-
-    let timer: NodeJS.Timeout|null = null;    
-
-    let active = true;
-    let togglingFlash = false;
-    let switchingCameras = false;
-    let environmentState = true;
-
     const [qrScanner, setQrScanner] = useState<QrScanner | null>(null);
     const [hasFlash, setHasFlash] = useState<boolean>(false);
     const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
@@ -39,7 +39,6 @@ export default function Scanner() {
 
     const historyContext = useContext(HistoryContext);
     const scanSessionContext = useContext(ScanSessionContext);
-
     const navigate = useNavigate();
 
     useEffect(() => {
