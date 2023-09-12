@@ -101,39 +101,41 @@ export default function Scanner() {
     }
 
     const toggleFlash = () => {
-        const func = async () => {
-            if (qrScanner && !switchingCameras && !togglingFlash) {
-                togglingFlash = true;
-                if (qrScanner.isFlashOn()) {
-                    await qrScanner.turnFlashOff();
-                } else {
-                    await qrScanner.turnFlashOn();
-                }
-                setIsFlashOn(qrScanner.isFlashOn());
-                togglingFlash = false;
+        if (qrScanner && !switchingCameras && !togglingFlash) {
+            togglingFlash = true;
+            if (qrScanner.isFlashOn()) {
+                qrScanner.turnFlashOff().then(() => {
+                    setIsFlashOn(qrScanner.isFlashOn());
+                    togglingFlash = false;
+                });
+            } else {
+                qrScanner.turnFlashOn().then(() => {
+                    setIsFlashOn(qrScanner.isFlashOn());
+                    togglingFlash = false;
+                });
             }
         }
-        func();
     }
 
     const toggleCamera = () => {
-        const func = async () => {
-            if (qrScanner && !switchingCameras) {
-                switchingCameras = true;
-                setIsFlashOn(false);
+        if (qrScanner && !switchingCameras) {
+            switchingCameras = true;
+            setIsFlashOn(false);
 
-                if (environmentState) {
-                    await qrScanner.setCamera('user');
-                } else {
-                    await qrScanner.setCamera('environment');
-                }
-
-                qrScanner.hasFlash().then((result) => { setHasFlash(result); });
-                setEnvironmentState(!environmentState);
-                switchingCameras = false;
+            if (environmentState) {
+                qrScanner.setCamera('user').then(() => {
+                    qrScanner.hasFlash().then((result) => { setHasFlash(result); });
+                    setEnvironmentState(!environmentState);
+                    switchingCameras = false;
+                });
+            } else {
+                qrScanner.setCamera('environment').then(() => {
+                    qrScanner.hasFlash().then((result) => { setHasFlash(result); });
+                    setEnvironmentState(!environmentState);
+                    switchingCameras = false;
+                });
             }
         }
-        func();
     }
 
     return (
