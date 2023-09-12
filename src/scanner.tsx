@@ -8,8 +8,8 @@ import { Link, useNavigate } from 'react-router-dom';
 let viewFinder: HTMLVideoElement | null = null;
 let overlay: HTMLDivElement | null = null;
 
-let qrScanner: QrScanner|null = null;
-let timer: NodeJS.Timeout|null = null;    
+let qrScanner: QrScanner | null = null;
+let timer: NodeJS.Timeout | null = null;    
 
 let active = true;
 let togglingFlash = false;
