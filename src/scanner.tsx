@@ -26,7 +26,7 @@ export default function Scanner() {
     const [hasFlash, setHasFlash] = useState<boolean>(false);
     const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
     const [listCameras, setListCameras] = useState<QrScanner.Camera[] | null>(null);
-    const [environmentState, setEnvironmentState] = useState<boolean>(true);
+    //const [environmentState, setEnvironmentState] = useState<boolean>(true);
     
     const [_qr, setQr] = useState<string>('');
     const [code, setCode] = useState<string>('');
