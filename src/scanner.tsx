@@ -135,12 +135,14 @@ export default function Scanner() {
                     qrScanner?.hasFlash().then((result) => { setHasFlash(result); });
                     environmentState = false;
                     switchingCameras = false;
+                    togglingFlash = false;
                 });
             } else {
                 qrScanner.setCamera('environment').then(() => {
                     qrScanner?.hasFlash().then((result) => { setHasFlash(result); });
                     environmentState = true;
                     switchingCameras = false;
+                    togglingFlash = false;
                 });
             }
         }
