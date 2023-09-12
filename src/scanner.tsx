@@ -22,6 +22,7 @@ export default function Scanner() {
     const [qrScanner, setQrScanner] = useState<QrScanner | null>(null);
     const [hasFlash, setHasFlash] = useState<boolean>(false);
     const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
+    const [togglingFlash, setTogglingFlash] = useState<boolean>(false);
     const [listCameras, setListCameras] = useState<QrScanner.Camera[] | null>(null);
     const [environmentState, setEnvironmentState] = useState<boolean>(true);
     const [switchingCameras, setSwitchingCameras] = useState<boolean>(false);
@@ -100,7 +101,8 @@ export default function Scanner() {
 
     const toggleFlash = () => {
         const func = async () => {
-            if (qrScanner && !switchingCameras) {
+            setTogglingFlash(true);
+            if (qrScanner && !switchingCameras && !togglingFlash) {
                 if (qrScanner.isFlashOn()) {
                     await qrScanner.turnFlashOff();
                 } else {
@@ -108,14 +110,15 @@ export default function Scanner() {
                 }
                 setIsFlashOn(qrScanner.isFlashOn());
             }
+            setTogglingFlash(false);
         }
         func();
     }
 
     const toggleCamera = () => {
         const func = async () => {
+            setSwitchingCameras(true);
             if (qrScanner && !switchingCameras) {
-                setSwitchingCameras(true);
                 setIsFlashOn(false);
 
                 if (environmentState) {
@@ -126,8 +129,8 @@ export default function Scanner() {
 
                 qrScanner.hasFlash().then((result) => { setHasFlash(result); });
                 setEnvironmentState(!environmentState);
-                setSwitchingCameras(false);
             }
+            setSwitchingCameras(false);
         }
         func();
     }
