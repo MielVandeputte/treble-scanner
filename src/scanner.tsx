@@ -26,12 +26,12 @@ export default function Scanner() {
     const [environmentState, setEnvironmentState] = useState<boolean>(true);
     const [switchingCameras, setSwitchingCameras] = useState<boolean>(false);
     
-    const [qr, setQr] = useState<string>('jkgjkwjtpoiuiopipoir');
-    const [code, setCode] = useState<string>('alreadyScanned');
-    const [ownerName, setOwnerName] = useState<string>('Miel Vandeputte');
-    const [ownerEmail, setOwnerEmail] = useState<string>('vandeputte.miel@gmail.com');
+    const [setQr] = useState<string>('');
+    const [code, setCode] = useState<string>('');
+    const [ownerName, setOwnerName] = useState<string>('');
+    const [ownerEmail, setOwnerEmail] = useState<string>('');
     const [ticketTypeId, setTicketTypeId] = useState<number>(0);
-    const [ticketTypeName, setTicketTypeName] = useState<string>('Voorverkoop');
+    const [ticketTypeName, setTicketTypeName] = useState<string>('');
 
     const historyContext = useContext(HistoryContext);
     const scanSessionContext = useContext(ScanSessionContext);
