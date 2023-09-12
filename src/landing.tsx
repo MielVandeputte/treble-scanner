@@ -53,22 +53,22 @@ export default function Landing() {
                         Beide zijn te vinden in het dasboard op glow-events.be.
                     </p>
 
-                    <form onSubmit={handleSubmit} className='w-full sm:px-12'>
+                    <form onSubmit={handleSubmit} className='w-full sm:px-16'>
                         <div className='flex items-center'>
-                            <label className='text-zinc-200 text-xl font-semibold w-40'>
+                            <label className='text-zinc-200 text-xl font-semibold w-32'>
                                 event-id
                             </label>
                             <input type='text' id='eventId' name='eventId' autoComplete='off' maxLength={50} required className='py-3 px-5 w-full text-zinc-200 rounded-full bg-zinc-800 text-xl'/>
                         </div>
 
                         <div className='flex items-center mt-5'>
-                            <label className='text-zinc-200 text-xl font-semibold w-40'>
+                            <label className='text-zinc-200 text-xl font-semibold w-32'>
                                 code
                             </label>
                             <input type='text' id='eventscanAuthorizationCode' name='eventscanAuthorizationCode' autoComplete='off' maxLength={50} required className='py-3 px-5 w-full text-zinc-200 rounded-full bg-zinc-800 text-xl'/>
                         </div>
 
-                        <button type='submit' className={clsx(loading && 'pointer-events-none animate-pulse', 'bg-emerald-800 mt-10 border-2 border-transparent rounded-full whitespace-nowrap transition duration-200 text-white select-none h-14 w-full text-center font-semibold text-xl')}>
+                        <button type='submit' className={clsx(loading && 'focus:outline-none pointer-events-none animate-pulse', 'bg-emerald-800 mt-10 border-2 border-transparent rounded-full whitespace-nowrap transition duration-200 text-white select-none h-14 w-full text-center font-semibold text-xl')}>
                             Start
                         </button>
                     </form>
