@@ -116,6 +116,7 @@ export default function Scanner() {
         const func = async () => {
             if (qrScanner && !switchingCameras) {
                 setSwitchingCameras(true);
+                setIsFlashOn(false);
 
                 if (environmentState) {
                     await qrScanner.setCamera('user');
@@ -123,7 +124,7 @@ export default function Scanner() {
                     await qrScanner.setCamera('environment');
                 }
 
-                qrScanner.hasFlash().then((result) => { setHasFlash(result); setIsFlashOn(false); });
+                qrScanner.hasFlash().then((result) => { setHasFlash(result); });
                 setEnvironmentState(!environmentState);
                 setSwitchingCameras(false);
             }
