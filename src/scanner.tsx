@@ -100,7 +100,7 @@ export default function Scanner() {
 
     const toggleFlash = () => {
         const func = async () => {
-            if (qrScanner) {
+            if (qrScanner && !switchingCameras) {
                 if (qrScanner.isFlashOn()) {
                     await qrScanner.turnFlashOff();
                 } else {
