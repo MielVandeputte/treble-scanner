@@ -135,7 +135,7 @@ export default function Scanner() {
         <main className='overflow-hidden h-screen bg-zinc-950 absolute top-0 w-screen select-none'>
             <video id='viewFinder' className='object-cover w-full h-[100dvh]'/>
 
-            <div id='overlay' className={clsx('border-[8px] border-solid rounded-md border-opacity-90 transition duration-200', code == 'success' && 'border-green-800', code == 'alreadyScanned' && 'border-yellow-800', code == 'noTicket' && 'border-red-800', code == '' && 'border-zinc-900')}/>
+            <div id='overlay' className={clsx('border-[8px] border-solid rounded-md border-opacity-40 transition duration-200', code == 'success' && 'border-green-800', code == 'alreadyScanned' && 'border-yellow-800', code == 'noTicket' && 'border-red-800', code == '' && 'border-zinc-200')}/>
 
             <header className={clsx('absolute overflow-hidden z-50 transition duration-200 w-full h-1/3 bg-opacity-95 bottom-0 p-5', code == 'success' && 'bg-green-800', code == 'alreadyScanned' && 'bg-yellow-800', code == 'noTicket' && 'bg-red-800', code == '' && 'bg-zinc-900')}>
                 <section className='flex w-full justify-around no-blue-box'>
