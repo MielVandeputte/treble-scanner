@@ -2,6 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    :root {
+        @apply bg-zinc-800;
+        @apply overflow-x-hidden;
+    }
+
+    ::-webkit-scrollbar {
+        width: 12px;
+    }
+  
+    ::-webkit-scrollbar-thumb {
+        background-color: #3F3F46;
+        border-radius: 6px;
+    }
+  
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #52525B;
+    }
+  
+    ::-webkit-scrollbar-track {
+        background-color: #18181B;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+}
+
 @layer components {
     .logo {
         font-family: 'Proza Libre', sans-serif;
