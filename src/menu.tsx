@@ -60,14 +60,14 @@ export default function Menu() {
                 </div>
             </main>
             <footer className='w-full p-5 items-center flex select-none'>
-                <Link className='mr-5 rounded-full aspect-square text-white h-14 bg-zinc-800 aria-selected:bg-zinc-700 border-2 border-transparent' to='/scanner'>
+                <Link className='mr-5 rounded-full aspect-square text-white h-12 bg-zinc-800 aria-selected:bg-zinc-700 border-2 border-transparent' to='/scanner'>
                     <div className='flex items-center justify-center h-full'>
-                        <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth='2' stroke='#ffffff' className='w-6 h-6'>
+                        <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth='2' stroke='#ffffff' className='w-5 h-5'>
                             <path strokeLinecap='round' strokeLinejoin='round' d='M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3' />
                         </svg>
                     </div>
                 </Link>
-                <button onClick={logout} className='rounded-full font-semibold text-white text-xl w-full h-14 bg-red-900 aria-selected:bg-red-950 border-2 border-transparent no-blue-box'>
+                <button onClick={logout} className='rounded-full font-semibold text-white w-full h-12 bg-red-900 aria-selected:bg-red-950 border-2 border-transparent no-blue-box'>
                     Ander event
                 </button>
             </footer>
