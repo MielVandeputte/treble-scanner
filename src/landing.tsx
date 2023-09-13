@@ -1,5 +1,5 @@
 import '@fontsource/proza-libre/600.css';
-import { ScanSessionContext } from './wrapper';
+import { InternetConnectedContext, ScanSessionContext } from './wrapper';
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
@@ -12,37 +12,54 @@ export default function Landing() {
     const [eventscanAuthorizationCode, setEventscanAuthorizationCode] = useState<string>('');
 
     const [loading, setLoading] = useState<boolean>(false);
-    const [errorMessage, setErrorMessage] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>('');
+
+    const internetConnectedContext = useContext(InternetConnectedContext);
 
     useEffect(() => {
         if (scanSessionContext.scanSession != null) { navigate('/scanner'); }
     }, []);
 
+    useEffect(() => {
+        if (navigator.onLine) {
+            if (errorMessage === 'Verbind met het internet om in te loggen') {
+                setErrorMessage('');
+            }
+        } else {
+            setErrorMessage('Verbind met het internet om in te loggen');
+        }
+
+    }, [internetConnectedContext]);
+
     const handleSubmit = (event: FormEvent) => {
-        setLoading(true);
         event.preventDefault();
 
-        const target = event.target as typeof event.target & {
-            eventId: { value: string };
-            eventscanAuthorizationCode: { value: string };
-        };
-        
-        fetch('https://www.glow-events.be/api/check-scan-authorization-code', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 'eventId': target.eventId.value, 'scanAuthorizationCode': target.eventscanAuthorizationCode.value })
-        }).then(async (data) => {
-            const result = await data.json();
+        if (navigator.onLine) {
+            setLoading(true);
 
-            if (result.data === true) {
-                scanSessionContext.setScanSession({ eventId: target.eventId.value, scanAuthorizationCode: target.eventscanAuthorizationCode.value });
-                navigate('/scanner');
-            } else if (result.data === false) {
-                setErrorMessage(true);
-            }
+            const target = event.target as typeof event.target & {
+                eventId: { value: string };
+                eventscanAuthorizationCode: { value: string };
+            };
+            
+            fetch('https://www.glow-events.be/api/check-scan-authorization-code', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 'eventId': target.eventId.value, 'scanAuthorizationCode': target.eventscanAuthorizationCode.value })
+            
+            }).then(async (data) => {
+                const result = await data.json();
 
-            setLoading(false);
-        });
+                if (result.data === true) {
+                    scanSessionContext.setScanSession({ eventId: target.eventId.value, scanAuthorizationCode: target.eventscanAuthorizationCode.value });
+                    navigate('/scanner');
+                } else if (result.data === false) {
+                    setErrorMessage('event-id of code verkeerd');
+                }
+
+                setLoading(false);
+            });
+        }
     }
 
     return (
@@ -71,12 +88,12 @@ export default function Landing() {
                             <input type='text' onChange={(event) => {setEventscanAuthorizationCode(event.target.value)}} id='eventscanAuthorizationCode' name='eventscanAuthorizationCode' autoComplete='off' maxLength={50} required className='py-3 px-5 w-full text-zinc-200 rounded-full bg-zinc-800'/>
                         </div>
 
-                        <button type='submit' disabled={eventId === '' || eventscanAuthorizationCode === ''} className={clsx(loading && 'pointer-events-none animate-pulse', !loading && 'disabled:bg-transparent disabled:border-zinc-800 disabled:text-zinc-400', 'bg-emerald-800 mt-10 border-2 border-transparent rounded-full whitespace-nowrap transition duration-200 text-white select-none h-12 w-full text-center font-semibold no-blue-box')}>
+                        <button type='submit' disabled={eventId === '' || eventscanAuthorizationCode === '' || !internetConnectedContext} className={clsx(loading && 'pointer-events-none animate-pulse', !loading && 'disabled:bg-transparent disabled:border-zinc-800 disabled:text-zinc-400', 'bg-emerald-800 mt-10 border-2 border-transparent rounded-full whitespace-nowrap transition duration-200 text-white select-none h-12 w-full text-center font-semibold no-blue-box')}>
                             Start
                         </button>
                     </form>
 
-                    <span className={clsx('text-xl mt-5', errorMessage && 'text-zinc-200', !errorMessage && 'text-transparent')}>event-id of code verkeerd</span>
+                    <span className='mt-5 h-6 font-semibold text-zinc-200'>{errorMessage}</span>
                 </div>
             </main>
         </div>

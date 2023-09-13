@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Scanner from './scanner';
 import Menu from './menu';
 import Landing from './landing';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import store from 'store2';
 import ManualAdd from './manual-add';
 

@@ -52,7 +52,7 @@ export default function Scanner() {
             qrScanner = new QrScanner(
                 viewFinder,
                 result => { handleScan(result); },
-                { maxScansPerSecond: 1, preferredCamera: 'environment', calculateScanRegion: calculateScanRegion, highlightScanRegion: true, overlay: overlay},
+                { preferredCamera: 'environment', calculateScanRegion: calculateScanRegion, highlightScanRegion: true, overlay: overlay},
             );
 
             qrScanner.start().then(() => {
