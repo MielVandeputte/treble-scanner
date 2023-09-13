@@ -27,6 +27,8 @@ export type ScanSession = {
 
 export const ScanSessionContext = createContext({ scanSession: null as ScanSession|null, setScanSession: (_scanSession: ScanSession|null) => {} });
 export const HistoryContext = createContext({ history: [] as Ticket[], addToHistory: (_latestTicket: Ticket) => {}, clearHistory: () => {} });
+export const InternetConnectedContext = createContext(true);
+
 
 const router = createBrowserRouter([
     { path: '/', element: <Landing /> },
@@ -38,6 +40,17 @@ const router = createBrowserRouter([
 export default function Wrapper() {   
     const [scanSession, setScanSession] = useState<ScanSession|null>(store.get('scanSession'));
     const [history, setHistory] = useState<Ticket[]>(store.get('history')? store.get('history'): []);
+    const [internetConnected, setInternetConnected] = useState<boolean>(navigator.onLine);
+
+    useEffect(() => {
+        window.addEventListener('online', updateInternetConnected);
+        window.addEventListener('offline', updateInternetConnected);
+
+        return () => {
+            window.removeEventListener('online', updateInternetConnected);
+            window.removeEventListener('offline', updateInternetConnected);
+        }
+    });
 
     useEffect(() => {
         store.set('scanSession', scanSession);
@@ -46,6 +59,10 @@ export default function Wrapper() {
     useEffect(() => {
         store.set('history', history);
     }, [history]);
+
+    const updateInternetConnected = () => {
+        setInternetConnected(navigator.onLine);
+    }
 
     const addToHistory = (latestTicket: Ticket) => {
         setHistory(prevHistory => [...prevHistory, latestTicket]);
@@ -56,10 +73,12 @@ export default function Wrapper() {
     }
     
     return (
-        <ScanSessionContext.Provider value={{ scanSession: scanSession, setScanSession: setScanSession }}>
-            <HistoryContext.Provider value={{ history: history, addToHistory: addToHistory, clearHistory: clearHistory }}>
-                <RouterProvider router={router}/>
-            </HistoryContext.Provider>
-        </ScanSessionContext.Provider>
+        <InternetConnectedContext.Provider value={internetConnected}>
+            <ScanSessionContext.Provider value={{ scanSession: scanSession, setScanSession: setScanSession }}>
+                <HistoryContext.Provider value={{ history: history, addToHistory: addToHistory, clearHistory: clearHistory }}>
+                    <RouterProvider router={router}/>
+                </HistoryContext.Provider>
+            </ScanSessionContext.Provider>
+        </InternetConnectedContext.Provider>
     );
 }
