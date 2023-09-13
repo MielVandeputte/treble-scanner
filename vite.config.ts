@@ -41,6 +41,18 @@ export default defineConfig({
                         type: 'image/png',
                         purpose: 'any'
                     }
+                ],
+                screenshots: [
+                    {
+                        src: 'screenshot-start.png',
+                        sizes: '2160x1080',
+                        type: 'image/png'
+                    },
+                    {
+                        src: 'screenshot-scanner.png',
+                        sizes: '2160x1080',
+                        type: 'image/png'
+                    },
                 ]
             }
         }),
