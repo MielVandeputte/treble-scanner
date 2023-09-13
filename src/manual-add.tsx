@@ -77,8 +77,8 @@ export default function ManualAdd() {
                             internetConnectedContext && code?
                                 <>
                                     <div className='text-white mb-2 text-2xl overflow-hidden whitespace-nowrap font-sans text-center font-semibold'>{code === 'noTicket'? 'Geen ticket': code === 'alreadyScanned'? 'Al gescand': code === 'success'? 'Success': ''}</div>
-                                    <div className='text-zinc-200 overflow-hidden whitespace-nowrap font-sans text-center font-semibold'>Type {ticketTypeId} | {ticketTypeName}</div>
-                                    <div className='text-zinc-200 overflow-hidden whitespace-nowrap font-sans text-center font-semibold'>{ownerName} | {ownerEmail}</div>
+                                    <div className={clsx('text-zinc-200 overflow-hidden whitespace-nowrap font-sans text-center font-semibold', code === 'noTicket' && 'hidden')}>Type {ticketTypeId} | {ticketTypeName}</div>
+                                    <div className={clsx('text-zinc-200 overflow-hidden whitespace-nowrap font-sans text-center font-semibold', code === 'noTicket' && 'hidden')}>{ownerName} | {ownerEmail}</div>
                                 </>:
 
                             (internetConnectedContext === false) ?
