@@ -11,7 +11,7 @@ export default defineConfig({
             manifest: {
                 name: 'Glow Scanner',
                 short_name: 'Glow Scanner',
-                description: 'Scan QR-codes van Glow Events',
+                description: 'Scan de QR-codes op de tickets van Glow Events',
                 theme_color: '#18181B',
                 icons: [
                     {
