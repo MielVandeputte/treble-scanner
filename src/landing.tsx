@@ -58,14 +58,14 @@ export default function Landing() {
 
                     <form onSubmit={handleSubmit} className='w-full sm:px-16'>
                         <div className='flex items-center'>
-                            <label className='text-zinc-200 font-semibold w-24'>
+                            <label htmlFor='eventId' className='text-zinc-200 font-semibold w-24'>
                                 event-id
                             </label>
                             <input type='text' onChange={(event) => {setEventId(event.target.value)}} id='eventId' name='eventId' autoComplete='off' maxLength={50} required className='py-3 px-5 w-full text-zinc-200 rounded-full bg-zinc-800'/>
                         </div>
 
                         <div className='flex items-center mt-5'>
-                            <label className='text-zinc-200 font-semibold w-24'>
+                            <label htmlFor='eventscanAuthorizationCode' className='text-zinc-200 font-semibold w-24'>
                                 code
                             </label>
                             <input type='text' onChange={(event) => {setEventscanAuthorizationCode(event.target.value)}} id='eventscanAuthorizationCode' name='eventscanAuthorizationCode' autoComplete='off' maxLength={50} required className='py-3 px-5 w-full text-zinc-200 rounded-full bg-zinc-800'/>
