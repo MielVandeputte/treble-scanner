@@ -11,14 +11,12 @@
     },
     "dependencies": {
         "@fontsource/proza-libre": "^5.0.8",
-        "@supabase/supabase-js": "^2.33.1",
         "clsx": "^2.0.0",
         "qr-scanner": "^1.4.2",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.15.0",
-        "store2": "^2.14.2",
-        "supabase": "^1.93.0"
+        "store2": "^2.14.2"
     },
     "devDependencies": {
         "@types/react": "^18.2.15",
