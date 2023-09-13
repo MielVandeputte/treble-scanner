@@ -58,21 +58,16 @@ export default function ManualAdd() {
 
                 <div className='flex flex-col items-center justify-center w-full h-full'>
                     <form onSubmit={handleSubmit} className='w-full sm:px-16 max-w-2xl'>
-                        <div className='flex items-center'>
-                            <label htmlFor='code' className='text-zinc-200 font-semibold w-24'>
-                                code
-                            </label>
-                            <input type='text' onChange={(event) => {setQr(event.target.value)}} id='code' name='code' autoComplete='off' maxLength={50} required className='py-3 px-5 w-full text-zinc-200 select-none rounded-full bg-zinc-800'/>
-                        </div>
+                        <input type='text' onChange={(event) => {setQr(event.target.value)}} id='code' name='code' autoComplete='off' maxLength={50} required className='py-3 px-5 w-full text-zinc-200 select-none rounded-full bg-zinc-800'/>
 
                         <div className='flex justify-center'>
-                            <button type='submit' disabled={qr === '' || !internetConnectedContext} className={clsx(loading && 'pointer-events-none animate-pulse', !loading && 'disabled:bg-transparent disabled:border-zinc-800 disabled:text-zinc-400', 'bg-emerald-800 mt-5 border-2 border-transparent rounded-full whitespace-nowrap transition duration-200 text-white select-none h-12 px-12 text-center font-semibold no-blue-box')}>
+                            <button type='submit' disabled={qr === '' || !internetConnectedContext} className={clsx(loading && 'pointer-events-none animate-pulse', !loading && 'disabled:bg-transparent disabled:border-zinc-800 disabled:text-zinc-400', 'bg-emerald-800 mt-10 border-2 border-transparent rounded-full whitespace-nowrap transition duration-200 text-white select-none h-12 px-12 text-center font-semibold no-blue-box')}>
                                 Verifieer
                             </button>
                         </div>
                     </form>
 
-                    <div className={clsx('mt-5 min-h-[88px] overflow-hidden whitespace-nowrap w-full transition duration-200')}>                    
+                    <div className={clsx('mt-10 min-h-[88px] overflow-hidden whitespace-nowrap w-full transition duration-200')}>                    
                         {
                             internetConnectedContext && code?
                                 <>
