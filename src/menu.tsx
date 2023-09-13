@@ -12,14 +12,6 @@ export default function Menu() {
 
     useEffect(() => {
         if (scanSessionContext.scanSession == null) { navigate('/'); }
-
-        historyContext.history.sort((a, b) => {
-            if (b.timestamp instanceof Date) {
-                return b.timestamp.getTime() - a.timestamp.getTime();
-            } else {
-                return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
-            }
-        });
     }, []);
 
     const logout = () => {
@@ -50,12 +42,12 @@ export default function Menu() {
                                         {ticket.ownerEmail}
                                     </div>
                                     <div className='text-zinc-200'>
-                                        { (ticket.timestamp instanceof Date)? ticket.timestamp.toTimeString().split(' ')[0]: new Date(ticket.timestamp).toTimeString().split(' ')[0]}
+                                        {ticket.timestamp.toTimeString().split(' ')[0]}
                                     </div>
                                 </div>
                             )):
                         
-                        <div className='text-zinc-200 text-xl font-semibold text-center w-full'>Nog geen tickets gescand</div>
+                        <div className='text-zinc-200 font-semibold text-center w-full'>Nog geen tickets gescand</div>
                     }
                 </div>
             </main>
