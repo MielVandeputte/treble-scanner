@@ -52,7 +52,7 @@ export default function Menu() {
                 </div>
             </main>
             <footer className='w-full p-5 items-center flex select-none'>
-                <Link className='mr-5 rounded-full aspect-square text-white h-12 bg-zinc-800 aria-selected:bg-zinc-700 border-2 border-transparent' to='/scanner'>
+                <Link className='mr-3 rounded-full aspect-square text-white h-12 bg-zinc-800 aria-selected:bg-zinc-700 border-2 border-transparent' to='/scanner'>
                     <div className='flex items-center justify-center h-full'>
                         <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth='2' stroke='#ffffff' className='w-5 h-5'>
                             <path strokeLinecap='round' strokeLinejoin='round' d='M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3' />
