@@ -75,7 +75,7 @@ export default function Landing() {
                     <h1 className="text-center text-white logo text-5xl">glow</h1>
 
                     <p className="text-zinc-200 my-10 font-semibold text-center max-w-[600px]">
-                        Voer de event-id en de geheime code in om te beginnen scannen. Beide zijn te vinden in het
+                        Voer de event-id en de code in om te beginnen scannen. Beide zijn te vinden in het
                         dasboard op glow-events.be.
                     </p>
 
