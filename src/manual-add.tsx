@@ -30,7 +30,7 @@ export default function ManualAdd() {
                 body: JSON.stringify({
                     eventId: scanSessionContext.scanSession.eventId,
                     secretCode: qr,
-                    scanAuthorizationCode: '952bf6c7edb188e66ae69e38af4f2b7b',
+                    scanAuthorizationCode: scanSessionContext.scanSession.scanAuthorizationCode,
                 }),
             });
 
