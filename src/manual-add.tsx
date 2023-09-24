@@ -35,27 +35,27 @@ export default function ManualAdd() {
             });
 
             if (res.ok) {
-                const data = await res.json();
+                const content = await res.json();
 
-                if (data.code != 'noTicket') {
-                    setOwnerName(data.ownerName);
-                    setOwnerEmail(data.ownerEmail);
-                    setTicketTypeId(data.ticketTypeId);
-                    setTicketTypeName(data.ticketTypeName);
+                if (content.data.code != 'noTicket') {
+                    setOwnerName(content.data.ownerName);
+                    setOwnerEmail(content.data.ownerEmail);
+                    setTicketTypeId(content.data.ticketTypeId);
+                    setTicketTypeName(content.data.ticketTypeName);
 
                     const newTicket: Ticket = {
                         timestamp: new Date(),
                         qr: qr,
-                        code: data.code,
-                        ownerName: data.ownerName,
-                        ownerEmail: data.ownerEmail,
-                        ticketTypeId: data.ticketTypeId,
-                        ticketTypeName: data.ticketTypeName,
+                        code: content.data.code,
+                        ownerName: content.data.ownerName,
+                        ownerEmail: content.data.ownerEmail,
+                        ticketTypeId: content.data.ticketTypeId,
+                        ticketTypeName: content.data.ticketTypeName,
                     } as Ticket;
                     historyContext.addToHistory(newTicket);
                 }
 
-                setCode(data.code);
+                setCode(content.data.code);
                 setLoading(false);
             } else {
                 setLoading(false);
