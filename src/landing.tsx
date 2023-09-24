@@ -86,6 +86,7 @@ export default function Landing() {
                             </label>
                             <input
                                 type="text"
+                                value={eventId}
                                 onChange={(event) => {
                                     setEventId(event.target.value);
                                 }}
@@ -104,6 +105,7 @@ export default function Landing() {
                             </label>
                             <input
                                 type="text"
+                                value={eventscanAuthorizationCode}
                                 onChange={(event) => {
                                     setEventscanAuthorizationCode(event.target.value);
                                 }}
