@@ -8,8 +8,8 @@ export default function Landing() {
     const scanSessionContext = useContext(ScanSessionContext);
     const navigate = useNavigate();
 
-    const [eventId, setEventId] = useState<string>('');
-    const [eventscanAuthorizationCode, setEventscanAuthorizationCode] = useState<string>('');
+    const [eventId, setEventId] = useState<string>('minimaxi2024');
+    const [eventscanAuthorizationCode, setEventscanAuthorizationCode] = useState<string>('voorbeeldcode1');
 
     const [loading, setLoading] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
