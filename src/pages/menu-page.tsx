@@ -24,7 +24,7 @@ export function MenuPage() {
 
     return (
         <div className="bg-zinc-950 h-dvh flex flex-col w-screen overflow-x-hidden">
-            <header className="mt-10 mx-10 mb-5">
+            <header className="my-5 mx-10">
                 <h1 className="text-center text-white text-2xl font-bold select-none">Scangeschiedenis</h1>
             </header>
 
