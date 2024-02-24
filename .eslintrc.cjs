@@ -7,8 +7,5 @@ module.exports = {
     plugins: ['react-refresh'],
     rules: {
         'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-        // Set all rules to warn
-        'eslint:recommended': 'warn',
-        '@typescript-eslint/no-explicit-any': 'warn',
     },
 };

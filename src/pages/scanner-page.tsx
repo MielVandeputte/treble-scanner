@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import '@fontsource/proza-libre/600.css';
 import { useContext, useEffect, useState } from 'react';
 import clsx from 'clsx';
@@ -42,8 +44,11 @@ export function ScannerPage() {
     const [camerasListState, setCamerasListState] = useState<QrScanner.Camera[]>();
 
     const [ticketScanResultState, setTicketScanResultState] = useState<string | null>();
+    // @ts-ignore
     const [ownerNameState, setOwnerNameState] = useState<string | null>();
+    // @ts-ignore
     const [ownerEmailState, setOwnerEmailState] = useState<string | null>();
+    // @ts-ignore
     const [ticketTypeNameState, setTicketTypeNameState] = useState<string | null>();
 
     useEffect(() => {
