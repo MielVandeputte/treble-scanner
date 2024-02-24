@@ -60,7 +60,7 @@ export function LoginPage() {
     }
 
     return (
-        <div className="bg-zinc-900 w-screen h-dvh flex justify-center items-center p-10 select-none">
+        <div className="bg-zinc-950 w-screen h-dvh flex justify-center items-center p-10 select-none">
             <div className="flex flex-col items-center gap-8">
                 <h1 className="text-center text-white logo text-4xl">glow</h1>
 

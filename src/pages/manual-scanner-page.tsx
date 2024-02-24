@@ -65,7 +65,7 @@ export function ManualScannerPage() {
     }
 
     return (
-        <div className="bg-zinc-950 h-screen flex flex-col w-full overflow-x-hidden">
+        <div className="bg-zinc-950 w-screen flex flex-col h-dvh overflow-x-hidden">
             <main className="pt-10 px-10 flex-grow">
                 <h1 className="text-center text-white text-2xl font-bold select-none">Manueel</h1>
 
