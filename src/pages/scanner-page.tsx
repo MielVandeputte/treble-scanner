@@ -324,7 +324,7 @@ export function ScannerPage() {
                             </Link>
                         </section>
 
-                        <section onClick={restartScanning} className="w-full relative h-3/5">
+                        <button onClick={restartScanning} className="w-full relative h-3/5 whitespace-nowrap">
                             <h1
                                 className={clsx(
                                     'absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-4xl',
@@ -361,13 +361,13 @@ export function ScannerPage() {
                             >
                                 glow
                             </h1>
-                        </section>
+                        </button>
 
                         <button
                             onClick={restartScanning}
                             className={clsx(
                                 'h-1/5 overflow-ellipsis whitespace-nowrap w-full transition duration-200 text-white  font-sans text-center font-semibold',
-                                (!ticketScanResultState || ticketScanResultState === 'noTicket') && 'hidden'
+                                ticketScanResultState !== 'success' && 'hidden'
                             )}
                         >
                             <div>{ticketTypeNameState}</div>
