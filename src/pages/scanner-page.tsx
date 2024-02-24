@@ -42,9 +42,9 @@ export function ScannerPage() {
     const [camerasListState, setCamerasListState] = useState<QrScanner.Camera[]>();
 
     const [ticketScanResultState, setTicketScanResultState] = useState<string | null>();
-    const [ownerNameState, setOwnerNameState] = useState<string>();
-    const [ownerEmailState, setOwnerEmailState] = useState<string>();
-    const [ticketTypeNameState, setTicketTypeNameState] = useState<string>();
+    const [ownerNameState, setOwnerNameState] = useState<string | null>();
+    const [ownerEmailState, setOwnerEmailState] = useState<string | null>();
+    const [ticketTypeNameState, setTicketTypeNameState] = useState<string | null>();
 
     useEffect(() => {
         if (false && !scannerCredentialsContext.scannerCredentials) {
@@ -106,6 +106,7 @@ export function ScannerPage() {
             const json = await scanTicketQuery.json();
 
             if (scanTicketQuery.ok) {
+                setTicketScanResultState('success');
                 setOwnerNameState(json.data.ownerName);
                 setOwnerEmailState(json.data.ownerEmail);
                 setTicketTypeNameState(json.data.ticketTypeName);
@@ -121,7 +122,10 @@ export function ScannerPage() {
 
                 ticketHistoryContext.addTicketScanAttemptToHistory(newTicketScanAttempt);
             } else {
-                setTicketScanResultState(json.error);
+                setTicketScanResultState(json.error || 'unknownError');
+                setOwnerNameState(null);
+                setOwnerEmailState(null);
+                setTicketTypeNameState(null);
             }
 
             timer = setTimeout(() => {
@@ -193,9 +197,12 @@ export function ScannerPage() {
                 id="overlay"
                 className={clsx(
                     'border-[8px] border-solid rounded-md border-opacity-40 transition duration-200',
-                    ticketScanResultState == 'success' && 'border-green-800',
-                    ticketScanResultState == 'alreadyScanned' && 'border-yellow-800',
-                    ticketScanResultState == 'noTicket' && 'border-red-800',
+                    ticketScanResultState === 'success' && 'border-emerald-800',
+                    ticketScanResultState === 'alreadyScanned' && 'border-amber-800',
+                    ticketScanResultState &&
+                        ticketScanResultState !== 'success' &&
+                        ticketScanResultState !== 'alreadyScanned' &&
+                        'border-rose-800',
                     !ticketScanResultState && 'border-zinc-200'
                 )}
             />
@@ -203,10 +210,13 @@ export function ScannerPage() {
             <header
                 className={clsx(
                     'absolute overflow-hidden z-50 transition duration-200 w-full h-1/3 bg-opacity-95 bottom-0 p-5',
-                    ticketScanResultState == 'success' && 'bg-green-800',
-                    ticketScanResultState == 'alreadyScanned' && 'bg-yellow-800',
-                    ticketScanResultState == 'noTicket' && 'bg-red-800',
-                    !ticketScanResultState && 'bg-zinc-900'
+                    ticketScanResultState === 'success' && 'border-emerald-800',
+                    ticketScanResultState === 'alreadyScanned' && 'border-amber-800',
+                    ticketScanResultState &&
+                        ticketScanResultState !== 'success' &&
+                        ticketScanResultState !== 'alreadyScanned' &&
+                        'border-rose-800',
+                    !ticketScanResultState && 'border-zinc-950'
                 )}
             >
                 {internetConnectedContext ? (
