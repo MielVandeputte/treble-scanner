@@ -13,10 +13,10 @@ export function ManualScannerPage() {
     const [secretCodeState, setSecretCodeState] = useState<string>();
     const [loadingState, setLoadingState] = useState<boolean>(false);
 
-    const [ticketScanResultState, setTicketScanResultState] = useState<string | null>("success");
-    const [ownerNameState, setOwnerNameState] = useState<string>("Miel vandeputte");
-    const [ownerEmailState, setOwnerEmailState] = useState<string>("vandeputte.miel@gmail.com");
-    const [ticketTypeNameState, setTicketTypeNameState] = useState<string>("VIP");
+    const [ticketScanResultState, setTicketScanResultState] = useState<string | null>();
+    const [ownerNameState, setOwnerNameState] = useState<string>();
+    const [ownerEmailState, setOwnerEmailState] = useState<string>();
+    const [ticketTypeNameState, setTicketTypeNameState] = useState<string>();
 
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
@@ -65,7 +65,7 @@ export function ManualScannerPage() {
     return (
         <div className="bg-zinc-950 w-screen flex flex-col h-dvh overflow-x-hidden">
             <main className="m-10 h-full">
-                <h1 className="text-center text-white text-2xl font-bold select-none">Manueel</h1>
+                <h1 className="text-center text-white text-2xl font-bold select-none">Manueel scannen</h1>
 
                 <div className="flex flex-col items-center justify-center w-full h-full">
                     <form onSubmit={handleSubmit} className="flex flex-col w-full sm:px-16 max-w-2xl items-center">
