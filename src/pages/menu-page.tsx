@@ -3,6 +3,7 @@ import { TicketScanAttemptHistoryContext, ScannerCredentialsContext } from '../c
 import { useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
+import { TicketScanAttempt } from '../types.ts';
 
 export function MenuPage() {
     const historyContext = useContext(TicketScanAttemptHistoryContext);
@@ -28,7 +29,7 @@ export function MenuPage() {
                 <h1 className="text-center pb-5 text-white text-3xl font-bold select-none">Scangeschiedenis</h1>
                 <div className="text-center">
                     {historyContext.ticketScanAttemptHistory.length > 0 ? (
-                        historyContext.ticketScanAttemptHistory.map((ticket: Ticket, index: number) => (
+                        historyContext.ticketScanAttemptHistory.map((ticket: TicketScanAttempt, index: number) => (
                             <div
                                 key={index}
                                 className={clsx(
@@ -38,16 +39,16 @@ export function MenuPage() {
                             >
                                 <div className="text-white text-xl font-semibold mb-1">
                                     {ticket.ownerName} -{' '}
-                                    {ticket.code == 'alreadyScanned'
+                                    {ticket.result == 'alreadyScanned'
                                         ? 'Ticket al gescand'
-                                        : ticket.code == 'success'
+                                        : ticket.result == 'success'
                                         ? 'Correct ticket'
                                         : ''}
                                 </div>
                                 <div className="text-zinc-200">
                                     Type {ticket.ticketTypeId} | {ticket.ticketTypeName}
                                 </div>
-                                <div className="text-zinc-200">{ticket.qr}</div>
+                                <div className="text-zinc-200">{ticket.secretCode}</div>
                                 <div className="text-zinc-200">{ticket.ownerEmail}</div>
                                 <div className="text-zinc-200">{ticket.timestamp.toTimeString().split(' ')[0]}</div>
                             </div>
