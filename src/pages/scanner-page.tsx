@@ -47,7 +47,7 @@ export function ScannerPage() {
     const [ticketTypeNameState, setTicketTypeNameState] = useState<string | null>();
 
     useEffect(() => {
-        if (false && !scannerCredentialsContext.scannerCredentials) {
+        if (!scannerCredentialsContext.scannerCredentials) {
             navigate('/');
         } else {
             viewFinder = document.getElementById('viewFinder') as HTMLVideoElement;
