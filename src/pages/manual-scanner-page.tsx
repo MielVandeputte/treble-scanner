@@ -13,10 +13,10 @@ export function ManualScannerPage() {
     const [secretCodeState, setSecretCodeState] = useState<string>();
     const [loadingState, setLoadingState] = useState<boolean>(false);
 
-    const [ticketScanResultState, setTicketScanResultState] = useState<string>('success');
-    const [ownerNameState, setOwnerNameState] = useState<string | null>('Miel Vandeputte');
-    const [ownerEmailState, setOwnerEmailState] = useState<string | null>("vandeputte.miel@gmail.com");
-    const [ticketTypeNameState, setTicketTypeNameState] = useState<string | null>("Voorverkoop");
+    const [ticketScanResultState, setTicketScanResultState] = useState<string>();
+    const [ownerNameState, setOwnerNameState] = useState<string | null>();
+    const [ownerEmailState, setOwnerEmailState] = useState<string | null>();
+    const [ticketTypeNameState, setTicketTypeNameState] = useState<string | null>();
 
     async function handleSubmit(event: FormEvent): Promise<void> {
         event.preventDefault();
