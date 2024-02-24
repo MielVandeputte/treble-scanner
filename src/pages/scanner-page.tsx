@@ -322,31 +322,31 @@ export function ScannerPage() {
                         <section onClick={restartScanning} className="w-full relative h-3/5">
                             <h1
                                 className={clsx(
-                                    'absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-5xl',
-                                    ticketScanResultState == 'success' ? 'fade-in' : 'fade-out'
+                                    'absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-4xl',
+                                    ticketScanResultState === 'success' ? 'fade-in' : 'fade-out'
                                 )}
                             >
-                                Success
+                                Geldig ticket
                             </h1>
                             <h1
                                 className={clsx(
-                                    'absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-5xl',
-                                    ticketScanResultState == 'noTicket' ? 'fade-in' : 'fade-out'
+                                    'absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-4xl',
+                                    ticketScanResultState &&
+                                        ticketScanResultState !== 'success' &&
+                                        ticketScanResultState !== 'alreadyScanned'
+                                        ? 'fade-in'
+                                        : 'fade-out'
                                 )}
                             >
-                                Geen
-                                <br />
-                                ticket
+                                {ticketScanResultState === 'ticketNotFound' ? 'Ongeldig ticket' : 'Error opgetreden'}
                             </h1>
                             <h1
                                 className={clsx(
-                                    'absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-5xl',
-                                    ticketScanResultState == 'alreadyScanned' ? 'fade-in' : 'fade-out'
+                                    'absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-4xl',
+                                    ticketScanResultState === 'alreadyScanned' ? 'fade-in' : 'fade-out'
                                 )}
                             >
-                                Al
-                                <br />
-                                gescand
+                                Al gescand
                             </h1>
                             <h1
                                 className={clsx(
