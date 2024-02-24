@@ -2,7 +2,11 @@ import '@fontsource/proza-libre/600.css';
 import { useContext, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import QrScanner from 'qr-scanner';
-import { TicketScanAttemptHistoryContext, InternetConnectedContext, ScannerCredentialsContext } from '../context-provider.tsx';
+import {
+    TicketScanAttemptHistoryContext,
+    InternetConnectedContext,
+    ScannerCredentialsContext,
+} from '../context-provider.tsx';
 import { Link, useNavigate } from 'react-router-dom';
 import { TicketScanAttempt } from '../types.ts';
 
@@ -45,7 +49,6 @@ export function ScannerPage() {
     useEffect(() => {
         if (false && !scannerCredentialsContext.scannerCredentials) {
             navigate('/');
-
         } else {
             viewFinder = document.getElementById('viewFinder') as HTMLVideoElement;
             overlay = document.getElementById('overlay') as HTMLDivElement;
@@ -80,17 +83,25 @@ export function ScannerPage() {
     }, []);
 
     async function handleScan(scanResult: QrScanner.ScanResult) {
-        if (scanResult?.data && active && scannerCredentialsContext.scannerCredentials && internetConnectedContext.valueOf()) {
+        if (
+            scanResult?.data &&
+            active &&
+            scannerCredentialsContext.scannerCredentials &&
+            internetConnectedContext.valueOf()
+        ) {
             active = false;
 
-            const scanTicketQuery = await fetch(`https://www.glow-events.be/api/events/${scannerCredentialsContext.scannerCredentials.eventId}/modules/basic-ticket-store/scan-ticket`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    secretCode: scanResult.data,
-                    scanAuthorizationCode: scannerCredentialsContext.scannerCredentials.scanAuthorizationCode,
-                }),
-            });
+            const scanTicketQuery = await fetch(
+                `https://www.glow-events.be/api/events/${scannerCredentialsContext.scannerCredentials.eventId}/modules/basic-ticket-store/scan-ticket`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        secretCode: scanResult.data,
+                        scanAuthorizationCode: scannerCredentialsContext.scannerCredentials.scanAuthorizationCode,
+                    }),
+                }
+            );
 
             const json = await scanTicketQuery.json();
 
@@ -114,10 +125,10 @@ export function ScannerPage() {
             }
 
             timer = setTimeout(() => {
-                        setTicketScanResultState(null);
-                        active = true;
-                        timer = null;
-                    }, 10_000);
+                setTicketScanResultState(null);
+                active = true;
+                timer = null;
+            }, 10_000);
         }
     }
 
@@ -138,7 +149,6 @@ export function ScannerPage() {
                     setIsFlashOnState(false);
                     togglingFlash = false;
                 });
-
             } else {
                 qrScanner.turnFlashOn().then(() => {
                     setIsFlashOnState(true);
@@ -162,7 +172,6 @@ export function ScannerPage() {
                     switchingCameras = false;
                     togglingFlash = false;
                 });
-
             } else {
                 qrScanner.setCamera('environment').then(() => {
                     qrScanner?.hasFlash().then((result) => {
@@ -177,7 +186,7 @@ export function ScannerPage() {
     }
 
     return (
-        <main className="overflow-hidden h-screen bg-zinc-950 absolute top-0 w-screen select-none">
+        <main className="overflow-hidden h-dvh bg-zinc-950 absolute top-0 w-screen select-none">
             <video id="viewFinder" className="object-cover w-full h-[100dvh]" />
 
             <div
@@ -259,7 +268,10 @@ export function ScannerPage() {
                                 <></>
                             )}
 
-                            <Link to={'/manual-scanner'} className="w-12 aspect-square flex justify-center items-center">
+                            <Link
+                                to={'/manual-scanner'}
+                                className="w-12 aspect-square flex justify-center items-center"
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"

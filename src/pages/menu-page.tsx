@@ -12,7 +12,7 @@ export function MenuPage() {
     const navigate = useNavigate();
     useEffect(() => {
         if (scannerCredentialsContext.scannerCredentials === null) {
-            //navigate('/');
+            navigate('/');
         }
     }, []);
 
