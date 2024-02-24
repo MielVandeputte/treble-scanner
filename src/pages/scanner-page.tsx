@@ -206,7 +206,8 @@ export function ScannerPage() {
                         ticketScanResultState !== 'alreadyScanned' &&
                         internetConnectedContext.valueOf() &&
                         'border-rose-800',
-                    !ticketScanResultState && internetConnectedContext.valueOf() && 'border-zinc-200'
+                    !ticketScanResultState && internetConnectedContext.valueOf() && 'border-zinc-200',
+                    !internetConnectedContext.valueOf() && 'border-transparent'
                 )}
             />
 
