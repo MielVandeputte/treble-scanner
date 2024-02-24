@@ -56,7 +56,7 @@ export function ManualScannerPage() {
 
                 ticketScanAttemptHistoryContext.addTicketScanAttemptToHistory(newTicketScanAttempt);
             } else {
-                setTicketScanResultState(json.error);
+                setTicketScanResultState(json.error || 'unknownError');
                 setOwnerNameState(null);
                 setOwnerEmailState(null);
                 setTicketTypeNameState(null);
@@ -99,7 +99,7 @@ export function ManualScannerPage() {
                         </button>
                     </form>
 
-                    <div className={clsx('mt-10 overflow-hidden w-full text-zinc-200 font-semibold text-center')}>
+                    <div className={clsx('mt-10 overflow-hidden w-full text-zinc-200 font-semibold text-center min-h-[88px]')}>
                         {internetConnectedContext && ticketScanResultState && (
                             <>
                                 <div>
