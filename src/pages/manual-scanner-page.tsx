@@ -13,10 +13,9 @@ export function ManualScannerPage() {
     const [secretCodeState, setSecretCodeState] = useState<string>();
     const [loadingState, setLoadingState] = useState<boolean>(false);
 
-    const [ticketScanResultState, setTicketScanResultState] = useState<string | null>("succ");
+    const [ticketScanResultState, setTicketScanResultState] = useState<string | null>("success");
     const [ownerNameState, setOwnerNameState] = useState<string>("Miel vandeputte");
     const [ownerEmailState, setOwnerEmailState] = useState<string>("vandeputte.miel@gmail.com");
-    const [ticketTypeIdState, setTicketTypeIdState] = useState<number>(5);
     const [ticketTypeNameState, setTicketTypeNameState] = useState<string>("VIP");
 
     async function handleSubmit(event: FormEvent) {
@@ -39,7 +38,6 @@ export function ManualScannerPage() {
             if (scanTicketQuery.ok) {
                 setOwnerNameState(json.data.ownerName);
                 setOwnerEmailState(json.data.ownerEmail);
-                setTicketTypeIdState(json.data.ticketTypeId);
                 setTicketTypeNameState(json.data.ticketTypeName);
 
                 const newTicketScanAttempt: TicketScanAttempt = {
@@ -66,17 +64,15 @@ export function ManualScannerPage() {
 
     return (
         <div className="bg-zinc-950 w-screen flex flex-col h-dvh overflow-x-hidden">
-            <main className="pt-10 px-10 flex-grow">
+            <main className="m-10 h-full">
                 <h1 className="text-center text-white text-2xl font-bold select-none">Manueel</h1>
 
-                <div className="flex flex-col items-center justify-center w-full h-full pt-18">
-                    <form onSubmit={handleSubmit} className="flex flex-col w-full sm:px-16 max-w-2xl items-center ">
+                <div className="flex flex-col items-center justify-center w-full h-full">
+                    <form onSubmit={handleSubmit} className="flex flex-col w-full sm:px-16 max-w-2xl items-center">
                         <input
                             placeholder="Geheime code"
                             type="text"
-                            onChange={(event) => {
-                                setSecretCodeState(event.target.value);
-                            }}
+                            onChange={(event) => {setSecretCodeState(event.target.value);}}
                             id="secretCode"
                             name="secretCode"
                             autoComplete="off"
@@ -99,45 +95,37 @@ export function ManualScannerPage() {
                         </button>
                     </form>
 
-                    <div
-                        className={clsx(
-                            'mt-10 min-h-[88px] overflow-hidden whitespace-nowrap w-full transition duration-200'
-                        )}
-                    >
-                        {internetConnectedContext && ticketScanResultState ? (
+                    <div className={clsx('mt-10 overflow-hidden whitespace-nowrap w-full text-zinc-200 font-semibold text-center')}>
+                        {internetConnectedContext && ticketScanResultState && (
                             <>
-                                <div className="text-white mb-2 text-2xl overflow-hidden whitespace-nowrap font-sans text-center font-semibold">
-                                    {ticketScanResultState === 'noTicket'
-                                        ? 'Geen ticket'
-                                        : ticketScanResultState === 'alreadyScanned'
-                                        ? 'Al gescand'
-                                        : ticketScanResultState === 'success'
-                                        ? 'Success'
-                                        : ''}
+                                <div>
+                                    {(() => {
+                                        switch (ticketScanResultState) {
+                                            case "success":
+                                                return "Geldig ticket";
+                                            case "alreadyScanned":
+                                                return "Ticket al gescand";
+                                            case "noTicket":
+                                                return "Geen geldig ticket";
+                                        }
+                                    })()}
                                 </div>
-                                <div
-                                    className={clsx(
-                                        'text-zinc-200 overflow-hidden whitespace-nowrap font-sans text-center font-semibold',
-                                        ticketScanResultState === 'noTicket' && 'hidden'
-                                    )}
-                                >
-                                    Type {ticketTypeIdState} | {ticketTypeNameState}
-                                </div>
-                                <div
-                                    className={clsx(
-                                        'text-zinc-200 overflow-hidden whitespace-nowrap font-sans text-center font-semibold',
-                                        ticketScanResultState === 'noTicket' && 'hidden'
-                                    )}
-                                >
-                                    {ownerNameState} | {ownerEmailState}
-                                </div>
+
+                                {
+                                    (ticketScanResultState === "success" || ticketScanResultState === 'alreadyScanned') &&
+                                    <>
+                                        <div>{ticketTypeNameState}</div>
+                                        <div>{ownerNameState}</div>
+                                        <div>{ownerEmailState}</div>
+                                    </>
+                                }
                             </>
-                        ) : internetConnectedContext === false ? (
-                            <div className="text-zinc-200 font-semibold text-center w-full">
-                                Verbind met het internet om te beginnen verifieren
-                            </div>
-                        ) : (
-                            <></>
+                        )}
+
+                        {(!internetConnectedContext) && (
+                            <span>
+                                Geen internetverbinding
+                            </span>
                         )}
                     </div>
                 </div>

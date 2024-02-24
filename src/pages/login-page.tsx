@@ -61,7 +61,7 @@ export function LoginPage() {
 
     return (
         <div className="bg-zinc-950 w-screen h-dvh flex justify-center items-center p-10 select-none">
-            <div className="flex flex-col items-center gap-8">
+            <main className="flex flex-col items-center gap-8">
                 <h1 className="text-center text-white logo text-4xl">glow</h1>
 
                 <p className="text-zinc-200 font-semibold text-justify">
@@ -118,7 +118,7 @@ export function LoginPage() {
 
                     <span className="font-bold h-6 text-zinc-400 text-center">{errorMessageState}</span>
                 </form>
-            </div>
+            </main>
         </div>
     );
 }
