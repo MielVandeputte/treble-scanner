@@ -2,8 +2,9 @@ import '@fontsource/proza-libre/600.css';
 import { useContext, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import QrScanner from 'qr-scanner';
-import { HistoryContext, InternetConnectedContext, ScanSessionContext, Ticket } from './wrapper';
+import { TicketScanAttemptHistoryContext, InternetConnectedContext, ScannerCredentialsContext } from '../context-provider.tsx';
 import { Link, useNavigate } from 'react-router-dom';
+import { TicketScanAttempt } from '../types.ts';
 
 let viewFinder: HTMLVideoElement | null = null;
 let overlay: HTMLDivElement | null = null;
@@ -22,29 +23,30 @@ function calculateScanRegion(video: HTMLVideoElement): QrScanner.ScanRegion {
         height: 400,
         x: video.videoWidth / 2 - 200,
         y: (video.videoHeight * 2) / 6 - 200,
-    } as QrScanner.ScanRegion;
+    };
 }
 
-export default function Scanner() {
-    const [hasFlash, setHasFlash] = useState<boolean>(false);
-    const [isFlashOn, setIsFlashOn] = useState<boolean>(false);
-    const [listCameras, setListCameras] = useState<QrScanner.Camera[] | null>(null);
-
-    const [_qr, setQr] = useState<string>('');
-    const [code, setCode] = useState<string>('');
-    const [ownerName, setOwnerName] = useState<string>('');
-    const [ownerEmail, setOwnerEmail] = useState<string>('');
-    const [ticketTypeId, setTicketTypeId] = useState<number>(0);
-    const [ticketTypeName, setTicketTypeName] = useState<string>('');
-
-    const historyContext = useContext(HistoryContext);
-    const scanSessionContext = useContext(ScanSessionContext);
-    const internetConnectedContext = useContext(InternetConnectedContext);
+export function ScannerPage() {
     const navigate = useNavigate();
 
+    const ticketHistoryContext = useContext(TicketScanAttemptHistoryContext);
+    const scannerCredentialsContext = useContext(ScannerCredentialsContext);
+    const internetConnectedContext = useContext(InternetConnectedContext);
+
+    const [hasFlashState, setHasFlashState] = useState<boolean>(false);
+    const [isFlashOnState, setIsFlashOnState] = useState<boolean>(false);
+    const [camerasListState, setCamerasListState] = useState<QrScanner.Camera[]>();
+
+    const [ticketScanResultState, setTicketScanResultState] = useState<string | null>();
+    const [ownerNameState, setOwnerNameState] = useState<string>();
+    const [ownerEmailState, setOwnerEmailState] = useState<string>();
+    const [ticketTypeIdState, setTicketTypeIdState] = useState<number>();
+    const [ticketTypeNameState, setTicketTypeNameState] = useState<string>();
+
     useEffect(() => {
-        if (scanSessionContext.scanSession == null) {
+        if (false && !scannerCredentialsContext.scannerCredentials) {
             navigate('/');
+
         } else {
             viewFinder = document.getElementById('viewFinder') as HTMLVideoElement;
             overlay = document.getElementById('overlay') as HTMLDivElement;
@@ -64,10 +66,11 @@ export default function Scanner() {
 
             qrScanner.start().then(() => {
                 qrScanner?.hasFlash().then((result) => {
-                    setHasFlash(result);
+                    setHasFlashState(result);
                 });
+
                 QrScanner.listCameras().then((result) => {
-                    setListCameras(result);
+                    setCamerasListState(result);
                 });
             });
         }
@@ -77,98 +80,99 @@ export default function Scanner() {
         };
     }, []);
 
-    const handleScan = async (result: QrScanner.ScanResult) => {
-        if (result && result.data && active && scanSessionContext.scanSession && navigator.onLine) {
+    async function handleScan(scanResult: QrScanner.ScanResult) {
+        if (scanResult?.data && active && scannerCredentialsContext.scannerCredentials && internetConnectedContext.valueOf()) {
             active = false;
-            setQr(result.data);
 
-            const res = await fetch('https://www.glow-events.be/api/scan-ticket', {
+            const scanTicketQuery = await fetch(`https://www.glow-events.be/api/events/${scannerCredentialsContext.scannerCredentials.eventId}/modules/basic-ticket-store/scan-ticket`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    eventId: scanSessionContext.scanSession.eventId,
-                    secretCode: result.data,
-                    scanAuthorizationCode: scanSessionContext.scanSession.scanAuthorizationCode,
+                    secretCode: scanResult.data,
+                    scanAuthorizationCode: scannerCredentialsContext.scannerCredentials.scanAuthorizationCode,
                 }),
             });
 
-            if (res.ok) {
-                const content = await res.json();
+            const json = await scanTicketQuery.json();
 
-                if (content.data.code != 'noTicket') {
-                    setOwnerName(content.data.ownerName);
-                    setOwnerEmail(content.data.ownerEmail);
-                    setTicketTypeId(content.data.ticketTypeId);
-                    setTicketTypeName(content.data.ticketTypeName);
+            if (scanTicketQuery.ok) {
+                setOwnerNameState(json.data.ownerName);
+                setOwnerEmailState(json.data.ownerEmail);
+                setTicketTypeIdState(json.data.ticketTypeId);
+                setTicketTypeNameState(json.data.ticketTypeName);
 
-                    const newTicket: Ticket = {
-                        timestamp: new Date(),
-                        qr: result.data,
-                        code: content.data.code,
-                        ownerName: content.data.ownerName,
-                        ownerEmail: content.data.ownerEmail,
-                        ticketTypeId: content.data.ticketTypeId,
-                        ticketTypeName: content.data.ticketTypeName,
-                    } as Ticket;
-                    historyContext.addToHistory(newTicket);
-                }
+                const newTicketScanAttempt: TicketScanAttempt = {
+                    result: 'success',
+                    timestamp: new Date(),
 
-                setCode(content.data.code);
+                    secretCode: scanResult.data,
 
-                timer = setTimeout(() => {
-                    setCode('');
-                    active = true;
-                    timer = null;
-                }, 10_000);
+                    ownerName: json.data.ownerName,
+                    ownerEmail: json.data.ownerEmail,
+
+                    ticketTypeId: json.data.ticketTypeId,
+                    ticketTypeName: json.data.ticketTypeName,
+                };
+
+                ticketHistoryContext.addTicketScanAttemptToHistory(newTicketScanAttempt);
             } else {
-                active = true;
+                setTicketScanResultState(json.error);
             }
-        }
-    };
 
-    const restartScanning = () => {
+            timer = setTimeout(() => {
+                        setTicketScanResultState(null);
+                        active = true;
+                        timer = null;
+                    }, 10_000);
+        }
+    }
+
+    function restartScanning(): void {
         if (timer) {
             clearTimeout(timer);
         }
-        setCode('');
+        setTicketScanResultState(null);
         active = true;
-    };
+    }
 
-    const toggleFlash = () => {
+    function toggleFlash(): void {
         if (qrScanner && !switchingCameras && !togglingFlash) {
             togglingFlash = true;
+
             if (qrScanner.isFlashOn()) {
                 qrScanner.turnFlashOff().then(() => {
-                    setIsFlashOn(false);
+                    setIsFlashOnState(false);
                     togglingFlash = false;
                 });
+
             } else {
                 qrScanner.turnFlashOn().then(() => {
-                    setIsFlashOn(true);
+                    setIsFlashOnState(true);
                     togglingFlash = false;
                 });
             }
         }
-    };
+    }
 
-    const toggleCamera = () => {
+    function toggleCamera(): void {
         if (qrScanner && !switchingCameras) {
             switchingCameras = true;
-            setIsFlashOn(false);
+            setIsFlashOnState(false);
 
             if (environmentState) {
                 qrScanner.setCamera('user').then(() => {
                     qrScanner?.hasFlash().then((result) => {
-                        setHasFlash(result);
+                        setHasFlashState(result);
                     });
                     environmentState = false;
                     switchingCameras = false;
                     togglingFlash = false;
                 });
+
             } else {
                 qrScanner.setCamera('environment').then(() => {
                     qrScanner?.hasFlash().then((result) => {
-                        setHasFlash(result);
+                        setHasFlashState(result);
                     });
                     environmentState = true;
                     switchingCameras = false;
@@ -176,7 +180,7 @@ export default function Scanner() {
                 });
             }
         }
-    };
+    }
 
     return (
         <main className="overflow-hidden h-screen bg-zinc-950 absolute top-0 w-screen select-none">
@@ -186,35 +190,35 @@ export default function Scanner() {
                 id="overlay"
                 className={clsx(
                     'border-[8px] border-solid rounded-md border-opacity-40 transition duration-200',
-                    code == 'success' && 'border-green-800',
-                    code == 'alreadyScanned' && 'border-yellow-800',
-                    code == 'noTicket' && 'border-red-800',
-                    code == '' && 'border-zinc-200'
+                    ticketScanResultState == 'success' && 'border-green-800',
+                    ticketScanResultState == 'alreadyScanned' && 'border-yellow-800',
+                    ticketScanResultState == 'noTicket' && 'border-red-800',
+                    !ticketScanResultState && 'border-zinc-200'
                 )}
             />
 
             <header
                 className={clsx(
                     'absolute overflow-hidden z-50 transition duration-200 w-full h-1/3 bg-opacity-95 bottom-0 p-5',
-                    code == 'success' && 'bg-green-800',
-                    code == 'alreadyScanned' && 'bg-yellow-800',
-                    code == 'noTicket' && 'bg-red-800',
-                    code == '' && 'bg-zinc-900'
+                    ticketScanResultState == 'success' && 'bg-green-800',
+                    ticketScanResultState == 'alreadyScanned' && 'bg-yellow-800',
+                    ticketScanResultState == 'noTicket' && 'bg-red-800',
+                    !ticketScanResultState && 'bg-zinc-900'
                 )}
             >
                 {internetConnectedContext ? (
                     <div className="w-full h-full">
                         <section className="flex w-full justify-around no-blue-box h-1/5">
-                            {hasFlash ? (
+                            {hasFlashState ? (
                                 <button
                                     className="w-12 aspect-square flex justify-center items-center"
                                     onClick={toggleFlash}
                                 >
-                                    {isFlashOn ? (
+                                    {isFlashOnState ? (
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 24 24"
-                                            fill={code == '' ? '#999999' : '#ffffff'}
+                                            fill={ticketScanResultState == '' ? '#999999' : '#ffffff'}
                                             className="w-6 h-6"
                                         >
                                             <path
@@ -227,7 +231,7 @@ export default function Scanner() {
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 24 24"
-                                            fill={code == '' ? '#999999' : '#ffffff'}
+                                            fill={ticketScanResultState == '' ? '#999999' : '#ffffff'}
                                             className="w-6 h-6"
                                         >
                                             <path d="M20.798 11.012l-3.188 3.416L9.462 6.28l4.24-4.542a.75.75 0 011.272.71L12.982 9.75h7.268a.75.75 0 01.548 1.262zM3.202 12.988L6.39 9.572l8.148 8.148-4.24 4.542a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262zM3.53 2.47a.75.75 0 00-1.06 1.06l18 18a.75.75 0 101.06-1.06l-18-18z" />
@@ -238,7 +242,7 @@ export default function Scanner() {
                                 <></>
                             )}
 
-                            {listCameras && listCameras.length > 1 ? (
+                            {camerasListState && camerasListState.length > 1 ? (
                                 <button
                                     className="w-12 aspect-square flex justify-center items-center"
                                     onClick={toggleCamera}
@@ -247,7 +251,7 @@ export default function Scanner() {
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24"
-                                        fill={code == '' ? '#999999' : '#ffffff'}
+                                        fill={ticketScanResultState == '' ? '#999999' : '#ffffff'}
                                         className="w-6 h-6"
                                     >
                                         <path
@@ -261,13 +265,13 @@ export default function Scanner() {
                                 <></>
                             )}
 
-                            <Link to={'/manual-add'} className="w-12 aspect-square flex justify-center items-center">
+                            <Link to={'/manual-scanner'} className="w-12 aspect-square flex justify-center items-center">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     strokeWidth="1.5"
-                                    stroke={code == '' ? '#999999' : '#ffffff'}
+                                    stroke={ticketScanResultState == '' ? '#999999' : '#ffffff'}
                                     className="w-6 h-6"
                                 >
                                     <path
@@ -282,7 +286,7 @@ export default function Scanner() {
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24"
-                                    fill={code === '' ? '#999999' : '#ffffff'}
+                                    fill={ticketScanResultState === '' ? '#999999' : '#ffffff'}
                                     className="w-6 h-6"
                                 >
                                     <path
@@ -298,7 +302,7 @@ export default function Scanner() {
                             <h1
                                 className={clsx(
                                     'absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-5xl',
-                                    code == 'success' ? 'fade-in' : 'fade-out'
+                                    ticketScanResultState == 'success' ? 'fade-in' : 'fade-out'
                                 )}
                             >
                                 Success
@@ -306,7 +310,7 @@ export default function Scanner() {
                             <h1
                                 className={clsx(
                                     'absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-5xl',
-                                    code == 'noTicket' ? 'fade-in' : 'fade-out'
+                                    ticketScanResultState == 'noTicket' ? 'fade-in' : 'fade-out'
                                 )}
                             >
                                 Geen
@@ -316,7 +320,7 @@ export default function Scanner() {
                             <h1
                                 className={clsx(
                                     'absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-5xl',
-                                    code == 'alreadyScanned' ? 'fade-in' : 'fade-out'
+                                    ticketScanResultState == 'alreadyScanned' ? 'fade-in' : 'fade-out'
                                 )}
                             >
                                 Al
@@ -326,7 +330,7 @@ export default function Scanner() {
                             <h1
                                 className={clsx(
                                     'absolute left-1/2 -translate-x-1/2 bottom-1/2 translate-y-[55%]  text-center text-zinc-400 logo text-5xl',
-                                    code == '' ? 'fade-in' : 'fade-out'
+                                    !ticketScanResultState ? 'fade-in' : 'fade-out'
                                 )}
                             >
                                 glow
@@ -337,14 +341,14 @@ export default function Scanner() {
                             onClick={restartScanning}
                             className={clsx(
                                 'h-1/5 overflow-ellipsis whitespace-nowrap w-full transition duration-200',
-                                (!code || code === 'noTicket') && 'hidden'
+                                (!ticketScanResultState || ticketScanResultState === 'noTicket') && 'hidden'
                             )}
                         >
                             <div className="text-white overflow-hidden whitespace-nowrap font-sans text-center font-semibold">
-                                Type {ticketTypeId} | {ticketTypeName}
+                                Type {ticketTypeIdState} | {ticketTypeNameState}
                             </div>
                             <div className="text-white overflow-hidden whitespace-nowrap font-sans text-center font-semibold">
-                                {ownerName} | {ownerEmail}
+                                {ownerNameState} | {ownerEmailState}
                             </div>
                         </section>
                     </div>
@@ -355,7 +359,7 @@ export default function Scanner() {
                             fill="none"
                             viewBox="0 0 24 24"
                             strokeWidth="1.5"
-                            stroke={code == '' ? '#999999' : '#ffffff'}
+                            stroke={!ticketScanResultState ? '#999999' : '#ffffff'}
                             className="w-6 h-6 m-6"
                         >
                             <path
@@ -368,7 +372,7 @@ export default function Scanner() {
                         <h1
                             className={clsx(
                                 'text-xl font-semibold text-center',
-                                code === '' ? 'text-zinc-400' : 'text-white'
+                                !ticketScanResultState ? 'text-zinc-400' : 'text-white'
                             )}
                         >
                             Verbind met het internet om te beginnen scannen

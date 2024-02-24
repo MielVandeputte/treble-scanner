@@ -1,24 +1,24 @@
 import '@fontsource/proza-libre/600.css';
-import { HistoryContext, ScanSessionContext, Ticket } from './wrapper';
+import { TicketScanAttemptHistoryContext, ScannerCredentialsContext } from '../context-provider.tsx';
 import { useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 
-export default function Menu() {
-    const historyContext = useContext(HistoryContext);
-    const scanSessionContext = useContext(ScanSessionContext);
+export function MenuPage() {
+    const historyContext = useContext(TicketScanAttemptHistoryContext);
+    const scanSessionContext = useContext(ScannerCredentialsContext);
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (scanSessionContext.scanSession == null) {
+        /*if (scanSessionContext.scannerCredentials == null) {
             navigate('/');
-        }
+        }*/
     }, []);
 
     const logout = () => {
-        historyContext.clearHistory();
-        scanSessionContext.setScanSession(null);
+        historyContext.clearTicketScanAttemptHistory();
+        scanSessionContext.setScannerCredentials(null);
         navigate('/');
     };
 
@@ -27,13 +27,13 @@ export default function Menu() {
             <main className="px-5 pt-10 flex-grow overflow-y-scroll">
                 <h1 className="text-center pb-5 text-white text-3xl font-bold select-none">Scangeschiedenis</h1>
                 <div className="text-center">
-                    {historyContext.history.length > 0 ? (
-                        historyContext.history.map((ticket: Ticket, index: number) => (
+                    {historyContext.ticketScanAttemptHistory.length > 0 ? (
+                        historyContext.ticketScanAttemptHistory.map((ticket: Ticket, index: number) => (
                             <div
                                 key={index}
                                 className={clsx(
                                     'py-5 border-zinc-800',
-                                    index >= historyContext.history.length - 1 ? 'border-0' : 'border-b-2'
+                                    index >= historyContext.ticketScanAttemptHistory.length - 1 ? 'border-0' : 'border-b-2'
                                 )}
                             >
                                 <div className="text-white text-xl font-semibold mb-1">
