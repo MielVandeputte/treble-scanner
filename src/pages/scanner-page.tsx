@@ -210,13 +210,13 @@ export function ScannerPage() {
             <header
                 className={clsx(
                     'absolute overflow-hidden z-50 transition duration-200 w-full h-1/3 bg-opacity-95 bottom-0 p-5',
-                    ticketScanResultState === 'success' && 'border-emerald-800',
-                    ticketScanResultState === 'alreadyScanned' && 'border-amber-800',
+                    ticketScanResultState === 'success' && 'bg-emerald-800',
+                    ticketScanResultState === 'alreadyScanned' && 'bg-amber-800',
                     ticketScanResultState &&
                         ticketScanResultState !== 'success' &&
                         ticketScanResultState !== 'alreadyScanned' &&
-                        'border-rose-800',
-                    !ticketScanResultState && 'border-zinc-950'
+                        'bg-rose-800',
+                    !ticketScanResultState && 'bg-zinc-950'
                 )}
             >
                 {internetConnectedContext ? (
