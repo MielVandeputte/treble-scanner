@@ -197,26 +197,30 @@ export function ScannerPage() {
                 id="overlay"
                 className={clsx(
                     'border-[8px] border-solid rounded-md border-opacity-40 transition duration-200',
-                    ticketScanResultState === 'success' && 'border-emerald-800',
-                    ticketScanResultState === 'alreadyScanned' && 'border-amber-800',
+                    ticketScanResultState === 'success' && internetConnectedContext.valueOf() && 'border-emerald-800',
+                    ticketScanResultState === 'alreadyScanned' &&
+                        internetConnectedContext.valueOf() &&
+                        'border-amber-800',
                     ticketScanResultState &&
                         ticketScanResultState !== 'success' &&
                         ticketScanResultState !== 'alreadyScanned' &&
+                        internetConnectedContext.valueOf() &&
                         'border-rose-800',
-                    !ticketScanResultState && 'border-zinc-200'
+                    !ticketScanResultState && internetConnectedContext.valueOf() && 'border-zinc-200'
                 )}
             />
 
             <header
                 className={clsx(
                     'absolute overflow-hidden z-50 transition duration-200 w-full h-1/3 bg-opacity-95 bottom-0 p-5',
-                    ticketScanResultState === 'success' && 'bg-emerald-800',
-                    ticketScanResultState === 'alreadyScanned' && 'bg-amber-800',
+                    ticketScanResultState === 'success' && internetConnectedContext.valueOf() && 'bg-emerald-800',
+                    ticketScanResultState === 'alreadyScanned' && internetConnectedContext.valueOf() && 'bg-amber-800',
                     ticketScanResultState &&
                         ticketScanResultState !== 'success' &&
                         ticketScanResultState !== 'alreadyScanned' &&
+                        internetConnectedContext.valueOf() &&
                         'bg-rose-800',
-                    !ticketScanResultState && 'bg-zinc-950'
+                    (!ticketScanResultState || !internetConnectedContext.valueOf()) && 'bg-zinc-950'
                 )}
             >
                 {internetConnectedContext ? (
