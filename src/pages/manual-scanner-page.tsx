@@ -6,19 +6,19 @@ import clsx from 'clsx';
 import { TicketScanAttempt } from '../types.ts';
 
 export function ManualScannerPage() {
-    const ticketHistoryContext = useContext(TicketScanAttemptHistoryContext);
+    const ticketScanAttemptHistoryContext = useContext(TicketScanAttemptHistoryContext);
     const internetConnectedContext = useContext(InternetConnectedContext);
     const scannerCredentialsContext = useContext(ScannerCredentialsContext);
 
     const [secretCodeState, setSecretCodeState] = useState<string>();
     const [loadingState, setLoadingState] = useState<boolean>(false);
 
-    const [ticketScanResultState, setTicketScanResultState] = useState<string | null>();
+    const [ticketScanResultState, setTicketScanResultState] = useState<string>();
     const [ownerNameState, setOwnerNameState] = useState<string>();
     const [ownerEmailState, setOwnerEmailState] = useState<string>();
     const [ticketTypeNameState, setTicketTypeNameState] = useState<string>();
 
-    async function handleSubmit(event: FormEvent) {
+    async function handleSubmit(event: FormEvent): Promise<void> {
         event.preventDefault();
 
         if (secretCodeState && !loadingState && scannerCredentialsContext.scannerCredentials && internetConnectedContext.valueOf()) {
@@ -36,6 +36,7 @@ export function ManualScannerPage() {
             const json = await scanTicketQuery.json();
 
             if (scanTicketQuery.ok) {
+                setTicketScanResultState('success');
                 setOwnerNameState(json.data.ownerName);
                 setOwnerEmailState(json.data.ownerEmail);
                 setTicketTypeNameState(json.data.ticketTypeName);
@@ -53,7 +54,7 @@ export function ManualScannerPage() {
                     ticketTypeName: json.data.ticketTypeName,
                 };
 
-                ticketHistoryContext.addTicketScanAttemptToHistory(newTicketScanAttempt);
+                ticketScanAttemptHistoryContext.addTicketScanAttemptToHistory(newTicketScanAttempt);
             } else {
                 setTicketScanResultState(json.error);
             }
@@ -105,8 +106,9 @@ export function ManualScannerPage() {
                                                 return "Geldig ticket";
                                             case "alreadyScanned":
                                                 return "Ticket al gescand";
-                                            case "noTicket":
+                                            case "ticketNotFound":
                                                 return "Geen geldig ticket";
+                                            default: return "Ongekende error opgetreden";
                                         }
                                     })()}
                                 </div>
@@ -123,9 +125,9 @@ export function ManualScannerPage() {
                         )}
 
                         {(!internetConnectedContext) && (
-                            <span>
+                            <div>
                                 Geen internetverbinding
-                            </span>
+                            </div>
                         )}
                     </div>
                 </div>

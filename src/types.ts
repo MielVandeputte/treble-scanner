@@ -1,7 +1,5 @@
-export type TicketScanAttemptResult = 'success' | 'alreadyScanned' | 'noTicket';
-
 export type TicketScanAttempt = {
-    result: TicketScanAttemptResult;
+    result: string;
     timestamp: Date;
 
     secretCode: string;

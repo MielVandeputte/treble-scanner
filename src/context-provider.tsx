@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import store from 'store2';
-import { ScannerCredentials, TicketScanAttempt, TicketScanAttemptResult } from './types.ts';
+import { ScannerCredentials, TicketScanAttempt } from './types.ts';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 export const ScannerCredentialsContext = createContext({
@@ -23,7 +23,7 @@ function sortTicketScanAttemptHistoryByTimestamp(ticketScanAttemptHistory: Ticke
     });
 }
 
-function deserializeTicketScanAttemptHistory(serializedTicketScanAttemptHistory: { result: TicketScanAttemptResult, secretCode: string, timestamp: string, ownerName: string, ownerEmail: string, ticketTypeId: number, ticketTypeName:string }[] ): TicketScanAttempt[] {
+function deserializeTicketScanAttemptHistory(serializedTicketScanAttemptHistory: { result: string, secretCode: string, timestamp: string, ownerName: string, ownerEmail: string, ticketTypeId: number, ticketTypeName:string }[] ): TicketScanAttempt[] {
     return serializedTicketScanAttemptHistory.map((serializedTicket) => {
         return {
             ...serializedTicket,
