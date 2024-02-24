@@ -13,11 +13,11 @@ export function ManualScannerPage() {
     const [secretCodeState, setSecretCodeState] = useState<string>();
     const [loadingState, setLoadingState] = useState<boolean>(false);
 
-    const [ticketScanResultState, setTicketScanResultState] = useState<string | null>();
-    const [ownerNameState, setOwnerNameState] = useState<string>();
-    const [ownerEmailState, setOwnerEmailState] = useState<string>();
-    const [ticketTypeIdState, setTicketTypeIdState] = useState<number>();
-    const [ticketTypeNameState, setTicketTypeNameState] = useState<string>();
+    const [ticketScanResultState, setTicketScanResultState] = useState<string | null>("succ");
+    const [ownerNameState, setOwnerNameState] = useState<string>("Miel vandeputte");
+    const [ownerEmailState, setOwnerEmailState] = useState<string>("vandeputte.miel@gmail.com");
+    const [ticketTypeIdState, setTicketTypeIdState] = useState<number>(5);
+    const [ticketTypeNameState, setTicketTypeNameState] = useState<string>("VIP");
 
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
@@ -69,8 +69,8 @@ export function ManualScannerPage() {
             <main className="pt-10 px-10 flex-grow">
                 <h1 className="text-center text-white text-2xl font-bold select-none">Manueel</h1>
 
-                <div className="flex flex-col items-center justify-center w-full h-full">
-                    <form onSubmit={handleSubmit} className="flex flex-col w-full sm:px-16 max-w-2xl items-center">
+                <div className="flex flex-col items-center justify-center w-full h-full pt-18">
+                    <form onSubmit={handleSubmit} className="flex flex-col w-full sm:px-16 max-w-2xl items-center ">
                         <input
                             placeholder="Geheime code"
                             type="text"
@@ -85,20 +85,18 @@ export function ManualScannerPage() {
                             className="py-3 px-5 w-full text-zinc-200 select-none rounded-full font-semibold bg-zinc-800"
                         />
 
-
-                            <button
-                                type="submit"
-                                disabled={!secretCodeState || !internetConnectedContext}
-                                className={clsx(
-                                    loadingState && 'pointer-events-none animate-pulse',
-                                    !loadingState &&
-                                        'disabled:bg-transparent disabled:border-zinc-800 disabled:text-zinc-400',
-                                    'bg-emerald-800 mt-8 border-2 border-transparent rounded-full whitespace-nowrap transition duration-200 text-white select-none h-12 px-12 text-center font-semibold no-blue-box'
-                                )}
-                            >
-                                Scan
-                            </button>
-
+                        <button
+                            type="submit"
+                            disabled={!secretCodeState || !internetConnectedContext}
+                            className={clsx(
+                                loadingState && 'pointer-events-none animate-pulse',
+                                !loadingState &&
+                                'disabled:bg-transparent disabled:border-zinc-800 disabled:text-zinc-400',
+                                'bg-emerald-800 mt-8 border-2 border-transparent rounded-full whitespace-nowrap transition duration-200 text-white select-none h-12 px-12 text-center font-semibold no-blue-box'
+                            )}
+                        >
+                            Scan
+                        </button>
                     </form>
 
                     <div
