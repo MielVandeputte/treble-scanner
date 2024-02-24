@@ -6,57 +6,54 @@ import clsx from 'clsx';
 import { TicketScanAttempt } from '../types.ts';
 
 export function MenuPage() {
-    const historyContext = useContext(TicketScanAttemptHistoryContext);
-    const scanSessionContext = useContext(ScannerCredentialsContext);
+    const ticketScanAttemptHistoryContext = useContext(TicketScanAttemptHistoryContext);
+    const scannerCredentialsContext = useContext(ScannerCredentialsContext);
 
     const navigate = useNavigate();
-
     useEffect(() => {
-        /*if (scanSessionContext.scannerCredentials == null) {
-            navigate('/');
-        }*/
+        if (scannerCredentialsContext.scannerCredentials === null) {
+            //navigate('/');
+        }
     }, []);
 
-    const logout = () => {
-        historyContext.clearTicketScanAttemptHistory();
-        scanSessionContext.setScannerCredentials(null);
+    function logout(): void {
+        ticketScanAttemptHistoryContext.clearTicketScanAttemptHistory();
+        scannerCredentialsContext.setScannerCredentials(null);
         navigate('/');
-    };
+    }
 
     return (
-        <div className="bg-zinc-900 h-screen flex flex-col w-full overflow-x-hidden">
-            <main className="px-5 pt-10 flex-grow overflow-y-scroll">
-                <h1 className="text-center pb-5 text-white text-3xl font-bold select-none">Scangeschiedenis</h1>
-                <div className="text-center">
-                    {historyContext.ticketScanAttemptHistory.length > 0 ? (
-                        historyContext.ticketScanAttemptHistory.map((ticket: TicketScanAttempt, index: number) => (
+        <div className="bg-zinc-950 h-dvh flex flex-col w-screen overflow-x-hidden">
+            <header className="mt-10 mx-10 mb-5">
+                <h1 className="text-center text-white text-2xl font-bold select-none">Scangeschiedenis</h1>
+            </header>
+
+            <main className="mx-10 h-full overflow-y-scroll text-center text-zinc-400 font-semibold">
+                {ticketScanAttemptHistoryContext.ticketScanAttemptHistory.length > 0 ? (
+                    ticketScanAttemptHistoryContext.ticketScanAttemptHistory.map(
+                        (ticketScanAttempt: TicketScanAttempt, index: number) => (
                             <div
-                                key={index}
+                                key={ticketScanAttempt.secretCode}
                                 className={clsx(
                                     'py-5 border-zinc-800',
-                                    index >= historyContext.ticketScanAttemptHistory.length - 1 ? 'border-0' : 'border-b-2'
+                                    index >= ticketScanAttemptHistoryContext.ticketScanAttemptHistory.length - 1
+                                        ? 'border-0'
+                                        : 'border-b-2'
                                 )}
                             >
-                                <div className="text-white text-xl font-semibold mb-1">
-                                    {ticket.ownerName} -{' '}
-                                    {ticket.result == 'alreadyScanned'
-                                        ? 'Ticket al gescand'
-                                        : ticket.result == 'success'
-                                        ? 'Correct ticket'
-                                        : ''}
+                                <div className="mb-1 text-zinc-200">
+                                    {ticketScanAttempt.timestamp.toTimeString().split(' ')[0]}
                                 </div>
-                                <div className="text-zinc-200">
-                                    Type {ticket.ticketTypeId} | {ticket.ticketTypeName}
-                                </div>
-                                <div className="text-zinc-200">{ticket.secretCode}</div>
-                                <div className="text-zinc-200">{ticket.ownerEmail}</div>
-                                <div className="text-zinc-200">{ticket.timestamp.toTimeString().split(' ')[0]}</div>
+                                <div>{ticketScanAttempt.ticketTypeName}</div>
+                                <div>{ticketScanAttempt.secretCode}</div>
+                                <div>{ticketScanAttempt.ownerName}</div>
+                                <div>{ticketScanAttempt.ownerEmail}</div>
                             </div>
-                        ))
-                    ) : (
-                        <div className="text-zinc-200 font-semibold text-center w-full">Nog geen tickets gescand</div>
-                    )}
-                </div>
+                        )
+                    )
+                ) : (
+                    <div className="text-zinc-200">Nog geen tickets gescand</div>
+                )}
             </main>
             <footer className="w-full p-5 items-center flex select-none">
                 <Link

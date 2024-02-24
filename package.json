@@ -13,6 +13,7 @@
     "dependencies": {
         "@fontsource/proza-libre": "^5.0.8",
         "clsx": "^2.0.0",
+        "prettier": "^3.2.5",
         "qr-scanner": "^1.4.2",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",

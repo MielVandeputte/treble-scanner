@@ -23,7 +23,16 @@ function sortTicketScanAttemptHistoryByTimestamp(ticketScanAttemptHistory: Ticke
     });
 }
 
-function deserializeTicketScanAttemptHistory(serializedTicketScanAttemptHistory: { result: string, secretCode: string, timestamp: string, ownerName: string, ownerEmail: string, ticketTypeId: number, ticketTypeName:string }[] ): TicketScanAttempt[] {
+function deserializeTicketScanAttemptHistory(
+    serializedTicketScanAttemptHistory: {
+        result: string;
+        secretCode: string;
+        timestamp: string;
+        ownerName: string;
+        ownerEmail: string;
+        ticketTypeName: string;
+    }[]
+): TicketScanAttempt[] {
     return serializedTicketScanAttemptHistory.map((serializedTicket) => {
         return {
             ...serializedTicket,
@@ -33,7 +42,9 @@ function deserializeTicketScanAttemptHistory(serializedTicketScanAttemptHistory:
 }
 
 export function ContextProvider(props: Readonly<{ children: ReactNode }>) {
-    const [scannerCredentialsState, setScannerCredentialsState] = useState<ScannerCredentials | null>(store.get('scannerCredentials'));
+    const [scannerCredentialsState, setScannerCredentialsState] = useState<ScannerCredentials | null>(
+        store.get('scannerCredentials')
+    );
     const [ticketScanAttemptHistoryState, setTicketScanAttemptHistoryState] = useState<TicketScanAttempt[]>([]);
     const [internetConnectedState, setInternetConnectedState] = useState<boolean>(navigator.onLine);
 
@@ -64,7 +75,10 @@ export function ContextProvider(props: Readonly<{ children: ReactNode }>) {
 
     function addTicketScanAttemptToHistory(ticketScanAttempt: TicketScanAttempt): void {
         setTicketScanAttemptHistoryState((prevHistory) => {
-            const ticketScanAttemptHistory = sortTicketScanAttemptHistoryByTimestamp([...prevHistory, ticketScanAttempt])
+            const ticketScanAttemptHistory = sortTicketScanAttemptHistoryByTimestamp([
+                ...prevHistory,
+                ticketScanAttempt,
+            ]);
             store.set('ticketScanAttemptHistory', ticketScanAttemptHistory);
             return ticketScanAttemptHistory;
         });
@@ -77,8 +91,19 @@ export function ContextProvider(props: Readonly<{ children: ReactNode }>) {
 
     return (
         <InternetConnectedContext.Provider value={internetConnectedState}>
-            <ScannerCredentialsContext.Provider value={{ scannerCredentials: scannerCredentialsState, setScannerCredentials: setScannerCredentialsState }}>
-                <TicketScanAttemptHistoryContext.Provider value={{ ticketScanAttemptHistory: ticketScanAttemptHistoryState, addTicketScanAttemptToHistory: addTicketScanAttemptToHistory, clearTicketScanAttemptHistory: clearTicketHistory }}>
+            <ScannerCredentialsContext.Provider
+                value={{
+                    scannerCredentials: scannerCredentialsState,
+                    setScannerCredentials: setScannerCredentialsState,
+                }}
+            >
+                <TicketScanAttemptHistoryContext.Provider
+                    value={{
+                        ticketScanAttemptHistory: ticketScanAttemptHistoryState,
+                        addTicketScanAttemptToHistory: addTicketScanAttemptToHistory,
+                        clearTicketScanAttemptHistory: clearTicketHistory,
+                    }}
+                >
                     {props.children}
                 </TicketScanAttemptHistoryContext.Provider>
             </ScannerCredentialsContext.Provider>

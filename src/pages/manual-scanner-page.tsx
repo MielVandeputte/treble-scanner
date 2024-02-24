@@ -1,7 +1,11 @@
 import '@fontsource/proza-libre/600.css';
-import { TicketScanAttemptHistoryContext, InternetConnectedContext, ScannerCredentialsContext } from '../context-provider.tsx';
-import { FormEvent, useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import {
+    TicketScanAttemptHistoryContext,
+    InternetConnectedContext,
+    ScannerCredentialsContext,
+} from '../context-provider.tsx';
+import { FormEvent, useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { TicketScanAttempt } from '../types.ts';
 
@@ -18,20 +22,35 @@ export function ManualScannerPage() {
     const [ownerEmailState, setOwnerEmailState] = useState<string | null>();
     const [ticketTypeNameState, setTicketTypeNameState] = useState<string | null>();
 
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (scannerCredentialsContext.scannerCredentials === null) {
+            navigate('/');
+        }
+    }, []);
+
     async function handleSubmit(event: FormEvent): Promise<void> {
         event.preventDefault();
 
-        if (secretCodeState && !loadingState && scannerCredentialsContext.scannerCredentials && internetConnectedContext.valueOf()) {
+        if (
+            secretCodeState &&
+            !loadingState &&
+            scannerCredentialsContext.scannerCredentials &&
+            internetConnectedContext.valueOf()
+        ) {
             setLoadingState(true);
 
-            const scanTicketQuery = await fetch(`https://www.glow-events.be/api/events/${scannerCredentialsContext.scannerCredentials.eventId}/modules/basic-ticket-store/scan-ticket`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    secretCode: secretCodeState,
-                    scanAuthorizationCode: scannerCredentialsContext.scannerCredentials.scanAuthorizationCode,
-                }),
-            });
+            const scanTicketQuery = await fetch(
+                `https://www.glow-events.be/api/events/${scannerCredentialsContext.scannerCredentials.eventId}/modules/basic-ticket-store/scan-ticket`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        secretCode: secretCodeState,
+                        scanAuthorizationCode: scannerCredentialsContext.scannerCredentials.scanAuthorizationCode,
+                    }),
+                }
+            );
 
             const json = await scanTicketQuery.json();
 
@@ -44,13 +63,9 @@ export function ManualScannerPage() {
                 const newTicketScanAttempt: TicketScanAttempt = {
                     result: 'success',
                     timestamp: new Date(),
-
                     secretCode: secretCodeState,
-
                     ownerName: json.data.ownerName,
                     ownerEmail: json.data.ownerEmail,
-
-                    ticketTypeId: json.data.ticketTypeId,
                     ticketTypeName: json.data.ticketTypeName,
                 };
 
@@ -68,15 +83,19 @@ export function ManualScannerPage() {
 
     return (
         <div className="bg-zinc-950 w-screen flex flex-col h-dvh overflow-x-hidden">
-            <main className="m-10 h-full">
+            <header className="mt-10 mx-10 mb-5">
                 <h1 className="text-center text-white text-2xl font-bold select-none">Manueel scannen</h1>
+            </header>
 
+            <main className="mx-10 mt-[88px] h-full">
                 <div className="flex flex-col items-center justify-center w-full h-full">
                     <form onSubmit={handleSubmit} className="flex flex-col w-full sm:px-16 max-w-2xl items-center">
                         <input
                             placeholder="Geheime code"
                             type="text"
-                            onChange={(event) => {setSecretCodeState(event.target.value);}}
+                            onChange={(event) => {
+                                setSecretCodeState(event.target.value);
+                            }}
                             id="secretCode"
                             name="secretCode"
                             autoComplete="off"
@@ -91,7 +110,7 @@ export function ManualScannerPage() {
                             className={clsx(
                                 loadingState && 'pointer-events-none animate-pulse',
                                 !loadingState &&
-                                'disabled:bg-transparent disabled:border-zinc-800 disabled:text-zinc-400',
+                                    'disabled:bg-transparent disabled:border-zinc-800 disabled:text-zinc-400',
                                 'bg-emerald-800 mt-8 border-2 border-transparent rounded-full whitespace-nowrap transition duration-200 text-white select-none h-12 px-12 text-center font-semibold no-blue-box'
                             )}
                         >
@@ -99,38 +118,38 @@ export function ManualScannerPage() {
                         </button>
                     </form>
 
-                    <div className={clsx('mt-10 overflow-hidden w-full text-zinc-200 font-semibold text-center min-h-[88px]')}>
+                    <div
+                        className={clsx(
+                            'mt-10 overflow-hidden w-full text-zinc-200 font-semibold text-center min-h-[88px]'
+                        )}
+                    >
                         {internetConnectedContext && ticketScanResultState && (
                             <>
                                 <div>
                                     {(() => {
                                         switch (ticketScanResultState) {
-                                            case "success":
+                                            case 'success':
                                                 return `Geldig ticket van het type '${ticketTypeNameState}'`;
-                                            case "alreadyScanned":
-                                                return "Ticket al gescand";
-                                            case "ticketNotFound":
-                                                return "Geen geldig ticket";
-                                            default: return "Ongekende error opgetreden";
+                                            case 'alreadyScanned':
+                                                return 'Ticket al gescand';
+                                            case 'ticketNotFound':
+                                                return 'Geen geldig ticket';
+                                            default:
+                                                return 'Ongekende error opgetreden';
                                         }
                                     })()}
                                 </div>
 
-                                {
-                                    (ticketScanResultState === "success") &&
+                                {ticketScanResultState === 'success' && (
                                     <div className="mt-4">
                                         <div>{ownerNameState}</div>
                                         <div>{ownerEmailState}</div>
                                     </div>
-                                }
+                                )}
                             </>
                         )}
 
-                        {(!internetConnectedContext) && (
-                            <div>
-                                Geen internetverbinding
-                            </div>
-                        )}
+                        {!internetConnectedContext && <div>Geen internetverbinding</div>}
                     </div>
                 </div>
             </main>

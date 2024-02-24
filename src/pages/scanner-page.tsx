@@ -40,7 +40,6 @@ export function ScannerPage() {
     const [ticketScanResultState, setTicketScanResultState] = useState<string | null>();
     const [ownerNameState, setOwnerNameState] = useState<string>();
     const [ownerEmailState, setOwnerEmailState] = useState<string>();
-    const [ticketTypeIdState, setTicketTypeIdState] = useState<number>();
     const [ticketTypeNameState, setTicketTypeNameState] = useState<string>();
 
     useEffect(() => {
@@ -98,19 +97,14 @@ export function ScannerPage() {
             if (scanTicketQuery.ok) {
                 setOwnerNameState(json.data.ownerName);
                 setOwnerEmailState(json.data.ownerEmail);
-                setTicketTypeIdState(json.data.ticketTypeId);
                 setTicketTypeNameState(json.data.ticketTypeName);
 
                 const newTicketScanAttempt: TicketScanAttempt = {
                     result: 'success',
                     timestamp: new Date(),
-
                     secretCode: scanResult.data,
-
                     ownerName: json.data.ownerName,
                     ownerEmail: json.data.ownerEmail,
-
-                    ticketTypeId: json.data.ticketTypeId,
                     ticketTypeName: json.data.ticketTypeName,
                 };
 
@@ -345,7 +339,7 @@ export function ScannerPage() {
                             )}
                         >
                             <div className="text-white overflow-hidden whitespace-nowrap font-sans text-center font-semibold">
-                                Type {ticketTypeIdState} | {ticketTypeNameState}
+                                Type {} | {ticketTypeNameState}
                             </div>
                             <div className="text-white overflow-hidden whitespace-nowrap font-sans text-center font-semibold">
                                 {ownerNameState} | {ownerEmailState}
