@@ -324,7 +324,7 @@ export function ScannerPage() {
                             </Link>
                         </section>
 
-                        <section onClick={restartScanning} className="w-full relative h-4/5">
+                        <section onClick={restartScanning} className="w-full relative h-3/5">
                             <h1
                                 className={clsx(
                                     'absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-4xl',
@@ -363,20 +363,18 @@ export function ScannerPage() {
                             </h1>
                         </section>
 
-                        {/*                        <section
+                        <button
                             onClick={restartScanning}
                             className={clsx(
-                                'h-1/5 overflow-ellipsis whitespace-nowrap w-full transition duration-200',
+                                'h-1/5 overflow-ellipsis whitespace-nowrap w-full transition duration-200 text-white  font-sans text-center font-semibold',
                                 (!ticketScanResultState || ticketScanResultState === 'noTicket') && 'hidden'
                             )}
                         >
-                            <div className="text-white overflow-hidden whitespace-nowrap font-sans text-center font-semibold">
-                                Type {} | {ticketTypeNameState}
-                            </div>
-                            <div className="text-white overflow-hidden whitespace-nowrap font-sans text-center font-semibold">
+                            <div>{ticketTypeNameState}</div>
+                            <div>
                                 {ownerNameState} | {ownerEmailState}
                             </div>
-                        </section>*/}
+                        </button>
                     </div>
                 ) : (
                     <div className="w-full h-full flex justify-center items-center flex-col transition duration-200">
