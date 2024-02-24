@@ -375,8 +375,8 @@ export function ScannerPage() {
                             fill="none"
                             viewBox="0 0 24 24"
                             strokeWidth="1.5"
-                            stroke={!ticketScanResultState ? '#999999' : '#ffffff'}
-                            className="w-6 h-6 m-6"
+                            stroke="#999999"
+                            className="w-6 h-6 mb-6 mx-6"
                         >
                             <path
                                 strokeLinecap="round"
@@ -385,14 +385,7 @@ export function ScannerPage() {
                             />
                         </svg>
 
-                        <h1
-                            className={clsx(
-                                'text-xl font-semibold text-center',
-                                !ticketScanResultState ? 'text-zinc-400' : 'text-white'
-                            )}
-                        >
-                            Verbind met het internet om te beginnen scannen
-                        </h1>
+                        <h1 className="font-semibold text-center text-zinc-400">Geen internetverbinding</h1>
                     </div>
                 )}
             </header>
