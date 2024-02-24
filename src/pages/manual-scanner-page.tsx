@@ -13,10 +13,10 @@ export function ManualScannerPage() {
     const [secretCodeState, setSecretCodeState] = useState<string>();
     const [loadingState, setLoadingState] = useState<boolean>(false);
 
-    const [ticketScanResultState, setTicketScanResultState] = useState<string>();
-    const [ownerNameState, setOwnerNameState] = useState<string>();
-    const [ownerEmailState, setOwnerEmailState] = useState<string>();
-    const [ticketTypeNameState, setTicketTypeNameState] = useState<string>();
+    const [ticketScanResultState, setTicketScanResultState] = useState<string>('success');
+    const [ownerNameState, setOwnerNameState] = useState<string | null>('Miel Vandeputte');
+    const [ownerEmailState, setOwnerEmailState] = useState<string | null>("vandeputte.miel@gmail.com");
+    const [ticketTypeNameState, setTicketTypeNameState] = useState<string | null>("Voorverkoop");
 
     async function handleSubmit(event: FormEvent): Promise<void> {
         event.preventDefault();
@@ -57,6 +57,9 @@ export function ManualScannerPage() {
                 ticketScanAttemptHistoryContext.addTicketScanAttemptToHistory(newTicketScanAttempt);
             } else {
                 setTicketScanResultState(json.error);
+                setOwnerNameState(null);
+                setOwnerEmailState(null);
+                setTicketTypeNameState(null);
             }
 
             setLoadingState(false);
@@ -96,14 +99,14 @@ export function ManualScannerPage() {
                         </button>
                     </form>
 
-                    <div className={clsx('mt-10 overflow-hidden whitespace-nowrap w-full text-zinc-200 font-semibold text-center')}>
+                    <div className={clsx('mt-10 overflow-hidden w-full text-zinc-200 font-semibold text-center')}>
                         {internetConnectedContext && ticketScanResultState && (
                             <>
                                 <div>
                                     {(() => {
                                         switch (ticketScanResultState) {
                                             case "success":
-                                                return "Geldig ticket";
+                                                return `Geldig ticket van het type '${ticketTypeNameState}'`;
                                             case "alreadyScanned":
                                                 return "Ticket al gescand";
                                             case "ticketNotFound":
@@ -114,12 +117,11 @@ export function ManualScannerPage() {
                                 </div>
 
                                 {
-                                    (ticketScanResultState === "success" || ticketScanResultState === 'alreadyScanned') &&
-                                    <>
-                                        <div>{ticketTypeNameState}</div>
+                                    (ticketScanResultState === "success") &&
+                                    <div className="mt-4">
                                         <div>{ownerNameState}</div>
                                         <div>{ownerEmailState}</div>
-                                    </>
+                                    </div>
                                 }
                             </>
                         )}
