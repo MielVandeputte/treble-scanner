@@ -79,11 +79,9 @@ export function ScannerPage() {
     }, []);
 
     async function handleScan(scanResult: QrScanner.ScanResult): Promise<void> {
-        if (!active) return;
+        if (!active || !internetConnectedContext.valueOf()) return;
 
-        if (!internetConnectedContext.valueOf()) {
-            setErrorMessageState('Geen internetverbinding');
-        } else if (!scanResult.data) {
+        if (!scanResult.data) {
             setErrorMessageState('Geen QR-code gevonden');
         } else if (!scannerCredentialsContext.scannerCredentials) {
             setErrorMessageState('Niet ingelogd');
