@@ -352,7 +352,7 @@ export function ScannerPage() {
                         <button
                             onClick={restartScanning}
                             className={clsx(
-                                'h-1/5 overflow-ellipsis whitespace-nowrap w-full transition duration-200 ease-in-out text-zinc-400 font-sans text-center font-semibold'
+                                'h-1/5 overflow-ellipsis whitespace-nowrap w-full transition duration-200 ease-in-out text-zinc-200 font-sans text-center font-semibold'
                             )}
                         >
                             <div>{errorMessageState}</div>
