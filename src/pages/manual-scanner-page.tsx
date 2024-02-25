@@ -16,6 +16,7 @@ export function ManualScannerPage() {
 
     const [secretCodeState, setSecretCodeState] = useState<string>();
     const [loadingState, setLoadingState] = useState<boolean>(false);
+    const [errorMessageState, setErrorMessageState] = useState<string>();
 
     const [ticketScanResultState, setTicketScanResultState] = useState<string>();
     const [ownerNameState, setOwnerNameState] = useState<string | null>();
@@ -24,20 +25,21 @@ export function ManualScannerPage() {
 
     const navigate = useNavigate();
     useEffect(() => {
-        if (scannerCredentialsContext.scannerCredentials === null) {
-            navigate('/');
-        }
-    }, []);
+        if (scannerCredentialsContext.scannerCredentials === null) navigate('/');
+    }, [scannerCredentialsContext.scannerCredentials]);
 
     async function handleSubmit(event: FormEvent): Promise<void> {
         event.preventDefault();
 
-        if (
-            secretCodeState &&
-            !loadingState &&
-            scannerCredentialsContext.scannerCredentials &&
-            internetConnectedContext.valueOf()
-        ) {
+        if (!internetConnectedContext.valueOf()) {
+            setErrorMessageState('Geen internetverbinding');
+        } else if (!secretCodeState) {
+            setErrorMessageState('Vul alle velden in');
+        } else if (!scannerCredentialsContext.scannerCredentials) {
+            setErrorMessageState('Niet ingelogd');
+        } else if (loadingState) {
+            setErrorMessageState('Nog aan het laden');
+        } else {
             setLoadingState(true);
 
             const scanTicketQuery = await fetch(
@@ -83,7 +85,7 @@ export function ManualScannerPage() {
 
     return (
         <div className="bg-zinc-950 w-screen flex flex-col h-dvh overflow-x-hidden">
-            <header className="my-5 mx-10">
+            <header className="py-5 mx-10 border-b-2 border-zinc-800">
                 <h1 className="text-center text-white text-2xl font-bold select-none">Manueel scannen</h1>
             </header>
 
@@ -106,7 +108,7 @@ export function ManualScannerPage() {
 
                         <button
                             type="submit"
-                            disabled={!secretCodeState || !internetConnectedContext}
+                            disabled={!secretCodeState}
                             className={clsx(
                                 loadingState && 'pointer-events-none animate-pulse',
                                 !loadingState &&
@@ -123,7 +125,7 @@ export function ManualScannerPage() {
                             'mt-10 overflow-hidden w-full text-zinc-200 font-semibold text-center min-h-[88px]'
                         )}
                     >
-                        {internetConnectedContext && ticketScanResultState && (
+                        {!errorMessageState && ticketScanResultState && (
                             <>
                                 <div>
                                     {(() => {
@@ -149,7 +151,7 @@ export function ManualScannerPage() {
                             </>
                         )}
 
-                        {!internetConnectedContext && <div>Geen internetverbinding</div>}
+                        {errorMessageState && <div>{errorMessageState}</div>}
                     </div>
                 </div>
             </main>

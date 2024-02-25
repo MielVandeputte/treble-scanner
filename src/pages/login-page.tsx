@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 
 export function LoginPage() {
-    const navigate = useNavigate();
-
     const scannerCredentialsContext = useContext(ScannerCredentialsContext);
     const internetConnectedContext = useContext(InternetConnectedContext);
 
@@ -16,10 +14,9 @@ export function LoginPage() {
     const [loadingState, setLoadingState] = useState<boolean>(false);
     const [errorMessageState, setErrorMessageState] = useState<string>();
 
+    const navigate = useNavigate();
     useEffect(() => {
-        if (scannerCredentialsContext.scannerCredentials !== null) {
-            navigate('/scanner');
-        }
+        if (scannerCredentialsContext.scannerCredentials !== null) navigate('/scanner');
     }, [scannerCredentialsContext.scannerCredentials]);
 
     async function handleSubmit(event: FormEvent): Promise<void> {
@@ -108,7 +105,7 @@ export function LoginPage() {
 
                     <button
                         type="submit"
-                        disabled={!eventIdState || !scanAuthorizationCodeState || !internetConnectedContext}
+                        disabled={!eventIdState || !scanAuthorizationCodeState}
                         className={clsx(
                             loadingState && 'pointer-events-none animate-pulse',
                             !loadingState && 'disabled:bg-transparent disabled:border-zinc-800 disabled:text-zinc-400',
