@@ -62,7 +62,7 @@ export function MenuPage() {
                         )
                     )
                 ) : (
-                    <div className="text-zinc-200 flex items-center h-full w-screen text-center justify-center">
+                    <div className="text-zinc-200 flex items-center h-full text-center justify-center">
                         Nog geen tickets gescand
                     </div>
                 )}
