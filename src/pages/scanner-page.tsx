@@ -341,7 +341,7 @@ export function ScannerPage() {
                             </h1>
                             <h1
                                 className={clsx(
-                                    'absolute left-1/2 -translate-x-1/2 bottom-1/2 translate-y-[55%]  text-center text-zinc-400 logo text-5xl',
+                                    'absolute left-1/2 -translate-x-1/2 bottom-1/2 translate-y-[55%] text-center text-zinc-400 logo text-5xl',
                                     !ticketScanResultState ? 'fade-in' : 'fade-out'
                                 )}
                             >
@@ -352,7 +352,7 @@ export function ScannerPage() {
                         <button
                             onClick={restartScanning}
                             className={clsx(
-                                'h-1/5 overflow-ellipsis whitespace-nowrap w-full transition duration-200 text-white font-sans text-center font-semibold'
+                                'h-1/5 overflow-ellipsis whitespace-nowrap w-full transition duration-200 ease-in-out text-zinc-400 font-sans text-center font-semibold'
                             )}
                         >
                             <div>{errorMessageState}</div>
