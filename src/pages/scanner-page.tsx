@@ -49,40 +49,49 @@ export function ScannerPage() {
     const [errorMessageState, setErrorMessageState] = useState<string | null>();
 
     useEffect(() => {
-        if (!scannerCredentialsContext.scannerCredentials) {
-            navigate('/');
-        } else {
-            viewFinder = document.getElementById('viewFinder') as HTMLVideoElement;
-            overlay = document.getElementById('overlay') as HTMLDivElement;
+        if (!scannerCredentialsContext.scannerCredentials) navigate('/');
+    }, [scannerCredentialsContext.scannerCredentials]);
 
-            qrScanner = new QrScanner(viewFinder, handleScan, {
-                preferredCamera: 'environment',
-                calculateScanRegion: calculateScanRegion,
-                highlightScanRegion: true,
-                overlay: overlay,
+    useEffect(() => {
+        viewFinder = document.getElementById('viewFinder') as HTMLVideoElement;
+        overlay = document.getElementById('overlay') as HTMLDivElement;
+
+        qrScanner = new QrScanner(viewFinder, handleScan, {
+            preferredCamera: 'environment',
+            calculateScanRegion: calculateScanRegion,
+            highlightScanRegion: true,
+            overlay: overlay,
+        });
+
+        qrScanner.start().then(() => {
+            active = true;
+            togglingFlash = false;
+            switchingCameras = false;
+            environmentState = true;
+
+            qrScanner?.hasFlash().then((result) => {
+                setHasFlashState(result);
             });
 
-            qrScanner.start().then(() => {
-                qrScanner?.hasFlash().then((result) => {
-                    setHasFlashState(result);
-                });
-
-                QrScanner.listCameras().then((result) => {
-                    setCamerasListState(result);
-                });
+            QrScanner.listCameras().then((result) => {
+                setCamerasListState(result);
             });
-        }
+        });
 
         return () => {
             qrScanner?.destroy();
+            if (timer) {
+                clearTimeout(timer);
+                timer = null;
+            }
         };
     }, []);
 
     useEffect(() => {
         if (internetConnectedContext.valueOf()) {
-            restartScanning();
+            //restartScanning();
         } else {
-            active = false;
+            //active = false;
             setTicketScanResultState(null);
             setTicketTypeNameState(null);
             setOwnerNameState(null);
@@ -150,6 +159,7 @@ export function ScannerPage() {
     function restartScanning(): void {
         if (timer) {
             clearTimeout(timer);
+            timer = null;
         }
 
         setTicketScanResultState(null);
