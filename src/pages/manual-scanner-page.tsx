@@ -41,7 +41,6 @@ export function ManualScannerPage() {
             setErrorMessageState('Nog aan het laden');
         } else {
             setLoadingState(true);
-            setErrorMessageState(null);
 
             const scanTicketQuery = await fetch(
                 `https://www.glow-events.be/api/events/${scannerCredentialsContext.scannerCredentials.eventId}/modules/basic-ticket-store/scan-ticket`,
@@ -58,6 +57,7 @@ export function ManualScannerPage() {
             const json = await scanTicketQuery.json();
 
             if (scanTicketQuery.ok) {
+                setErrorMessageState(null);
                 setTicketScanResultState(json.data.result);
                 setOwnerNameState(json.data.ownerName);
                 setOwnerEmailState(json.data.ownerEmail);
@@ -83,11 +83,11 @@ export function ManualScannerPage() {
 
     return (
         <div className="bg-zinc-950 w-screen flex flex-col h-dvh overflow-x-hidden">
-            <header className="py-5 border-b-2 border-zinc-900">
-                <h1 className="text-center text-white text-2xl font-bold select-none mx-10">Manueel scannen</h1>
+            <header className="py-5 border-b-2 border-zinc-900 mx-10">
+                <h1 className="text-center text-white text-2xl font-bold select-none">Manueel scannen</h1>
             </header>
 
-            <main className="mx-10 mt-[88px] h-full">
+            <main className="mx-10 mt-[112px] h-full">
                 <div className="flex flex-col items-center justify-center w-full h-full">
                     <form onSubmit={handleSubmit} className="flex flex-col w-full sm:px-16 max-w-2xl items-center">
                         <input
@@ -120,7 +120,7 @@ export function ManualScannerPage() {
 
                     <div
                         className={clsx(
-                            'mt-10 overflow-hidden w-full text-zinc-200 font-semibold text-center min-h-[88px]'
+                            'mt-10 overflow-hidden w-full text-zinc-200 font-semibold text-center min-h-[112px]'
                         )}
                     >
                         {!errorMessageState ? (
@@ -130,8 +130,9 @@ export function ManualScannerPage() {
                                         case 'success':
                                             return (
                                                 <>
-                                                    <div>Geldig ticket van het type '{ticketTypeNameState}'</div>;
+                                                    <div>Geldig ticket</div>
                                                     <div className="mt-4">
+                                                        <div>{ticketTypeNameState}</div>
                                                         <div>{ownerNameState}</div>
                                                         <div>{ownerEmailState}</div>
                                                     </div>
@@ -140,15 +141,16 @@ export function ManualScannerPage() {
                                         case 'alreadyScanned':
                                             return (
                                                 <>
-                                                    <div>Ticket van het type '{ticketTypeNameState}' al gescand</div>
+                                                    <div>Ticket al gescand</div>
                                                     <div className="mt-4">
+                                                        <div>{ticketTypeNameState}</div>
                                                         <div>{ownerNameState}</div>
                                                         <div>{ownerEmailState}</div>
                                                     </div>
                                                 </>
                                             );
                                         case 'notFound':
-                                            return <div>Geen geldig ticket</div>;
+                                            return <div>Ongeldig ticket</div>;
                                     }
                                 })()}
                             </>
