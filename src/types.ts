@@ -4,9 +4,9 @@ export type TicketScanAttempt = {
     result: TicketScanAttemptResult;
     timestamp: Date;
     secretCode: string;
-    ownerName: string;
-    ownerEmail: string;
-    ticketTypeName: string;
+    ownerName?: string;
+    ownerEmail?: string;
+    ticketTypeName?: string;
 };
 
 export type ScannerCredentials = {

@@ -11,10 +11,8 @@ export function MenuPage() {
 
     const navigate = useNavigate();
     useEffect(() => {
-        if (scannerCredentialsContext.scannerCredentials === null) {
-            navigate('/');
-        }
-    }, []);
+        if (scannerCredentialsContext.scannerCredentials === null) navigate('/');
+    }, [scannerCredentialsContext.scannerCredentials]);
 
     function logout(): void {
         ticketScanAttemptHistoryContext.clearTicketScanAttemptHistory();
@@ -24,7 +22,7 @@ export function MenuPage() {
 
     return (
         <div className="bg-zinc-950 h-dvh flex flex-col w-screen overflow-x-hidden">
-            <header className="my-5 mx-10">
+            <header className="py-5 mx-10 border-b-2 border-zinc-900">
                 <h1 className="text-center text-white text-2xl font-bold select-none">Scangeschiedenis</h1>
             </header>
 
@@ -35,7 +33,7 @@ export function MenuPage() {
                             <div
                                 key={ticketScanAttempt.secretCode}
                                 className={clsx(
-                                    'py-5 border-zinc-800',
+                                    'py-5 mx-5 border-zinc-900',
                                     index >= ticketScanAttemptHistoryContext.ticketScanAttemptHistory.length - 1
                                         ? 'border-0'
                                         : 'border-b-2'
@@ -43,6 +41,18 @@ export function MenuPage() {
                             >
                                 <div className="mb-1 text-zinc-200">
                                     {ticketScanAttempt.timestamp.toTimeString().split(' ')[0]}
+                                </div>
+                                <div>
+                                    {(() => {
+                                        switch (ticketScanAttempt.result) {
+                                            case 'success':
+                                                return 'Geldig ticket';
+                                            case 'alreadyScanned':
+                                                return 'Ticket al gescand';
+                                            case 'notFound':
+                                                return 'Ongeldig ticket';
+                                        }
+                                    })()}
                                 </div>
                                 <div>{ticketScanAttempt.ticketTypeName}</div>
                                 <div>{ticketScanAttempt.secretCode}</div>
