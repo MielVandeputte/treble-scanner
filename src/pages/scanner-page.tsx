@@ -46,7 +46,6 @@ export function ScannerPage() {
     const [ownerEmailState, setOwnerEmailState] = useState<string | null>();
     const [ticketTypeNameState, setTicketTypeNameState] = useState<string | null>();
 
-    const [loadingState, setLoadingState] = useState<boolean>(false);
     const [errorMessageState, setErrorMessageState] = useState<string | null>();
 
     useEffect(() => {
@@ -90,7 +89,6 @@ export function ScannerPage() {
             setErrorMessageState('Niet ingelogd');
         } else {
             active = false;
-            setLoadingState(true);
             setErrorMessageState(null);
 
             const scanTicketQuery = await fetch(
@@ -344,8 +342,7 @@ export function ScannerPage() {
                             <h1
                                 className={clsx(
                                     'absolute left-1/2 -translate-x-1/2 bottom-1/2 translate-y-[55%]  text-center text-zinc-400 logo text-5xl',
-                                    !ticketScanResultState ? 'fade-in' : 'fade-out',
-                                    loadingState && 'animate-pulse'
+                                    !ticketScanResultState ? 'fade-in' : 'fade-out'
                                 )}
                             >
                                 glow
@@ -360,9 +357,11 @@ export function ScannerPage() {
                         >
                             <div>{errorMessageState}</div>
                             <div>{ticketTypeNameState}</div>
-                            <div>
-                                {ownerNameState} | {ownerEmailState}
-                            </div>
+                            {ownerNameState && ownerEmailState && (
+                                <div>
+                                    {ownerNameState} | {ownerEmailState}
+                                </div>
+                            )}
                         </button>
                     </div>
                 ) : (
