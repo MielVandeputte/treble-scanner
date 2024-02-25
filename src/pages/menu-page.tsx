@@ -62,7 +62,9 @@ export function MenuPage() {
                         )
                     )
                 ) : (
-                    <div className="text-zinc-200 flex items-center h-full">Nog geen tickets gescand</div>
+                    <div className="text-zinc-200 flex items-center h-full w-screen text-center justify-center">
+                        Nog geen tickets gescand
+                    </div>
                 )}
             </main>
             <footer className="w-full p-5 items-center flex select-none">
