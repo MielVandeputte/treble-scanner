@@ -78,6 +78,18 @@ export function ScannerPage() {
         };
     }, []);
 
+    useEffect(() => {
+        if (internetConnectedContext.valueOf()) {
+            restartScanning();
+        } else {
+            active = false;
+            setTicketScanResultState(null);
+            setTicketTypeNameState(null);
+            setOwnerNameState(null);
+            setOwnerEmailState(null);
+        }
+    }, [internetConnectedContext.valueOf()]);
+
     async function handleScan(scanResult: QrScanner.ScanResult): Promise<void> {
         if (!active || !internetConnectedContext.valueOf()) return;
 
