@@ -94,7 +94,7 @@ export function ScannerPage() {
             setOwnerNameState(null);
             setOwnerEmailState(null);
         }
-    }, [internetConnectedContext]);
+    }, [internetConnectedContext.valueOf()]);
 
     async function handleScan(scanResult: QrScanner.ScanResult): Promise<void> {
         if (!active || !internetConnectedContext.valueOf()) return;
