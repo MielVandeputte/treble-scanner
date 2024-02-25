@@ -7,7 +7,7 @@ import {
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
-import { TicketScanAttempt } from '../types.ts';
+import { TicketScanAttempt, TicketScanAttemptResult } from '../types.ts';
 
 export function ManualScannerPage() {
     const ticketScanAttemptHistoryContext = useContext(TicketScanAttemptHistoryContext);
@@ -16,9 +16,9 @@ export function ManualScannerPage() {
 
     const [secretCodeState, setSecretCodeState] = useState<string>();
     const [loadingState, setLoadingState] = useState<boolean>(false);
-    const [errorMessageState, setErrorMessageState] = useState<string>();
+    const [errorMessageState, setErrorMessageState] = useState<string | null>();
 
-    const [ticketScanResultState, setTicketScanResultState] = useState<string>();
+    const [ticketScanResultState, setTicketScanResultState] = useState<TicketScanAttemptResult>();
     const [ownerNameState, setOwnerNameState] = useState<string | null>();
     const [ownerEmailState, setOwnerEmailState] = useState<string | null>();
     const [ticketTypeNameState, setTicketTypeNameState] = useState<string | null>();
@@ -41,6 +41,7 @@ export function ManualScannerPage() {
             setErrorMessageState('Nog aan het laden');
         } else {
             setLoadingState(true);
+            setErrorMessageState(null);
 
             const scanTicketQuery = await fetch(
                 `https://www.glow-events.be/api/events/${scannerCredentialsContext.scannerCredentials.eventId}/modules/basic-ticket-store/scan-ticket`,
@@ -57,13 +58,13 @@ export function ManualScannerPage() {
             const json = await scanTicketQuery.json();
 
             if (scanTicketQuery.ok) {
-                setTicketScanResultState('success');
+                setTicketScanResultState(json.data.result);
                 setOwnerNameState(json.data.ownerName);
                 setOwnerEmailState(json.data.ownerEmail);
                 setTicketTypeNameState(json.data.ticketTypeName);
 
                 const newTicketScanAttempt: TicketScanAttempt = {
-                    result: 'success',
+                    result: json.data.result,
                     timestamp: new Date(),
                     secretCode: secretCodeState,
                     ownerName: json.data.ownerName,
@@ -72,11 +73,8 @@ export function ManualScannerPage() {
                 };
 
                 ticketScanAttemptHistoryContext.addTicketScanAttemptToHistory(newTicketScanAttempt);
-            } else {
-                setTicketScanResultState(json.error || 'unknownError');
-                setOwnerNameState(null);
-                setOwnerEmailState(null);
-                setTicketTypeNameState(null);
+            } else if (json.error) {
+                setErrorMessageState(json.error);
             }
 
             setLoadingState(false);
@@ -85,8 +83,8 @@ export function ManualScannerPage() {
 
     return (
         <div className="bg-zinc-950 w-screen flex flex-col h-dvh overflow-x-hidden">
-            <header className="py-5 mx-10 border-b-2 border-zinc-800">
-                <h1 className="text-center text-white text-2xl font-bold select-none">Manueel scannen</h1>
+            <header className="py-5 border-b-2 border-zinc-900">
+                <h1 className="text-center text-white text-2xl font-bold select-none mx-10">Manueel scannen</h1>
             </header>
 
             <main className="mx-10 mt-[88px] h-full">
@@ -125,33 +123,30 @@ export function ManualScannerPage() {
                             'mt-10 overflow-hidden w-full text-zinc-200 font-semibold text-center min-h-[88px]'
                         )}
                     >
-                        {!errorMessageState && ticketScanResultState && (
+                        {!errorMessageState ? (
                             <>
-                                <div>
-                                    {(() => {
-                                        switch (ticketScanResultState) {
-                                            case 'success':
-                                                return `Geldig ticket van het type '${ticketTypeNameState}'`;
-                                            case 'alreadyScanned':
-                                                return 'Ticket al gescand';
-                                            case 'ticketNotFound':
-                                                return 'Geen geldig ticket';
-                                            default:
-                                                return 'Ongekende error opgetreden';
-                                        }
-                                    })()}
-                                </div>
-
-                                {ticketScanResultState === 'success' && (
-                                    <div className="mt-4">
-                                        <div>{ownerNameState}</div>
-                                        <div>{ownerEmailState}</div>
-                                    </div>
-                                )}
+                                {(() => {
+                                    switch (ticketScanResultState) {
+                                        case 'success':
+                                            return (
+                                                <>
+                                                    <div>`Geldig ticket van het type '${ticketTypeNameState}'`</div>;
+                                                    <div className="mt-4">
+                                                        <div>{ownerNameState}</div>
+                                                        <div>{ownerEmailState}</div>
+                                                    </div>
+                                                </>
+                                            );
+                                        case 'alreadyScanned':
+                                            return <div>'Ticket al gescand'</div>;
+                                        case 'notFound':
+                                            return <div>'Geen geldig ticket'</div>;
+                                    }
+                                })()}
                             </>
+                        ) : (
+                            <div>{errorMessageState}</div>
                         )}
-
-                        {errorMessageState && <div>{errorMessageState}</div>}
                     </div>
                 </div>
             </main>
