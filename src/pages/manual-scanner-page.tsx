@@ -130,7 +130,7 @@ export function ManualScannerPage() {
                                         case 'success':
                                             return (
                                                 <>
-                                                    <div>`Geldig ticket van het type '${ticketTypeNameState}'`</div>;
+                                                    <div>Geldig ticket van het type '{ticketTypeNameState}'</div>;
                                                     <div className="mt-4">
                                                         <div>{ownerNameState}</div>
                                                         <div>{ownerEmailState}</div>
@@ -138,9 +138,17 @@ export function ManualScannerPage() {
                                                 </>
                                             );
                                         case 'alreadyScanned':
-                                            return <div>'Ticket al gescand'</div>;
+                                            return (
+                                                <>
+                                                    <div>Ticket van het type '{ticketTypeNameState}' al gescand</div>
+                                                    <div className="mt-4">
+                                                        <div>{ownerNameState}</div>
+                                                        <div>{ownerEmailState}</div>
+                                                    </div>
+                                                </>
+                                            );
                                         case 'notFound':
-                                            return <div>'Geen geldig ticket'</div>;
+                                            return <div>Geen geldig ticket</div>;
                                     }
                                 })()}
                             </>
