@@ -12,7 +12,7 @@ export function LoginPage() {
     const [scanAuthorizationCodeState, setScanAuthorizationCodeState] = useState<string>();
 
     const [loadingState, setLoadingState] = useState<boolean>(false);
-    const [errorMessageState, setErrorMessageState] = useState<string>();
+    const [errorMessageState, setErrorMessageState] = useState<string | null>();
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -28,6 +28,7 @@ export function LoginPage() {
             setErrorMessageState('Vul alle velden in');
         } else {
             setLoadingState(true);
+            setErrorMessageState(null);
 
             const checkScanAuthorizationdCodeQuery = await fetch(
                 `https://www.glow-events.be/api/events/${eventIdState}/modules/basic-ticket-store/check-scan-authorization-code`,

@@ -19,9 +19,9 @@ export function ManualScannerPage() {
     const [errorMessageState, setErrorMessageState] = useState<string | null>();
 
     const [ticketScanResultState, setTicketScanResultState] = useState<TicketScanAttemptResult>();
-    const [ownerNameState, setOwnerNameState] = useState<string | null>();
-    const [ownerEmailState, setOwnerEmailState] = useState<string | null>();
-    const [ticketTypeNameState, setTicketTypeNameState] = useState<string | null>();
+    const [ownerNameState, setOwnerNameState] = useState<string>();
+    const [ownerEmailState, setOwnerEmailState] = useState<string>();
+    const [ticketTypeNameState, setTicketTypeNameState] = useState<string>();
 
     const navigate = useNavigate();
     useEffect(() => {
