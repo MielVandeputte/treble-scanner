@@ -33,7 +33,7 @@ export function MenuPage() {
                             <div
                                 key={ticketScanAttempt.secretCode}
                                 className={clsx(
-                                    'py-5 mx-5 border-zinc-900',
+                                    'py-5 mx-8 border-zinc-900',
                                     index >= ticketScanAttemptHistoryContext.ticketScanAttemptHistory.length - 1
                                         ? 'border-0'
                                         : 'border-b-2'
