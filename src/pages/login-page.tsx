@@ -27,32 +27,34 @@ export function LoginPage() {
 
         if (!internetConnectedContext.valueOf()) {
             setErrorMessageState('Geen internetverbinding');
-
         } else if (!eventIdState || !scanAuthorizationCodeState) {
             setErrorMessageState('Vul alle velden in');
-
-        } else{
+        } else {
             setLoadingState(true);
 
-            const checkScanAuthorizationdCodeQuery = await fetch(`https://www.glow-events.be/api/events/${eventIdState}/modules/basic-ticket-store/check-scan-authorization-code`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    scanAuthorizationCode: scanAuthorizationCodeState,
-                }),
-            });
+            const checkScanAuthorizationdCodeQuery = await fetch(
+                `https://www.glow-events.be/api/events/${eventIdState}/modules/basic-ticket-store/check-scan-authorization-code`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        scanAuthorizationCode: scanAuthorizationCodeState,
+                    }),
+                }
+            );
 
-            const result = await checkScanAuthorizationdCodeQuery.json();
+            const json = await checkScanAuthorizationdCodeQuery.json();
 
-            if (result.data === true) {
+            if (json.data === true) {
                 scannerCredentialsContext.setScannerCredentials({
                     eventId: eventIdState,
                     scanAuthorizationCode: scanAuthorizationCodeState,
                 });
                 navigate('/scanner');
-
-            } else {
+            } else if (json.data === false) {
                 setErrorMessageState('Event ID of code verkeerd');
+            } else if (json.error) {
+                setErrorMessageState(json.error);
             }
 
             setLoadingState(false);
@@ -65,8 +67,8 @@ export function LoginPage() {
                 <h1 className="text-center text-white logo text-4xl">glow</h1>
 
                 <p className="text-zinc-200 font-semibold text-justify">
-                    Voer het event ID en de code in om te beginnen scannen. Beide zijn te vinden in het
-                    dashboard op glow-events.be.
+                    Voer het event ID en de code in om te beginnen scannen. Beide zijn te vinden in het dashboard op
+                    glow-events.be.
                 </p>
 
                 <form onSubmit={handleSubmit} className="w-full sm:px-16 flex flex-col gap-5">

@@ -13,9 +13,9 @@ export const TicketScanAttemptHistoryContext = createContext({
     addTicketScanAttemptToHistory: (_ticketScanAttempt: TicketScanAttempt): void => {},
     clearTicketScanAttemptHistory: (): void => {},
 });
-/* eslint-enable @typescript-eslint/no-unused-vars */
 
 export const InternetConnectedContext = createContext(true);
+/* eslint-enable @typescript-eslint/no-unused-vars */
 
 function sortTicketScanAttemptHistoryByTimestamp(ticketScanAttemptHistory: TicketScanAttempt[]): TicketScanAttempt[] {
     return ticketScanAttemptHistory.sort((firstScanAttempt, secondScanAttempt) => {
