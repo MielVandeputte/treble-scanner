@@ -88,7 +88,9 @@ export function ScannerPage() {
     }, []);
 
     useEffect(() => {
-        if (!internetConnectedContext.valueOf()) {
+        if (internetConnectedContext.valueOf()) {
+            restartScanning();
+        } else {
             setTicketScanResultState(null);
             setTicketTypeNameState(null);
             setOwnerNameState(null);
