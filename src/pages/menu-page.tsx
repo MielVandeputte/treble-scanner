@@ -30,15 +30,7 @@ export function MenuPage() {
                 {ticketScanAttemptHistoryContext.ticketScanAttemptHistory.length > 0 ? (
                     ticketScanAttemptHistoryContext.ticketScanAttemptHistory.map(
                         (ticketScanAttempt: TicketScanAttempt, index: number) => (
-                            <div
-                                key={ticketScanAttempt.secretCode}
-                                className={clsx(
-                                    'py-5 border-zinc-900',
-                                    index >= ticketScanAttemptHistoryContext.ticketScanAttemptHistory.length - 1
-                                        ? 'border-0'
-                                        : 'border-b-2'
-                                )}
-                            >
+                            <div key={ticketScanAttempt.secretCode} className="mt-5">
                                 <div className="mb-1 text-zinc-200">
                                     {ticketScanAttempt.timestamp.toTimeString().split(' ')[0]}
                                 </div>
@@ -58,6 +50,14 @@ export function MenuPage() {
                                 <div>{ticketScanAttempt.secretCode}</div>
                                 <div>{ticketScanAttempt.ownerName}</div>
                                 <div>{ticketScanAttempt.ownerEmail}</div>
+                                <div
+                                    className={clsx(
+                                        'pb-5 border-zinc-900 mx-8',
+                                        index >= ticketScanAttemptHistoryContext.ticketScanAttemptHistory.length - 1
+                                            ? 'border-0'
+                                            : 'border-b-2'
+                                    )}
+                                />
                             </div>
                         )
                     )
