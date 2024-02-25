@@ -26,14 +26,14 @@ export function MenuPage() {
                 <h1 className="text-center text-white text-2xl font-bold select-none">Scangeschiedenis</h1>
             </header>
 
-            <main className="mx-10 h-full overflow-y-scroll text-center text-zinc-400 font-semibold">
+            <main className="h-full overflow-y-scroll overflow-x-hidden text-center text-zinc-400 font-semibold">
                 {ticketScanAttemptHistoryContext.ticketScanAttemptHistory.length > 0 ? (
                     ticketScanAttemptHistoryContext.ticketScanAttemptHistory.map(
                         (ticketScanAttempt: TicketScanAttempt, index: number) => (
                             <div
                                 key={ticketScanAttempt.secretCode}
                                 className={clsx(
-                                    'py-5 mx-8 border-zinc-900',
+                                    'py-5 mx-24 border-zinc-900',
                                     index >= ticketScanAttemptHistoryContext.ticketScanAttemptHistory.length - 1
                                         ? 'border-0'
                                         : 'border-b-2'
@@ -62,7 +62,7 @@ export function MenuPage() {
                         )
                     )
                 ) : (
-                    <div className="text-zinc-200 flex items-center h-full text-center justify-center">
+                    <div className="text-zinc-400 flex items-center h-full text-center justify-center">
                         Nog geen tickets gescand
                     </div>
                 )}
