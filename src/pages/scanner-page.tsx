@@ -358,7 +358,6 @@ export function ScannerPage() {
                                 (!ticketScanResultState || ticketScanResultState === 'notFound') && 'hidden'
                             )}
                         >
-                            <div>{ticketScanResultState}</div>
                             <div>{ticketTypeNameState}</div>
                             <div>
                                 {ownerNameState} | {ownerEmailState}
