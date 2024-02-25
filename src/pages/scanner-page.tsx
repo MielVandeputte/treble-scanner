@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import '@fontsource/proza-libre/600.css';
 import { useContext, useEffect, useState } from 'react';
 import clsx from 'clsx';
@@ -35,7 +33,7 @@ function calculateScanRegion(video: HTMLVideoElement): QrScanner.ScanRegion {
 export function ScannerPage() {
     const navigate = useNavigate();
 
-    const ticketHistoryContext = useContext(TicketScanAttemptHistoryContext);
+    const ticketScanAttemptHistoryContext = useContext(TicketScanAttemptHistoryContext);
     const scannerCredentialsContext = useContext(ScannerCredentialsContext);
     const internetConnectedContext = useContext(InternetConnectedContext);
 
@@ -44,12 +42,12 @@ export function ScannerPage() {
     const [camerasListState, setCamerasListState] = useState<QrScanner.Camera[]>();
 
     const [ticketScanResultState, setTicketScanResultState] = useState<string | null>();
-    // @ts-ignore
     const [ownerNameState, setOwnerNameState] = useState<string | null>();
-    // @ts-ignore
     const [ownerEmailState, setOwnerEmailState] = useState<string | null>();
-    // @ts-ignore
     const [ticketTypeNameState, setTicketTypeNameState] = useState<string | null>();
+
+    const [loadingState, setLoadingState] = useState<boolean>(false);
+    const [errorMessageState, setErrorMessageState] = useState<string | null>();
 
     useEffect(() => {
         if (!scannerCredentialsContext.scannerCredentials) {
@@ -58,18 +56,12 @@ export function ScannerPage() {
             viewFinder = document.getElementById('viewFinder') as HTMLVideoElement;
             overlay = document.getElementById('overlay') as HTMLDivElement;
 
-            qrScanner = new QrScanner(
-                viewFinder,
-                (result) => {
-                    handleScan(result);
-                },
-                {
-                    preferredCamera: 'environment',
-                    calculateScanRegion: calculateScanRegion,
-                    highlightScanRegion: true,
-                    overlay: overlay,
-                }
-            );
+            qrScanner = new QrScanner(viewFinder, handleScan, {
+                preferredCamera: 'environment',
+                calculateScanRegion: calculateScanRegion,
+                highlightScanRegion: true,
+                overlay: overlay,
+            });
 
             qrScanner.start().then(() => {
                 qrScanner?.hasFlash().then((result) => {
@@ -87,14 +79,19 @@ export function ScannerPage() {
         };
     }, []);
 
-    async function handleScan(scanResult: QrScanner.ScanResult) {
-        if (
-            scanResult?.data &&
-            active &&
-            scannerCredentialsContext.scannerCredentials &&
-            internetConnectedContext.valueOf()
-        ) {
+    async function handleScan(scanResult: QrScanner.ScanResult): Promise<void> {
+        if (!active) return;
+
+        if (!internetConnectedContext.valueOf()) {
+            setErrorMessageState('Geen internetverbinding');
+        } else if (!scanResult.data) {
+            setErrorMessageState('Geen QR-code gevonden');
+        } else if (!scannerCredentialsContext.scannerCredentials) {
+            setErrorMessageState('Niet ingelogd');
+        } else {
             active = false;
+            setLoadingState(true);
+            setErrorMessageState(null);
 
             const scanTicketQuery = await fetch(
                 `https://www.glow-events.be/api/events/${scannerCredentialsContext.scannerCredentials.eventId}/modules/basic-ticket-store/scan-ticket`,
@@ -111,13 +108,13 @@ export function ScannerPage() {
             const json = await scanTicketQuery.json();
 
             if (scanTicketQuery.ok) {
-                setTicketScanResultState('success');
                 setOwnerNameState(json.data.ownerName);
                 setOwnerEmailState(json.data.ownerEmail);
                 setTicketTypeNameState(json.data.ticketTypeName);
+                setTicketScanResultState(json.data.result);
 
                 const newTicketScanAttempt: TicketScanAttempt = {
-                    result: 'success',
+                    result: json.data.result,
                     timestamp: new Date(),
                     secretCode: scanResult.data,
                     ownerName: json.data.ownerName,
@@ -125,16 +122,17 @@ export function ScannerPage() {
                     ticketTypeName: json.data.ticketTypeName,
                 };
 
-                ticketHistoryContext.addTicketScanAttemptToHistory(newTicketScanAttempt);
-            } else {
-                setTicketScanResultState(json.error || 'unknownError');
-                setOwnerNameState(null);
-                setOwnerEmailState(null);
-                setTicketTypeNameState(null);
+                ticketScanAttemptHistoryContext.addTicketScanAttemptToHistory(newTicketScanAttempt);
+            } else if (json.error) {
+                setErrorMessageState(json.error);
             }
 
             timer = setTimeout(() => {
                 setTicketScanResultState(null);
+                setOwnerNameState(null);
+                setOwnerEmailState(null);
+                setTicketTypeNameState(null);
+
                 active = true;
                 timer = null;
             }, 10_000);
@@ -145,7 +143,12 @@ export function ScannerPage() {
         if (timer) {
             clearTimeout(timer);
         }
+
         setTicketScanResultState(null);
+        setOwnerNameState(null);
+        setOwnerEmailState(null);
+        setTicketTypeNameState(null);
+
         active = true;
     }
 
@@ -196,37 +199,26 @@ export function ScannerPage() {
 
     return (
         <main className="overflow-hidden h-dvh bg-zinc-950 absolute top-0 w-screen select-none">
-            <video id="viewFinder" className="object-cover w-full h-[100dvh]" />
+            <video id="viewFinder" className="object-cover w-full h-dvh" />
 
             <div
                 id="overlay"
                 className={clsx(
                     'border-[8px] border-solid rounded-md border-opacity-40 transition duration-200',
-                    ticketScanResultState === 'success' && internetConnectedContext.valueOf() && 'border-emerald-800',
-                    ticketScanResultState === 'alreadyScanned' &&
-                        internetConnectedContext.valueOf() &&
-                        'border-amber-800',
-                    ticketScanResultState &&
-                        ticketScanResultState !== 'success' &&
-                        ticketScanResultState !== 'alreadyScanned' &&
-                        internetConnectedContext.valueOf() &&
-                        'border-rose-800',
-                    !ticketScanResultState && internetConnectedContext.valueOf() && 'border-zinc-200',
-                    !internetConnectedContext.valueOf() && 'border-transparent'
+                    ticketScanResultState === 'success' && 'border-green-800',
+                    ticketScanResultState === 'alreadyScanned' && 'border-yellow-800',
+                    ticketScanResultState === 'notFound' && 'border-red-800',
+                    !ticketScanResultState && 'border-zinc-200'
                 )}
             />
 
             <header
                 className={clsx(
                     'absolute overflow-hidden z-50 transition duration-200 w-full h-1/3 bg-opacity-95 bottom-0 p-5',
-                    ticketScanResultState === 'success' && internetConnectedContext.valueOf() && 'bg-emerald-800',
-                    ticketScanResultState === 'alreadyScanned' && internetConnectedContext.valueOf() && 'bg-amber-800',
-                    ticketScanResultState &&
-                        ticketScanResultState !== 'success' &&
-                        ticketScanResultState !== 'alreadyScanned' &&
-                        internetConnectedContext.valueOf() &&
-                        'bg-rose-800',
-                    (!ticketScanResultState || !internetConnectedContext.valueOf()) && 'bg-zinc-950'
+                    ticketScanResultState === 'success' && 'bg-green-800',
+                    ticketScanResultState === 'alreadyScanned' && 'bg-yellow-800',
+                    ticketScanResultState === 'notFound' && 'bg-red-800',
+                    !ticketScanResultState && 'bg-zinc-950'
                 )}
             >
                 {internetConnectedContext ? (
@@ -245,9 +237,9 @@ export function ScannerPage() {
                                             className="w-6 h-6"
                                         >
                                             <path
-                                                fill-rule="evenodd"
+                                                fillRule="evenodd"
                                                 d="M14.615 1.595a.75.75 0 01.359.852L12.982 9.75h7.268a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.913-.143z"
-                                                clip-rule="evenodd"
+                                                clipRule="evenodd"
                                             />
                                         </svg>
                                     ) : (
@@ -336,14 +328,10 @@ export function ScannerPage() {
                             <h1
                                 className={clsx(
                                     'absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[55%] text-center text-white font-sans font-bold text-4xl',
-                                    ticketScanResultState &&
-                                        ticketScanResultState !== 'success' &&
-                                        ticketScanResultState !== 'alreadyScanned'
-                                        ? 'fade-in'
-                                        : 'fade-out'
+                                    ticketScanResultState === 'notFound' ? 'fade-in' : 'fade-out'
                                 )}
                             >
-                                {ticketScanResultState === 'ticketNotFound' ? 'Ongeldig ticket' : 'Error opgetreden'}
+                                Ongeldig ticket
                             </h1>
                             <h1
                                 className={clsx(
@@ -367,9 +355,10 @@ export function ScannerPage() {
                             onClick={restartScanning}
                             className={clsx(
                                 'h-1/5 overflow-ellipsis whitespace-nowrap w-full transition duration-200 text-white  font-sans text-center font-semibold',
-                                ticketScanResultState !== 'success' && 'hidden'
+                                (!ticketScanResultState || ticketScanResultState === 'notFound') && 'hidden'
                             )}
                         >
+                            <div>{ticketScanResultState}</div>
                             <div>{ticketTypeNameState}</div>
                             <div>
                                 {ownerNameState} | {ownerEmailState}
@@ -396,6 +385,8 @@ export function ScannerPage() {
                         <h1 className="font-semibold text-center text-zinc-400">Geen internetverbinding</h1>
                     </div>
                 )}
+
+                {loadingState && errorMessageState}
             </header>
         </main>
     );
