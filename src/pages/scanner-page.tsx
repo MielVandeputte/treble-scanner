@@ -344,7 +344,8 @@ export function ScannerPage() {
                             <h1
                                 className={clsx(
                                     'absolute left-1/2 -translate-x-1/2 bottom-1/2 translate-y-[55%]  text-center text-zinc-400 logo text-5xl',
-                                    !ticketScanResultState ? 'fade-in' : 'fade-out'
+                                    !ticketScanResultState ? 'fade-in' : 'fade-out',
+                                    loadingState && 'animate-pulse'
                                 )}
                             >
                                 glow
@@ -354,10 +355,10 @@ export function ScannerPage() {
                         <button
                             onClick={restartScanning}
                             className={clsx(
-                                'h-1/5 overflow-ellipsis whitespace-nowrap w-full transition duration-200 text-white  font-sans text-center font-semibold',
-                                (!ticketScanResultState || ticketScanResultState === 'notFound') && 'hidden'
+                                'h-1/5 overflow-ellipsis whitespace-nowrap w-full transition duration-200 text-white font-sans text-center font-semibold'
                             )}
                         >
+                            <div>{errorMessageState}</div>
                             <div>{ticketTypeNameState}</div>
                             <div>
                                 {ownerNameState} | {ownerEmailState}
@@ -384,8 +385,6 @@ export function ScannerPage() {
                         <h1 className="font-semibold text-center text-zinc-400">Geen internetverbinding</h1>
                     </div>
                 )}
-
-                {loadingState && errorMessageState}
             </header>
         </main>
     );
