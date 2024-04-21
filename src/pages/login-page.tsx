@@ -31,7 +31,7 @@ export function LoginPage() {
             setErrorMessageState(null);
 
             const checkScanAuthorizationdCodeQuery = await fetch(
-                `https://www.glow-events.be/api/events/${eventIdState}/modules/basic-ticket-store/check-scan-authorization-code`,
+                `https://www.treble-events.be/api/events/${eventIdState}/modules/basic-ticket-store/check-scan-authorization-code`,
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -62,11 +62,11 @@ export function LoginPage() {
     return (
         <div className="bg-zinc-950 w-screen h-dvh flex justify-center items-center p-10 select-none">
             <main className="flex flex-col items-center gap-8">
-                <h1 className="text-center text-white logo text-4xl">glow</h1>
+                <h1 className="text-center text-white logo text-4xl">treble</h1>
 
                 <p className="text-zinc-200 font-semibold text-justify">
                     Voer het event ID en de code in om te beginnen scannen. Beide zijn te vinden in het dashboard op
-                    glow-events.be.
+                    treble-events.be.
                 </p>
 
                 <form onSubmit={handleSubmit} className="w-full sm:px-16 flex flex-col gap-5">

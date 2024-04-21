@@ -9,9 +9,9 @@ export default defineConfig({
         VitePWA({
             registerType: 'autoUpdate',
             manifest: {
-                name: 'Glow Scanner',
-                short_name: 'Glow Scanner',
-                description: 'Scan de QR-codes op de tickets van Glow Events',
+                name: 'Treble Scanner',
+                short_name: 'Treble Scanner',
+                description: 'Scan de QR-codes op de tickets van Treble Events',
                 theme_color: '#18181B',
                 icons: [
                     {

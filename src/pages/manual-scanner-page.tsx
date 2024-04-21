@@ -49,7 +49,7 @@ export function ManualScannerPage() {
             setTicketTypeNameState(null);
 
             const scanTicketQuery = await fetch(
-                `https://www.glow-events.be/api/events/${scannerCredentialsContext.scannerCredentials.eventId}/modules/basic-ticket-store/scan-ticket`,
+                `https://www.treble-events.be/api/events/${scannerCredentialsContext.scannerCredentials.eventId}/modules/basic-ticket-store/scan-ticket`,
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
