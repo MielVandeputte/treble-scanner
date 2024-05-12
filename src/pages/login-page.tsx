@@ -3,6 +3,7 @@ import { InternetConnectedContext, ScannerCredentialsContext } from '../context-
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
+import { getBaseBackendUrl } from '../../common/backend-base-url.ts';
 
 export function LoginPage() {
     const scannerCredentialsContext = useContext(ScannerCredentialsContext);
@@ -31,7 +32,8 @@ export function LoginPage() {
             setErrorMessageState(null);
 
             const checkScanAuthorizationdCodeQuery = await fetch(
-                `https://www.treble-events.be/api/events/${eventIdState}/modules/basic-ticket-store/check-scan-authorization-code`,
+                getBaseBackendUrl() +
+                    `/events/${eventIdState}/modules/basic-ticket-store/check-scan-authorization-code`,
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
