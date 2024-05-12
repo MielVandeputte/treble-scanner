@@ -8,6 +8,7 @@ import { FormEvent, useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { TicketScanAttempt, TicketScanAttemptResult } from '../types.ts';
+import { getBaseBackendUrl } from '../../common/backend-base-url.ts';
 
 export function ManualScannerPage() {
     const ticketScanAttemptHistoryContext = useContext(TicketScanAttemptHistoryContext);
@@ -49,7 +50,8 @@ export function ManualScannerPage() {
             setTicketTypeNameState(null);
 
             const scanTicketQuery = await fetch(
-                `https://www.treble-events.be/api/events/${scannerCredentialsContext.scannerCredentials.eventId}/modules/basic-ticket-store/scan-ticket`,
+                getBaseBackendUrl() +
+                    `/events/${scannerCredentialsContext.scannerCredentials.eventId}/modules/basic-ticket-store/scan-ticket`,
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
