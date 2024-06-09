@@ -3,8 +3,9 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
+    body {
         @apply bg-zinc-950;
+        @apply overflow-y-scroll;
         @apply overflow-x-hidden;
     }
 }
@@ -14,7 +15,7 @@
         font-family: 'Proza Libre', sans-serif;
     }
 
-    .no-blue-box {
+    * {
         -webkit-tap-highlight-color: transparent;
     }
 
