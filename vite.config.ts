@@ -42,28 +42,6 @@ export default defineConfig({
                         purpose: 'any',
                     },
                 ],
-                screenshots: [
-                    {
-                        src: 'screenshot-start.png',
-                        sizes: '2467x1080',
-                        type: 'image/png',
-                    },
-                    {
-                        src: 'screenshot-scanner.png',
-                        sizes: '2467x1080',
-                        type: 'image/png',
-                    },
-                    {
-                        src: 'screenshot-scanner-success.png',
-                        sizes: '2467x1080',
-                        type: 'image/png',
-                    },
-                    {
-                        src: 'screenshot-scanner-already-scanned.png',
-                        sizes: '2467x1080',
-                        type: 'image/png',
-                    },
-                ],
             },
         }),
     ],
