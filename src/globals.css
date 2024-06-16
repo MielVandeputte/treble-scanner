@@ -3,18 +3,19 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
+    body {
         @apply bg-zinc-950;
+        @apply overflow-y-hidden;
         @apply overflow-x-hidden;
     }
 }
 
 @layer components {
-    .logo {
+    .logo-font {
         font-family: 'Proza Libre', sans-serif;
     }
 
-    .no-blue-box {
+    * {
         -webkit-tap-highlight-color: transparent;
     }
 
