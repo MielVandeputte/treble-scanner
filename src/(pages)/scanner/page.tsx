@@ -245,9 +245,9 @@ export function Scanner() {
                 ref={overlay}
                 className={clsx(
                     'border-[8px] border-solid rounded-sm border-opacity-40 transition duration-200',
-                    ticketScanResultState === 'success' && 'border-emerald-800',
-                    ticketScanResultState === 'alreadyScanned' && 'border-amber-800',
-                    ticketScanResultState === 'notFound' && 'border-rose-800',
+                    ticketScanResultState === 'SUCCESS' && 'border-emerald-800',
+                    ticketScanResultState === 'ALREADY_SCANNED' && 'border-amber-800',
+                    ticketScanResultState === 'NOT_FOUND' && 'border-rose-800',
                     !ticketScanResultState && 'border-zinc-200'
                 )}
             />
