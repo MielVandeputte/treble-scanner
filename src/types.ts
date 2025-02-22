@@ -1,4 +1,4 @@
-export type TicketScanAttemptResult = 'success' | 'alreadyScanned' | 'notFound';
+export type TicketScanAttemptResult = 'SUCCESS' | 'ALREADY_SCANNED' | 'NOT_FOUND';
 
 export type TicketScanAttempt = {
     id: string;

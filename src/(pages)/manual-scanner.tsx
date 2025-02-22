@@ -129,11 +129,11 @@ export function ManualScanner() {
                                 <div>
                                     {(() => {
                                         switch (ticketScanResultState) {
-                                            case 'success':
+                                            case 'SUCCESS':
                                                 return 'Geldig ticket';
-                                            case 'alreadyScanned':
+                                            case 'ALREADY_SCANNED':
                                                 return 'Ticket al gescand';
-                                            case 'notFound':
+                                            case 'NOT_FOUND':
                                                 return 'Ongeldig ticket';
                                         }
                                     })()}
