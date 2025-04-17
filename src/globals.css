@@ -1,31 +1,30 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-@layer base {
-    body {
-        @apply bg-zinc-950;
-        @apply overflow-y-hidden;
-        @apply overflow-x-hidden;
-    }
+@layer utilities {
+  .logo-font {
+    font-family: 'Proza Libre', sans-serif;
+  }
+
+  .fade-in {
+    opacity: 0.9;
+    transition: opacity 200ms ease-in-out;
+  }
+
+  .fade-out {
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+  }
 }
 
-@layer components {
-    .logo-font {
-        font-family: 'Proza Libre', sans-serif;
-    }
+@layer base {
+  body {
+    @apply bg-zinc-950;
 
-    * {
-        -webkit-tap-highlight-color: transparent;
-    }
+    @apply overflow-x-hidden;
+    @apply overflow-y-hidden;
+  }
 
-    .fade-in {
-        opacity: 0.9;
-        transition: opacity 200ms ease-in-out;
-    }
-
-    .fade-out {
-        opacity: 0;
-        transition: opacity 200ms ease-in-out;
-    }
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
 }
