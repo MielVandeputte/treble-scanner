@@ -18,7 +18,7 @@
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.15.0",
-        "store2": "^2.14.2"
+        "store2": "^2.14.4"
     },
     "devDependencies": {
         "@types/react": "^18.2.15",
@@ -26,7 +26,7 @@
         "@typescript-eslint/eslint-plugin": "^7.13.0",
         "@typescript-eslint/parser": "^7.13.0",
         "@vite-pwa/assets-generator": "^0.2.4",
-        "@vitejs/plugin-react": "^4.3.1",
+        "@vitejs/plugin-react": "^4.4.0",
         "autoprefixer": "^10.4.15",
         "eslint": "^8.45.0",
         "eslint-plugin-react-hooks": "^4.6.0",
@@ -34,7 +34,7 @@
         "postcss": "^8.4.38",
         "tailwindcss": "^3.3.3",
         "typescript": "^5.4.5",
-        "vite": "^5.3.1",
-        "vite-plugin-pwa": "^0.20.0"
+        "vite": "^6.3.2",
+        "vite-plugin-pwa": "^1.0.0"
     }
 }
