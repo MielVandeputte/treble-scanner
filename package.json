@@ -1,26 +1,30 @@
 {
   "name": "treble-scanner",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "start": "vite",
+    "format": "prettier --write \"**/*.{js,tsx,ts,css,jsx,json}\"",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write \"**/*.{js,tsx,ts,css,jsx,json}\"",
-    "build": "tsc && vite build"
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@fontsource/proza-libre": "^5.2.5",
+    "@tanstack/react-query": "^5.74.4",
     "clsx": "^2.1.1",
     "qr-scanner": "^1.4.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-hook-form": "^7.55.0",
     "react-router-dom": "^7.5.1",
     "store2": "^2.14.4"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.4",
+    "@tanstack/eslint-plugin-query": "^5.73.3",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@typescript-eslint/eslint-plugin": "^8.30.1",

@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 @layer utilities {
-  .logo-font {
+  .brand-font {
     font-family: 'Proza Libre', sans-serif;
   }
 
@@ -26,5 +26,10 @@
 
   * {
     -webkit-tap-highlight-color: transparent;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 150ms;
   }
 }
