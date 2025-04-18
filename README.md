@@ -2,9 +2,9 @@
 
 | Branch | Status |
 | ------ | ------ |
-| Main | [![Node.js CI](https://github.com/MielVandeputte/Treble-Scanner/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/MielVandeputte/Treble-Scanner/actions/workflows/test.yml) |
-| Staging | [![Node.js CI](https://github.com/MielVandeputte/Treble-Scanner/actions/workflows/test.yml/badge.svg?branch=staging)](https://github.com/MielVandeputte/Treble-Scanner/actions/workflows/test.yml) |
+| Main | [![Lint](https://github.com/MielVandeputte/treble-scanner/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/MielVandeputte/treble-scanner/actions/workflows/lint.yml) |
+| Staging | [![Lint](https://github.com/MielVandeputte/treble-scanner/actions/workflows/lint.yml/badge.svg?branch=staging)](https://github.com/MielVandeputte/treble-scanner/actions/workflows/lint.yml) |
 
 feat:
-maint:
 fix:
+chore:

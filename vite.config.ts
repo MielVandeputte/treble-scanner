@@ -1,48 +1,50 @@
-import { defineConfig } from 'vite';
+import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [
-        react(),
-        VitePWA({
-            registerType: 'autoUpdate',
-            manifest: {
-                name: 'Treble Scanner',
-                short_name: 'Treble Scanner',
-                description: 'Scan de QR-codes op de tickets van Treble Events',
-                theme_color: '#18181B',
-                icons: [
-                    {
-                        src: 'pwa-72x72.png',
-                        sizes: '72x72',
-                        type: 'image/png',
-                    },
-                    {
-                        src: 'pwa-192x192.png',
-                        sizes: '192x192',
-                        type: 'image/png',
-                    },
-                    {
-                        src: 'pwa-512x512.png',
-                        sizes: '512x512',
-                        type: 'image/png',
-                    },
-                    {
-                        src: 'maskable-icon-512x512.png',
-                        sizes: '512x512',
-                        type: 'image/png',
-                        purpose: 'maskable',
-                    },
-                    {
-                        src: 'maskable-icon-512x512.png',
-                        sizes: '512x512',
-                        type: 'image/png',
-                        purpose: 'any',
-                    },
-                ],
-            },
-        }),
-    ],
+  plugins: [
+    react(),
+    tailwindcss(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      manifest: {
+        name: 'Treble Scanner',
+        short_name: 'Treble Scanner',
+        description: 'Scan de QR-codes op de tickets van Treble Events',
+        theme_color: '#18181B',
+        icons: [
+          {
+            src: 'pwa-72x72.png',
+            sizes: '72x72',
+            type: 'image/png',
+          },
+          {
+            src: 'pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+          },
+          {
+            src: 'pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+          },
+          {
+            src: 'maskable-icon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable',
+          },
+          {
+            src: 'maskable-icon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any',
+          },
+        ],
+      },
+    }),
+  ],
 });
