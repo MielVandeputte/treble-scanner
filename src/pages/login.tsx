@@ -39,27 +39,36 @@ export function Login(): JSX.Element {
       <form
         onSubmit={handleSubmit(onFormSubmit)}
         className="flex h-dvh w-screen max-w-md flex-col items-center justify-center gap-5 px-10 py-5"
+        aria-describedby={errorMessageState ?? undefined}
       >
-        <h1 className="brand-font text-center text-4xl text-white select-none">treble</h1>
+        <h1 className="brand-font text-center text-4xl text-zinc-200 select-none">treble</h1>
 
-        <p className="text-justify font-semibold text-zinc-200 select-none">
+        <p className="text-justify font-semibold text-zinc-400 select-none">
           Voer het event ID en de code in om tickets te beginnen scannen. Beide zijn te vinden in het dashboard op
           treble-events.be.
         </p>
 
         <div className="flex w-full flex-col items-center gap-4">
           <Input
+            id="event-id-input"
             {...register('eventId', { required: true })}
             placeholder="Event ID"
             autoComplete="off"
             invalid={!!errors.eventId}
+            aria-invalid={!!errors.eventId}
+            aria-required="true"
+            srLabel="Event ID"
           />
 
           <Input
+            id="code-input"
             {...register('scanAuthorizationCode', { required: true })}
             placeholder="Code"
             autoComplete="off"
             invalid={!!errors.scanAuthorizationCode}
+            aria-invalid={!!errors.scanAuthorizationCode}
+            aria-required="true"
+            srLabel="Code"
           />
         </div>
 
@@ -68,7 +77,9 @@ export function Login(): JSX.Element {
         </Button>
 
         {errorMessageState ? (
-          <span className="font-semibold text-rose-900 select-none">{errorMessageState}</span>
+          <p className="font-semibold text-rose-900 select-none" role="alert" aria-live="assertive">
+            {errorMessageState}
+          </p>
         ) : null}
       </form>
     </main>

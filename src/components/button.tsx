@@ -14,6 +14,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     <button
       {...props}
       ref={ref}
+      aria-busy={loading}
       disabled={disabled || loading}
       className={clsx(
         color === 'regular' && !disabled ? 'bg-zinc-900 active:bg-zinc-800' : '',

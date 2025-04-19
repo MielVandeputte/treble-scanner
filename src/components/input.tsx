@@ -1,10 +1,15 @@
 import clsx from 'clsx';
 import { InputHTMLAttributes, forwardRef } from 'react';
 
-type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'className'> & { invalid?: boolean };
+type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'className'> & { invalid?: boolean; srLabel?: string };
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(({ invalid = false, ...props }, ref) => (
+export const Input = forwardRef<HTMLInputElement, InputProps>(({ invalid = false, srLabel, ...props }, ref) => (
   <div className="w-full">
+    {props.id && srLabel ? (
+      <label htmlFor={props.id} className="sr-only">
+        {srLabel}
+      </label>
+    ) : null}
     <input
       {...props}
       ref={ref}

@@ -49,12 +49,21 @@ export function ManualScanner(): JSX.Element {
 
       <main className="flex justify-center">
         <div className="flex w-full max-w-md flex-col items-center justify-center gap-5 px-10 py-5">
-          <form onSubmit={handleSubmit(onFormSubmit)} className="flex w-full flex-col items-center gap-4">
+          <form
+            id="manual-scan-form"
+            onSubmit={handleSubmit(onFormSubmit)}
+            className="flex w-full flex-col items-center gap-4"
+            aria-describedby={errorMessageState ?? undefined}
+          >
             <Input
+              id="secret-code-input"
               {...register('secretCode', { required: true })}
               placeholder="Geheime code"
               autoComplete="off"
               invalid={!!errors.secretCode}
+              aria-invalid={!!errors.secretCode}
+              aria-required="true"
+              srLabel="Geheime code"
             />
 
             <Button type="submit" color="brand" horizontalPadding loading={isSubmitting} disabled={disabled}>
@@ -62,34 +71,38 @@ export function ManualScanner(): JSX.Element {
             </Button>
           </form>
 
-          <div className="min-h-32">
-            {lastScanAttemptState ? (
-              <div className="flex flex-col gap-2 text-center font-semibold text-zinc-400">
-                <span>
-                  {mapScanAttemptResultToString(lastScanAttemptState.result)}
-                  {lastScanAttemptState.ticketTypeName ? <br /> : null}
-                  {lastScanAttemptState.ticketTypeName ?? null}
-                </span>
+          {lastScanAttemptState ? (
+            <div
+              className="flex flex-col gap-2 text-center font-semibold text-zinc-400"
+              role="status"
+              aria-live="polite"
+            >
+              <p>
+                {mapScanAttemptResultToString(lastScanAttemptState.result)}
+                {lastScanAttemptState.ticketTypeName ? <br /> : null}
+                {lastScanAttemptState.ticketTypeName ?? null}
+              </p>
 
-                {lastScanAttemptState.ownerName || lastScanAttemptState.ownerEmail ? (
-                  <span>
-                    {lastScanAttemptState.ownerName ?? null}
-                    {lastScanAttemptState.ownerName && lastScanAttemptState.ownerEmail ? <br /> : null}
-                    {lastScanAttemptState.ownerEmail ?? null}
-                  </span>
-                ) : null}
-              </div>
-            ) : null}
+              {lastScanAttemptState.ownerName || lastScanAttemptState.ownerEmail ? (
+                <p>
+                  {lastScanAttemptState.ownerName ?? null}
+                  {lastScanAttemptState.ownerName && lastScanAttemptState.ownerEmail ? <br /> : null}
+                  {lastScanAttemptState.ownerEmail ?? null}
+                </p>
+              ) : null}
+            </div>
+          ) : null}
 
-            {errorMessageState ? (
-              <span className="font-semibold text-rose-900 select-none">{errorMessageState}</span>
-            ) : null}
-          </div>
+          {errorMessageState ? (
+            <p className="font-semibold text-rose-900 select-none" role="alert" aria-live="assertive">
+              {errorMessageState}
+            </p>
+          ) : null}
         </div>
       </main>
 
       <Footer cols={1}>
-        <Button onClick={() => navigate(SCANNER_PATH, { viewTransition: true })}>
+        <Button onClick={() => navigate(SCANNER_PATH, { viewTransition: true })} aria-label="Terug naar scanner">
           <BackIcon />
         </Button>
       </Footer>
