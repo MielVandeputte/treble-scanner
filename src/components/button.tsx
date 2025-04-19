@@ -16,9 +16,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       ref={ref}
       disabled={disabled || loading}
       className={clsx(
-        color === 'regular' && !disabled ? 'bg-zinc-900' : '',
-        color === 'brand' && !disabled ? 'bg-emerald-900' : '',
-        color === 'danger' && !disabled ? 'bg-rose-900' : '',
+        color === 'regular' && !disabled ? 'bg-zinc-900 active:bg-zinc-800' : '',
+        color === 'brand' && !disabled ? 'bg-emerald-900 active:bg-emerald-800' : '',
+        color === 'danger' && !disabled ? 'bg-rose-900 active:bg-rose-800' : '',
         horizontalPadding ? 'px-12' : 'px-5',
         loading && !disabled ? 'animate-pulse' : '',
         disabled ? 'border-zinc-900 bg-transparent text-zinc-400' : 'border-transparent text-white',

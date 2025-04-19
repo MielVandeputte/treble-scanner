@@ -184,10 +184,10 @@ export function Scanner(): JSX.Element {
         ref={overlay}
         className={clsx(
           lastScanAttemptState?.result === 'SUCCESS' ? 'border-emerald-900/40' : '',
-          lastScanAttemptState?.result === 'ALREADY_SCANNED' ? 'bg-amber-900/40' : '',
+          lastScanAttemptState?.result === 'ALREADY_SCANNED' ? 'border-amber-900/40' : '',
           lastScanAttemptState?.result === 'NOT_FOUND' ? 'border-rose-900/40' : '',
           lastScanAttemptState?.result ? '' : 'border-zinc-200/40',
-          'rounded-sm border-8 border-solid transition',
+          'rounded-sm border-8 border-solid transition duration-200',
         )}
       />
 
