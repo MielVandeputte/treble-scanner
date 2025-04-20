@@ -102,7 +102,11 @@ export function ManualScanner(): JSX.Element {
       </main>
 
       <Footer cols={1}>
-        <Button onClick={() => navigate(SCANNER_PATH, { viewTransition: true })} aria-label="Terug naar scanner">
+        <Button
+          type="button"
+          onClick={() => navigate(SCANNER_PATH, { viewTransition: true })}
+          aria-label="Terug naar scanner"
+        >
           <BackIcon />
         </Button>
       </Footer>
