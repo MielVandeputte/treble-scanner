@@ -94,7 +94,7 @@ export function ScannerCard({
               </motion.section>
             </AnimatePresence>
 
-            <section className="h-1/4 text-center font-semibold text-zinc-200">
+            <section className="h-1/4 text-center font-semibold text-zinc-200" role="alert" aria-live="polite">
               <p>
                 {errorMessageState ? (
                   <>

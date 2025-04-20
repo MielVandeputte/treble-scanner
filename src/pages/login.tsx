@@ -39,7 +39,7 @@ export function Login(): JSX.Element {
       <form
         onSubmit={handleSubmit(onFormSubmit)}
         className="flex h-svh max-w-md flex-col items-center justify-center gap-5 px-10 py-5"
-        aria-describedby={errorMessageState ?? undefined}
+        aria-describedby={errorMessageState ? 'error-message' : undefined}
       >
         <h1 className="brand-font text-center text-4xl text-zinc-200 select-none">treble</h1>
 
@@ -55,7 +55,6 @@ export function Login(): JSX.Element {
             placeholder="Event ID"
             autoComplete="off"
             invalid={!!errors.eventId}
-            aria-invalid={!!errors.eventId}
             aria-required="true"
             srLabel="Event ID"
           />
@@ -66,7 +65,6 @@ export function Login(): JSX.Element {
             placeholder="Code"
             autoComplete="off"
             invalid={!!errors.scanAuthorizationCode}
-            aria-invalid={!!errors.scanAuthorizationCode}
             aria-required="true"
             srLabel="Code"
           />
@@ -77,7 +75,7 @@ export function Login(): JSX.Element {
         </Button>
 
         {errorMessageState ? (
-          <p className="font-semibold text-rose-900 select-none" role="alert" aria-live="assertive">
+          <p id="error-message" className="font-semibold text-rose-900 select-none" role="alert" aria-live="assertive">
             {errorMessageState}
           </p>
         ) : null}
