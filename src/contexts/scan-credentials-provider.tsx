@@ -12,12 +12,11 @@ export function ScanCredentialsProvider({ children }: { children: ReactNode }): 
   );
 
   const setScanCredentialsAndSaveToStore = useCallback((scanCredentials: ScanCredentials | null): void => {
-    setScanCredentialsState(scanCredentials);
-
     if (scanCredentials === null) {
       store.clearAll();
       location.reload();
     } else {
+      setScanCredentialsState(scanCredentials);
       store.set(SCAN_CREDENTIALS_STORE_KEY, scanCredentials);
     }
   }, []);
