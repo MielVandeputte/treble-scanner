@@ -53,7 +53,7 @@ export function ManualScanner(): JSX.Element {
             id="manual-scan-form"
             onSubmit={handleSubmit(onFormSubmit)}
             className="flex w-full flex-col items-center gap-4"
-            aria-describedby={errorMessageState ?? undefined}
+            aria-describedby={errorMessageState ? 'error-message' : undefined}
           >
             <Input
               id="secret-code-input"
@@ -61,7 +61,6 @@ export function ManualScanner(): JSX.Element {
               placeholder="Geheime code"
               autoComplete="off"
               invalid={!!errors.secretCode}
-              aria-invalid={!!errors.secretCode}
               aria-required="true"
               srLabel="Geheime code"
             />
@@ -90,7 +89,12 @@ export function ManualScanner(): JSX.Element {
           ) : null}
 
           {errorMessageState ? (
-            <p className="font-semibold text-rose-900 select-none" role="alert" aria-live="assertive">
+            <p
+              id="error-message"
+              className="font-semibold text-rose-900 select-none"
+              role="alert"
+              aria-live="assertive"
+            >
               {errorMessageState}
             </p>
           ) : null}
