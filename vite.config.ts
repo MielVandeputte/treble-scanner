@@ -13,7 +13,7 @@ export default defineConfig({
       manifest: {
         name: 'Treble Scanner',
         short_name: 'Treble Scanner',
-        description: 'Scanner voor de QR-codes op de tickets van Treble Events',
+        description: 'Scanner voor de QR-codes op de tickets van Treble',
         theme_color: '#09090b',
         icons: [
           {

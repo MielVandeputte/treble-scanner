@@ -1,12 +1,9 @@
 import clsx from 'clsx';
-import { motion } from 'motion/react';
 import { JSX } from 'react';
 import { Link } from 'react-router-dom';
 
 import { SwitchIcon, FilledInLightningIcon, LightningIcon, MenuIcon, PencilIcon } from '../../components/icons.tsx';
 import { MANUAL_SCANNER_PATH, SCAN_HISTORY_PATH } from '../../main.tsx';
-
-const MotionLink = motion(Link);
 
 export function FlashButton({
   toggleFlash,
@@ -18,20 +15,17 @@ export function FlashButton({
   showingScanAttempt: boolean;
 }): JSX.Element {
   return (
-    <motion.button
-      layout
-      layoutId="flash"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      whileTap={{ opacity: 0.9, scale: 0.9 }}
-      className={clsx(
-        'flex aspect-square w-12 items-center justify-center transition',
-        showingScanAttempt ? 'text-white' : 'text-zinc-400',
-      )}
+    <button
+      type="button"
       onClick={toggleFlash}
+      className={clsx(
+        'flex aspect-square w-12 items-center justify-center transition active:scale-90',
+        showingScanAttempt ? 'text-zinc-200 active:text-white' : 'active:text-zinc-200',
+      )}
+      aria-label={isFlashOnState ? 'Zet flits uit' : 'Zet flits aan'}
     >
-      {isFlashOnState ? <FilledInLightningIcon /> : <LightningIcon />}
-    </motion.button>
+      {isFlashOnState ? <FilledInLightningIcon aria-hidden="true" /> : <LightningIcon aria-hidden="true" />}
+    </button>
   );
 }
 
@@ -43,55 +37,48 @@ export function CameraSwitchButton({
   showingScanAttempt: boolean;
 }): JSX.Element {
   return (
-    <motion.button
-      layout
-      layoutId="camera-switch"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      whileTap={{ opacity: 0.9, scale: 0.9 }}
+    <button
+      type="button"
       onClick={toggleCamera}
       className={clsx(
-        'flex aspect-square w-12 items-center justify-center transition',
-        showingScanAttempt ? 'text-white' : 'text-zinc-400',
+        'flex aspect-square w-12 items-center justify-center transition active:scale-90',
+        showingScanAttempt ? 'text-zinc-200 active:text-white' : 'active:text-zinc-200',
       )}
+      aria-label="Wissel camera"
     >
-      <SwitchIcon />
-    </motion.button>
+      <SwitchIcon aria-hidden="true" />
+    </button>
   );
 }
 
 export function ManualScannerButton({ showingScanAttempt }: { showingScanAttempt: boolean }): JSX.Element {
   return (
-    <MotionLink
-      layout
-      layoutId="manual-scanner"
-      whileTap={{ opacity: 0.9, scale: 0.9 }}
+    <Link
       to={MANUAL_SCANNER_PATH}
       viewTransition
       className={clsx(
-        'flex aspect-square w-12 items-center justify-center transition',
-        showingScanAttempt ? 'text-white' : 'text-zinc-400',
+        'flex aspect-square w-12 items-center justify-center transition active:scale-90',
+        showingScanAttempt ? 'text-zinc-200 active:text-white' : 'active:text-zinc-200',
       )}
+      aria-label="Manueel scannen"
     >
-      <PencilIcon />
-    </MotionLink>
+      <PencilIcon aria-hidden="true" />
+    </Link>
   );
 }
 
-export function MenuButton({ showingScanAttempt }: { showingScanAttempt: boolean }): JSX.Element {
+export function ScanHistoryButton({ showingScanAttempt }: { showingScanAttempt: boolean }): JSX.Element {
   return (
-    <MotionLink
-      layout
-      layoutId="menu"
-      whileTap={{ opacity: 0.9, scale: 0.9 }}
+    <Link
       to={SCAN_HISTORY_PATH}
       viewTransition
       className={clsx(
-        'flex aspect-square w-12 items-center justify-center transition',
-        showingScanAttempt ? 'text-white' : 'text-zinc-400',
+        'flex aspect-square w-12 items-center justify-center transition active:scale-90',
+        showingScanAttempt ? 'text-zinc-200 active:text-white' : 'active:text-zinc-200',
       )}
+      aria-label="Scangeschiedenis"
     >
-      <MenuIcon />
-    </MotionLink>
+      <MenuIcon aria-hidden="true" />
+    </Link>
   );
 }

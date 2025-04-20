@@ -53,11 +53,10 @@ export function Scanner(): JSX.Element {
         if (scanAttempt.data) {
           setLastScanAttemptState(scanAttempt.data);
           addScanAttempt(scanAttempt.data);
-          timer.current = setTimeout(() => restartScanning(), 10_000);
         } else if (scanAttempt.error) {
           setErrorMessageState(scanAttempt.error);
-          restartScanning();
         }
+        timer.current = setTimeout(() => restartScanning(), 10_000);
       } else {
         setErrorMessageState('Geen QR-code gevonden');
       }
@@ -122,6 +121,7 @@ export function Scanner(): JSX.Element {
     }
 
     setLastScanAttemptState(null);
+    setErrorMessageState(null);
 
     scanningActive.current = true;
   }
@@ -177,8 +177,8 @@ export function Scanner(): JSX.Element {
   }
 
   return (
-    <main className="absolute top-0 h-dvh w-screen overflow-hidden bg-zinc-950 select-none">
-      <video ref={viewFinder} className="h-dvh w-screen object-cover" />
+    <main className="absolute top-0 h-svh overflow-hidden bg-zinc-950 select-none">
+      <video ref={viewFinder} className="h-svh w-screen object-cover" aria-hidden="true" />
 
       <div
         ref={overlay}
@@ -187,8 +187,9 @@ export function Scanner(): JSX.Element {
           lastScanAttemptState?.result === 'ALREADY_SCANNED' ? 'border-amber-900/40' : '',
           lastScanAttemptState?.result === 'NOT_FOUND' ? 'border-rose-900/40' : '',
           lastScanAttemptState?.result ? '' : 'border-zinc-200/40',
-          'rounded-sm border-8 border-solid transition duration-200',
+          'rounded-sm border-8 border-solid transition',
         )}
+        aria-hidden="true"
       />
 
       <ScannerCard

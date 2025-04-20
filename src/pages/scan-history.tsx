@@ -20,12 +20,12 @@ export function ScanHistory(): JSX.Element {
   }
 
   return (
-    <div className="grid h-dvh w-screen grid-rows-[auto_1fr_auto]">
+    <div className="grid h-svh grid-rows-[auto_1fr_auto]">
       <Header title="Scangeschiedenis" />
 
       {scanHistory?.length ? (
         <main className="overflow-x-hidden overflow-y-scroll">
-          <ul className="flex flex-col divide-y divide-zinc-900 px-10 text-center font-semibold text-zinc-400">
+          <ul className="flex flex-col divide-y divide-zinc-900 px-10 text-center font-semibold">
             {scanHistory.map((scanAttempt: ScanAttempt) => (
               <li key={scanAttempt.id} className="flex flex-col gap-2 py-5">
                 <time dateTime={scanAttempt.timestamp.toISOString()} className="text-zinc-200">
@@ -53,7 +53,7 @@ export function ScanHistory(): JSX.Element {
         </main>
       ) : (
         <main className="flex items-center justify-center">
-          <p className="text-center font-semibold text-zinc-400 select-none">Nog geen tickets gescand</p>
+          <p className="text-center font-semibold select-none">Nog geen tickets gescand</p>
         </main>
       )}
 

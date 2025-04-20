@@ -22,7 +22,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         color === 'danger' && !disabled ? 'bg-rose-900 active:bg-rose-800' : '',
         horizontalPadding ? 'px-12' : 'px-5',
         loading && !disabled ? 'animate-pulse' : '',
-        disabled ? 'border-zinc-900 bg-transparent text-zinc-400' : 'border-transparent text-white',
+        disabled
+          ? 'border-zinc-900 bg-transparent'
+          : 'border-transparent text-zinc-200 active:scale-95 active:text-white',
         'flex h-12 items-center justify-center rounded-full border-2 text-center font-semibold whitespace-nowrap transition select-none',
       )}
     >

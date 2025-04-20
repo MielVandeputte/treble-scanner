@@ -44,7 +44,7 @@ export function ManualScanner(): JSX.Element {
   }
 
   return (
-    <div className="grid h-dvh w-screen grid-rows-[auto_1fr_auto]">
+    <div className="grid h-svh grid-rows-[auto_1fr_auto]">
       <Header title="Manueel scannen" />
 
       <main className="flex justify-center">
@@ -72,11 +72,7 @@ export function ManualScanner(): JSX.Element {
           </form>
 
           {lastScanAttemptState ? (
-            <div
-              className="flex flex-col gap-2 text-center font-semibold text-zinc-400"
-              role="status"
-              aria-live="polite"
-            >
+            <div className="flex flex-col gap-2 text-center font-semibold" role="status" aria-live="polite">
               <p>
                 {mapScanAttemptResultToString(lastScanAttemptState.result)}
                 {lastScanAttemptState.ticketTypeName ? <br /> : null}

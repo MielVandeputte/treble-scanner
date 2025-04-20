@@ -7,11 +7,12 @@
 }
 
 @layer base {
+  html,
   body {
     @apply bg-zinc-950;
+    @apply text-zinc-400;
 
-    @apply overflow-x-hidden;
-    @apply overflow-y-hidden;
+    @apply overflow-hidden;
   }
 
   * {

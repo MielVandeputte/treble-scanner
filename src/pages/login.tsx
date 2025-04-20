@@ -38,12 +38,12 @@ export function Login(): JSX.Element {
     <main className="flex justify-center">
       <form
         onSubmit={handleSubmit(onFormSubmit)}
-        className="flex h-dvh w-screen max-w-md flex-col items-center justify-center gap-5 px-10 py-5"
+        className="flex h-svh max-w-md flex-col items-center justify-center gap-5 px-10 py-5"
         aria-describedby={errorMessageState ?? undefined}
       >
         <h1 className="brand-font text-center text-4xl text-zinc-200 select-none">treble</h1>
 
-        <p className="text-justify font-semibold text-zinc-400 select-none">
+        <p className="text-justify font-semibold select-none">
           Voer het event ID en de code in om tickets te beginnen scannen. Beide zijn te vinden in het dashboard op
           treble-events.be.
         </p>
