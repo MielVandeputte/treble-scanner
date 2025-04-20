@@ -13,12 +13,12 @@ export default defineConfig({
       manifest: {
         name: 'Treble Scanner',
         short_name: 'Treble Scanner',
-        description: 'Scan de QR-codes op de tickets van Treble Events',
-        theme_color: '#18181B',
+        description: 'Scanner voor de QR-codes op de tickets van Treble',
+        theme_color: '#09090b',
         icons: [
           {
-            src: 'pwa-72x72.png',
-            sizes: '72x72',
+            src: 'pwa-64x64.png',
+            sizes: '64x64',
             type: 'image/png',
           },
           {
@@ -36,12 +36,6 @@ export default defineConfig({
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',
-          },
-          {
-            src: 'maskable-icon-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any',
           },
         ],
       },

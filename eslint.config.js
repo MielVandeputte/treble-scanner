@@ -77,6 +77,7 @@ export default defineConfig([
 
       'unicorn/no-null': 'off',
       'unicorn/prevent-abbreviations': 'off',
+      'unicorn/switch-case-braces': 'off',
     },
   },
 ]);

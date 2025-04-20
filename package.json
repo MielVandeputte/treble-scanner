@@ -1,21 +1,25 @@
 {
   "name": "treble-scanner",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "start": "vite",
+    "format": "prettier --write \"**/*.{js,tsx,ts,css,jsx,json}\"",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write \"**/*.{js,tsx,ts,css,jsx,json}\"",
-    "build": "tsc && vite build"
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023  public/logo.svg",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@fontsource/proza-libre": "^5.2.5",
     "clsx": "^2.1.1",
+    "motion": "^12.7.4",
     "qr-scanner": "^1.4.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-hook-form": "^7.55.0",
     "react-router-dom": "^7.5.1",
     "store2": "^2.14.4"
   },
@@ -36,7 +40,6 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "eslint-plugin-unicorn": "^58.0.0",
-    "globals": "^16.0.0",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
