@@ -51,6 +51,14 @@ const router = createBrowserRouter([
       </CredentialsFilter>
     ),
   },
+  {
+    path: '*',
+    element: (
+      <CredentialsFilter assertPresent>
+        <Scanner />
+      </CredentialsFilter>
+    ),
+  },
 ]);
 
 createRoot(document.querySelector('#root')!).render(

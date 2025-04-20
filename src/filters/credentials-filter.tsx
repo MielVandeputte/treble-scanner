@@ -1,4 +1,4 @@
-import { JSX, ReactNode, use } from 'react';
+import { JSX, ReactNode, use, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ScanCredentialsContext } from '../contexts/scan-credentials-context.tsx';
@@ -16,17 +16,23 @@ export function CredentialsFilter({
   const navigate = useNavigate();
   const scanCredentials = use(ScanCredentialsContext).scanCredentials;
 
+  useEffect(() => {
+    if (assertPresent && scanCredentials === null) {
+      navigate(LOGIN_PATH, { replace: true, viewTransition: true });
+    } else if (assertNotPresent && scanCredentials !== null) {
+      navigate(SCANNER_PATH, { replace: true, viewTransition: true });
+    }
+  }, [navigate, scanCredentials, assertPresent, assertNotPresent]);
+
   if (scanCredentials === undefined) {
     return null;
   }
 
   if (assertPresent && scanCredentials === null) {
-    navigate(LOGIN_PATH, { replace: true, viewTransition: true });
     return null;
   }
 
   if (assertNotPresent && scanCredentials !== null) {
-    navigate(SCANNER_PATH, { replace: true, viewTransition: true });
     return null;
   }
 

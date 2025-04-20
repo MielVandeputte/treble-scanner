@@ -8,7 +8,6 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import prettierConfig from 'eslint-config-prettier';
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
-import pluginQuery from '@tanstack/eslint-plugin-query';
 
 export default defineConfig([
   globalIgnores(['**/dist', './vite.config.ts']),
@@ -34,7 +33,6 @@ export default defineConfig([
       prettier,
       import: importPlugin,
       unicorn: eslintPluginUnicorn,
-      '@tanstack/query': pluginQuery,
     },
     settings: {
       react: {
@@ -48,7 +46,6 @@ export default defineConfig([
       ...importPlugin.configs.recommended.rules,
       ...prettierConfig.rules,
       ...eslintPluginUnicorn.configs.recommended.rules,
-      ...pluginQuery.configs.recommended.rules,
 
       'no-console': 'warn',
       'no-debugger': 'warn',

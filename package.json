@@ -8,12 +8,12 @@
     "format": "prettier --write \"**/*.{js,tsx,ts,css,jsx,json}\"",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023  public/logo.svg",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
     "@fontsource/proza-libre": "^5.2.5",
-    "@tanstack/react-query": "^5.74.4",
     "clsx": "^2.1.1",
     "motion": "^12.7.4",
     "qr-scanner": "^1.4.2",
@@ -25,7 +25,6 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.4",
-    "@tanstack/eslint-plugin-query": "^5.73.3",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@typescript-eslint/eslint-plugin": "^8.30.1",

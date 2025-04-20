@@ -16,6 +16,7 @@ export function ScanCredentialsProvider({ children }: { children: ReactNode }): 
 
     if (scanCredentials === null) {
       store.clearAll();
+      location.reload();
     } else {
       store.set(SCAN_CREDENTIALS_STORE_KEY, scanCredentials);
     }
