@@ -58,10 +58,14 @@ export function ScanHistory(): JSX.Element {
       )}
 
       <Footer cols={2}>
-        <Button onClick={logout} color="danger" aria-label="Uitloggen en ander event selecteren">
+        <Button type="button" onClick={logout} color="danger" aria-label="Uitloggen en ander event selecteren">
           Ander event
         </Button>
-        <Button onClick={() => navigate(SCANNER_PATH, { viewTransition: true })} aria-label="Terug naar scanner">
+        <Button
+          type="button"
+          onClick={() => navigate(SCANNER_PATH, { viewTransition: true })}
+          aria-label="Terug naar scanner"
+        >
           <BackIcon />
         </Button>
       </Footer>
