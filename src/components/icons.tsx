@@ -1,8 +1,9 @@
 import clsx from 'clsx';
-import { forwardRef } from 'react';
+import { forwardRef, SVGAttributes } from 'react';
 
-export const LightningIcon = forwardRef<SVGSVGElement, { className?: string }>(({ className }, ref) => (
+export const LightningIcon = forwardRef<SVGSVGElement, SVGAttributes<SVGSVGElement>>(({ className, ...props }, ref) => (
   <svg
+    {...props}
     ref={ref}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -14,25 +15,29 @@ export const LightningIcon = forwardRef<SVGSVGElement, { className?: string }>((
 ));
 LightningIcon.displayName = 'LightningIcon';
 
-export const FilledInLightningIcon = forwardRef<SVGSVGElement, { className?: string }>(({ className }, ref) => (
-  <svg
-    ref={ref}
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    className={clsx(className, 'h-6 w-6')}
-  >
-    <path
-      fillRule="evenodd"
-      d="M14.615 1.595a.75.75 0 01.359.852L12.982 9.75h7.268a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.913-.143z"
-      clipRule="evenodd"
-    />
-  </svg>
-));
+export const FilledInLightningIcon = forwardRef<SVGSVGElement, SVGAttributes<SVGSVGElement>>(
+  ({ className, ...props }, ref) => (
+    <svg
+      {...props}
+      ref={ref}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={clsx(className, 'h-6 w-6')}
+    >
+      <path
+        fillRule="evenodd"
+        d="M14.615 1.595a.75.75 0 01.359.852L12.982 9.75h7.268a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.913-.143z"
+        clipRule="evenodd"
+      />
+    </svg>
+  ),
+);
 FilledInLightningIcon.displayName = 'FilledInLightningIcon';
 
-export const SwitchIcon = forwardRef<SVGSVGElement, { className?: string }>(({ className }, ref) => (
+export const SwitchIcon = forwardRef<SVGSVGElement, SVGAttributes<SVGSVGElement>>(({ className, ...props }, ref) => (
   <svg
+    {...props}
     ref={ref}
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -50,8 +55,9 @@ export const SwitchIcon = forwardRef<SVGSVGElement, { className?: string }>(({ c
 ));
 SwitchIcon.displayName = 'SwitchIcon';
 
-export const PencilIcon = forwardRef<SVGSVGElement, { className?: string }>(({ className }, ref) => (
+export const PencilIcon = forwardRef<SVGSVGElement, SVGAttributes<SVGSVGElement>>(({ className, ...props }, ref) => (
   <svg
+    {...props}
     ref={ref}
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -69,8 +75,9 @@ export const PencilIcon = forwardRef<SVGSVGElement, { className?: string }>(({ c
 ));
 PencilIcon.displayName = 'PencilIcon';
 
-export const MenuIcon = forwardRef<SVGSVGElement, { className?: string }>(({ className }, ref) => (
+export const MenuIcon = forwardRef<SVGSVGElement, SVGAttributes<SVGSVGElement>>(({ className, ...props }, ref) => (
   <svg
+    {...props}
     ref={ref}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -86,8 +93,9 @@ export const MenuIcon = forwardRef<SVGSVGElement, { className?: string }>(({ cla
 ));
 MenuIcon.displayName = 'MenuIcon';
 
-export const WifiIcon = forwardRef<SVGSVGElement, { className?: string }>(({ className }, ref) => (
+export const WifiIcon = forwardRef<SVGSVGElement, SVGAttributes<SVGSVGElement>>(({ className, ...props }, ref) => (
   <svg
+    {...props}
     ref={ref}
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -105,8 +113,9 @@ export const WifiIcon = forwardRef<SVGSVGElement, { className?: string }>(({ cla
 ));
 WifiIcon.displayName = 'WifiIcon';
 
-export const BackIcon = forwardRef<SVGSVGElement, { className?: string }>(({ className }, ref) => (
+export const BackIcon = forwardRef<SVGSVGElement, SVGAttributes<SVGSVGElement>>(({ className, ...props }, ref) => (
   <svg
+    {...props}
     ref={ref}
     xmlns="http://www.w3.org/2000/svg"
     fill="none"

@@ -48,15 +48,16 @@ export function Scanner(): JSX.Element {
       if (scanResult.data) {
         scanningActive.current = false;
 
-        const scanAttempt = await scanTicket(scanResult.data, scanCredentials!);
+        const { data, error } = await scanTicket(scanResult.data, scanCredentials!);
 
-        if (scanAttempt.data) {
-          setLastScanAttemptState(scanAttempt.data);
-          addScanAttempt(scanAttempt.data);
-        } else if (scanAttempt.error) {
-          setErrorMessageState(scanAttempt.error);
+        if (data) {
+          setLastScanAttemptState(data);
+          addScanAttempt(data);
+        } else if (error) {
+          setErrorMessageState(error);
         }
-        timer.current = setTimeout(() => restartScanning(), 10_000);
+
+        timer.current = setTimeout(restartScanning, 10_000);
       } else {
         setErrorMessageState('Geen QR-code gevonden');
       }
@@ -177,7 +178,7 @@ export function Scanner(): JSX.Element {
   }
 
   return (
-    <main className="absolute top-0 h-svh overflow-hidden bg-zinc-950 select-none">
+    <main className="absolute top-0 h-svh w-screen overflow-hidden bg-zinc-950 select-none">
       <video ref={viewFinder} className="h-svh w-screen object-cover" aria-hidden />
 
       <div
