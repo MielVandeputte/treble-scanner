@@ -5,6 +5,13 @@
 | Main | [![Lint](https://github.com/MielVandeputte/treble-scanner/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/MielVandeputte/treble-scanner/actions/workflows/lint.yml) |
 | Staging | [![Lint](https://github.com/MielVandeputte/treble-scanner/actions/workflows/lint.yml/badge.svg?branch=staging)](https://github.com/MielVandeputte/treble-scanner/actions/workflows/lint.yml) |
 
+build:
+chore:
+ci:
+docs:
 feat:
 fix:
-chore:
+perf:
+refactor:
+style:
+test:

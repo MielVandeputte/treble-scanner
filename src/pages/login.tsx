@@ -38,7 +38,7 @@ export function Login(): JSX.Element {
     <main className="flex justify-center">
       <form
         onSubmit={handleSubmit(onFormSubmit)}
-        className="flex h-svh max-w-md flex-col items-center justify-center gap-5 px-10 py-5"
+        className="flex h-svh w-full max-w-md flex-col items-center justify-center gap-5 px-10 py-5"
         aria-describedby={errorMessageState ? 'error-message' : undefined}
       >
         <h1 className="brand-font text-center text-4xl text-zinc-200 select-none">treble</h1>
