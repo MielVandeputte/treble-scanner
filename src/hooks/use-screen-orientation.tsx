@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 
 import { ScreenOrientation } from '../types/screen-orientation.ts';
 
@@ -9,22 +9,18 @@ const orientationTypeToScreenOrientationMap: Record<OrientationType, ScreenOrien
   'landscape-secondary': 'LANDSCAPE',
 };
 
+function subscribe(callback: () => void) {
+  globalThis.screen.orientation.addEventListener('change', callback);
+
+  return () => {
+    globalThis.screen.orientation.removeEventListener('change', callback);
+  };
+}
+
 export function useScreenOrientation(): ScreenOrientation {
-  const [screenOrientationState, setScreenOrientationState] = useState<ScreenOrientation>(
-    orientationTypeToScreenOrientationMap[globalThis.screen.orientation.type],
+  return useSyncExternalStore<ScreenOrientation>(
+    subscribe,
+    () => orientationTypeToScreenOrientationMap[globalThis.screen.orientation.type],
+    () => 'PORTRAIT',
   );
-
-  useEffect(() => {
-    function refreshScreenOrientationState(): void {
-      setScreenOrientationState(orientationTypeToScreenOrientationMap[globalThis.screen.orientation.type]);
-    }
-
-    globalThis.addEventListener('resize', refreshScreenOrientationState);
-
-    return () => {
-      globalThis.removeEventListener('resize', refreshScreenOrientationState);
-    };
-  }, []);
-
-  return screenOrientationState;
 }
