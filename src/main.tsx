@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 
 import { ScanCredentialsProvider } from './contexts/scan-credentials-provider.tsx';
 import { ScanHistoryProvider } from './contexts/scan-history-provider.tsx';
@@ -53,11 +53,7 @@ const router = createBrowserRouter([
   },
   {
     path: '*',
-    element: (
-      <CredentialsFilter assertPresent>
-        <Scanner />
-      </CredentialsFilter>
-    ),
+    element: <Navigate to={SCANNER_PATH} replace />,
   },
 ]);
 
