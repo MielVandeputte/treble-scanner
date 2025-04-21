@@ -1,21 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
+
+function subscribe(callback: () => void) {
+  globalThis.addEventListener('online', callback);
+  globalThis.addEventListener('offline', callback);
+
+  return () => {
+    globalThis.removeEventListener('online', callback);
+    globalThis.removeEventListener('offline', callback);
+  };
+}
 
 export function useOnlineStatus(): boolean {
-  const [onlineStatusState, setOnlineStatusState] = useState<boolean>(navigator.onLine);
-
-  useEffect(() => {
-    function refreshOnlineStatusState(): void {
-      setOnlineStatusState(navigator.onLine);
-    }
-
-    globalThis.addEventListener('online', refreshOnlineStatusState);
-    globalThis.addEventListener('offline', refreshOnlineStatusState);
-
-    return () => {
-      globalThis.removeEventListener('online', refreshOnlineStatusState);
-      globalThis.removeEventListener('offline', refreshOnlineStatusState);
-    };
-  }, []);
-
-  return onlineStatusState;
+  return useSyncExternalStore<boolean>(
+    subscribe,
+    () => navigator.onLine,
+    () => true,
+  );
 }
