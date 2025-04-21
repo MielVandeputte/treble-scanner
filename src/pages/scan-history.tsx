@@ -66,7 +66,7 @@ export function ScanHistory(): JSX.Element {
           onClick={() => navigate(SCANNER_PATH, { viewTransition: true })}
           aria-label="Terug naar scanner"
         >
-          <BackIcon />
+          <BackIcon aria-hidden />
         </Button>
       </Footer>
     </div>

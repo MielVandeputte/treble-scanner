@@ -55,7 +55,7 @@ export function Login(): JSX.Element {
             placeholder="Event ID"
             autoComplete="off"
             invalid={!!errors.eventId}
-            aria-required="true"
+            aria-required
             srLabel="Event ID"
           />
 
@@ -65,7 +65,7 @@ export function Login(): JSX.Element {
             placeholder="Code"
             autoComplete="off"
             invalid={!!errors.scanAuthorizationCode}
-            aria-required="true"
+            aria-required
             srLabel="Code"
           />
         </div>

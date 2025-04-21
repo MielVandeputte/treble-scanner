@@ -119,7 +119,7 @@ export function ScannerCard({
         </>
       ) : (
         <div className="flex h-full flex-col items-center justify-center gap-2" role="alert" aria-live="assertive">
-          <WifiIcon aria-hidden="true" />
+          <WifiIcon aria-hidden />
           <p className="text-center font-semibold">Geen internetverbinding</p>
         </div>
       )}
