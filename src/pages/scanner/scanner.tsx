@@ -178,7 +178,7 @@ export function Scanner(): JSX.Element {
 
   return (
     <main className="absolute top-0 h-svh overflow-hidden bg-zinc-950 select-none">
-      <video ref={viewFinder} className="h-svh w-screen object-cover" aria-hidden="true" />
+      <video ref={viewFinder} className="h-svh w-screen object-cover" aria-hidden />
 
       <div
         ref={overlay}
@@ -189,7 +189,7 @@ export function Scanner(): JSX.Element {
           lastScanAttemptState?.result ? '' : 'border-zinc-200/40',
           'rounded-sm border-8 border-solid transition',
         )}
-        aria-hidden="true"
+        aria-hidden
       />
 
       <ScannerCard

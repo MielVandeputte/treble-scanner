@@ -12,7 +12,7 @@ export function PortraitFilter({ children }: { children: ReactNode }): JSX.Eleme
       role="alert"
       aria-live="assertive"
     >
-      <SwitchIcon aria-hidden="true" />
+      <SwitchIcon aria-hidden />
       <p className="text-center font-semibold">Draai je apparaat</p>
     </div>
   ) : (

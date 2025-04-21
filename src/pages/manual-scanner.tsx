@@ -61,7 +61,7 @@ export function ManualScanner(): JSX.Element {
               placeholder="Geheime code"
               autoComplete="off"
               invalid={!!errors.secretCode}
-              aria-required="true"
+              aria-required
               srLabel="Geheime code"
             />
 
@@ -107,7 +107,7 @@ export function ManualScanner(): JSX.Element {
           onClick={() => navigate(SCANNER_PATH, { viewTransition: true })}
           aria-label="Terug naar scanner"
         >
-          <BackIcon />
+          <BackIcon aria-hidden />
         </Button>
       </Footer>
     </div>

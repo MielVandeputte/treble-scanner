@@ -11,7 +11,7 @@
     "lint:fix": "eslint . --fix",
     "check": "npm run format:check && npm run lint:check",
     "fix": "npm run format:fix && npm run lint:fix",
-    "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023  public/logo.svg",
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/logo.svg",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },

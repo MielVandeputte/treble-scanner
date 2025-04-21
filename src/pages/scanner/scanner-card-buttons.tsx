@@ -24,7 +24,7 @@ export function FlashButton({
       )}
       aria-label={isFlashOnState ? 'Zet flits uit' : 'Zet flits aan'}
     >
-      {isFlashOnState ? <FilledInLightningIcon aria-hidden="true" /> : <LightningIcon aria-hidden="true" />}
+      {isFlashOnState ? <FilledInLightningIcon aria-hidden /> : <LightningIcon aria-hidden />}
     </button>
   );
 }
@@ -46,7 +46,7 @@ export function CameraSwitchButton({
       )}
       aria-label="Wissel camera"
     >
-      <SwitchIcon aria-hidden="true" />
+      <SwitchIcon aria-hidden />
     </button>
   );
 }
@@ -62,7 +62,7 @@ export function ManualScannerButton({ showingScanAttempt }: { showingScanAttempt
       )}
       aria-label="Manueel scannen"
     >
-      <PencilIcon aria-hidden="true" />
+      <PencilIcon aria-hidden />
     </Link>
   );
 }
@@ -78,7 +78,7 @@ export function ScanHistoryButton({ showingScanAttempt }: { showingScanAttempt: 
       )}
       aria-label="Scangeschiedenis"
     >
-      <MenuIcon aria-hidden="true" />
+      <MenuIcon aria-hidden />
     </Link>
   );
 }
