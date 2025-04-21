@@ -25,7 +25,7 @@ export function ScanHistory(): JSX.Element {
 
       {scanHistory?.length ? (
         <main className="overflow-x-hidden overflow-y-scroll">
-          <ul className="flex flex-col divide-y divide-zinc-900 px-10 text-center font-semibold">
+          <ol className="flex flex-col divide-y divide-zinc-900 px-10 text-center font-semibold">
             {scanHistory.map((scanAttempt: ScanAttempt) => (
               <li key={scanAttempt.id} className="flex flex-col gap-2 py-5">
                 <time dateTime={scanAttempt.timestamp.toISOString()} className="text-zinc-200">
@@ -49,7 +49,7 @@ export function ScanHistory(): JSX.Element {
                 <p>{scanAttempt.secretCode}</p>
               </li>
             ))}
-          </ul>
+          </ol>
         </main>
       ) : (
         <main className="flex items-center justify-center">
