@@ -7,7 +7,11 @@ export function PortraitFilter({ children }: { children: ReactNode }): JSX.Eleme
   const screenOrientation = useScreenOrientation();
 
   return screenOrientation === 'LANDSCAPE' ? (
-    <div className="flex h-svh flex-col items-center justify-center gap-2 select-none">
+    <div
+      className="flex h-svh flex-col items-center justify-center gap-2 select-none"
+      role="alert"
+      aria-live="assertive"
+    >
       <SwitchIcon aria-hidden="true" />
       <p className="text-center font-semibold">Draai je apparaat</p>
     </div>
