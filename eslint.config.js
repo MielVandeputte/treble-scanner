@@ -1,17 +1,16 @@
 import tsParser from '@typescript-eslint/parser';
-import tseslint from 'typescript-eslint';
-import react from 'eslint-plugin-react';
-import reactHooks from 'eslint-plugin-react-hooks';
+import tsEslint from 'typescript-eslint';
+import reactPlugin from 'eslint-plugin-react';
+import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import importPlugin from 'eslint-plugin-import';
-import prettier from 'eslint-plugin-prettier';
-import reactRefresh from 'eslint-plugin-react-refresh';
+import prettierPlugin from 'eslint-plugin-prettier';
+import reactRefreshPlugin from 'eslint-plugin-react-refresh';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import prettierConfig from 'eslint-config-prettier';
-import eslintPluginUnicorn from 'eslint-plugin-unicorn';
+import unicornPlugin from 'eslint-plugin-unicorn';
 
 export default defineConfig([
   globalIgnores(['**/dist', './vite.config.ts']),
-
   {
     files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
@@ -26,13 +25,13 @@ export default defineConfig([
       },
     },
     plugins: {
-      typescript: tseslint.plugin,
-      react,
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
-      prettier,
+      typescript: tsEslint.plugin,
+      react: reactPlugin,
+      'react-hooks': reactHooksPlugin,
+      'react-refresh': reactRefreshPlugin,
+      prettier: prettierPlugin,
       import: importPlugin,
-      unicorn: eslintPluginUnicorn,
+      unicorn: unicornPlugin,
     },
     settings: {
       react: {
@@ -40,12 +39,13 @@ export default defineConfig([
       },
     },
     rules: {
-      ...tseslint.configs.recommended.rules,
-      ...react.configs.recommended.rules,
-      ...reactHooks.configs.recommended.rules,
-      ...importPlugin.configs.recommended.rules,
+      ...tsEslint.configs.recommended.rules,
+      ...reactPlugin.configs.recommended.rules,
+      ...reactHooksPlugin.configs.recommended.rules,
+      ...reactRefreshPlugin.configs.recommended.rules,
       ...prettierConfig.rules,
-      ...eslintPluginUnicorn.configs.recommended.rules,
+      ...importPlugin.configs.recommended.rules,
+      ...unicornPlugin.configs.recommended.rules,
 
       'no-console': 'warn',
       'no-debugger': 'warn',
