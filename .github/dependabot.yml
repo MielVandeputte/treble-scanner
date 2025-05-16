@@ -10,5 +10,6 @@ updates:
     schedule:
       interval: "daily"
     target-branch: "staging"
-    prefix: "build(deps)"
-    prefix-development: "build(deps-dev)"
+    commit-message:
+      prefix: "build(deps)"
+      prefix-development: "build(deps-dev)"
