@@ -14,7 +14,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     <button
       {...props}
       ref={ref}
-      aria-busy={loading}
       disabled={disabled || loading}
       className={clsx(
         color === 'regular' && !disabled ? 'bg-zinc-900 active:bg-zinc-800' : '',
@@ -27,6 +26,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           : 'border-transparent text-zinc-200 active:scale-95 active:text-white',
         'flex h-12 items-center justify-center rounded-full border-2 text-center font-semibold whitespace-nowrap transition select-none',
       )}
+      aria-busy={loading}
     >
       {children}
     </button>

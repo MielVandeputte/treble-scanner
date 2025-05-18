@@ -57,7 +57,7 @@ export function ScanHistory(): JSX.Element {
         </main>
       )}
 
-      <Footer cols={2}>
+      <Footer columns={2}>
         <Button type="button" onClick={logout} color="danger" aria-label="Uitloggen en ander event selecteren">
           Ander event
         </Button>

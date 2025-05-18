@@ -61,8 +61,8 @@ export function ManualScanner(): JSX.Element {
               placeholder="Geheime code"
               autoComplete="off"
               invalid={!!errors.secretCode}
-              aria-required
               srLabel="Geheime code"
+              aria-required
             />
 
             <Button type="submit" color="brand" horizontalPadding loading={submitting} disabled={disabled}>
@@ -101,7 +101,7 @@ export function ManualScanner(): JSX.Element {
         </div>
       </main>
 
-      <Footer cols={1}>
+      <Footer columns={1}>
         <Button
           type="button"
           onClick={() => navigate(SCANNER_PATH, { viewTransition: true })}
