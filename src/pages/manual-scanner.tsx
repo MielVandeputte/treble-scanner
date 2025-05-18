@@ -22,24 +22,24 @@ export function ManualScanner(): JSX.Element {
 
   const {
     register,
-    formState: { disabled, errors, isSubmitting },
+    formState: { disabled, errors, isSubmitting: submitting },
     handleSubmit,
   } = useForm<FormType>();
 
-  const [lastScanAttemptState, setLastScanAttemptState] = useState<ScanAttempt | null>(null);
-  const [errorMessageState, setErrorMessageState] = useState<string | null>(null);
+  const [lastScanAttempt, setLastScanAttempt] = useState<ScanAttempt | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   async function onFormSubmit(formData: FormType): Promise<void> {
-    setLastScanAttemptState(null);
-    setErrorMessageState(null);
+    setLastScanAttempt(null);
+    setErrorMessage(null);
 
     const { data, error } = await scanTicket(formData.secretCode, scanCredentials!);
 
     if (data) {
-      setLastScanAttemptState(data);
+      setLastScanAttempt(data);
       addScanAttempt(data);
     } else if (error) {
-      setErrorMessageState(error);
+      setErrorMessage(error);
     }
   }
 
@@ -53,7 +53,7 @@ export function ManualScanner(): JSX.Element {
             id="manual-scan-form"
             onSubmit={handleSubmit(onFormSubmit)}
             className="flex w-full flex-col items-center gap-4"
-            aria-describedby={errorMessageState ? 'error-message' : undefined}
+            aria-describedby={errorMessage ? 'error-message' : undefined}
           >
             <Input
               id="secret-code-input"
@@ -65,37 +65,37 @@ export function ManualScanner(): JSX.Element {
               srLabel="Geheime code"
             />
 
-            <Button type="submit" color="brand" horizontalPadding loading={isSubmitting} disabled={disabled}>
+            <Button type="submit" color="brand" horizontalPadding loading={submitting} disabled={disabled}>
               Scan
             </Button>
           </form>
 
-          {lastScanAttemptState ? (
+          {lastScanAttempt ? (
             <div className="flex flex-col gap-2 text-center font-semibold" role="status" aria-live="polite">
               <p>
-                {mapScanAttemptResultToString(lastScanAttemptState.result)}
-                {lastScanAttemptState.ticketTypeName ? <br /> : null}
-                {lastScanAttemptState.ticketTypeName ?? null}
+                {mapScanAttemptResultToString(lastScanAttempt.result)}
+                {lastScanAttempt.ticketTypeName ? <br /> : null}
+                {lastScanAttempt.ticketTypeName ?? null}
               </p>
 
-              {lastScanAttemptState.ownerName || lastScanAttemptState.ownerEmail ? (
+              {lastScanAttempt.ownerName || lastScanAttempt.ownerEmail ? (
                 <p>
-                  {lastScanAttemptState.ownerName ?? null}
-                  {lastScanAttemptState.ownerName && lastScanAttemptState.ownerEmail ? <br /> : null}
-                  {lastScanAttemptState.ownerEmail ?? null}
+                  {lastScanAttempt.ownerName ?? null}
+                  {lastScanAttempt.ownerName && lastScanAttempt.ownerEmail ? <br /> : null}
+                  {lastScanAttempt.ownerEmail ?? null}
                 </p>
               ) : null}
             </div>
           ) : null}
 
-          {errorMessageState ? (
+          {errorMessage ? (
             <p
               id="error-message"
               className="font-semibold text-rose-900 select-none"
               role="alert"
               aria-live="assertive"
             >
-              {errorMessageState}
+              {errorMessage}
             </p>
           ) : null}
         </div>

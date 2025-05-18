@@ -16,21 +16,21 @@ export function Login(): JSX.Element {
 
   const {
     register,
-    formState: { disabled, errors, isSubmitting },
+    formState: { disabled, errors, isSubmitting: submitting },
     handleSubmit,
   } = useForm<FormType>();
 
-  const [errorMessageState, setErrorMessageState] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   async function onFormSubmit(formData: FormType): Promise<void> {
-    setErrorMessageState(null);
+    setErrorMessage(null);
 
     const { data, error } = await checkScanAuthorizationCode(formData);
 
     if (data) {
       setScanCredentials(data);
     } else if (error) {
-      setErrorMessageState(error);
+      setErrorMessage(error);
     }
   }
 
@@ -40,7 +40,7 @@ export function Login(): JSX.Element {
         id="login-form"
         onSubmit={handleSubmit(onFormSubmit)}
         className="flex h-svh w-full max-w-md flex-col items-center justify-center gap-5 px-10 py-5"
-        aria-describedby={errorMessageState ? 'error-message' : undefined}
+        aria-describedby={errorMessage ? 'error-message' : undefined}
       >
         <h1 className="brand-font text-center text-4xl text-zinc-200 select-none">treble</h1>
 
@@ -71,13 +71,13 @@ export function Login(): JSX.Element {
           />
         </div>
 
-        <Button type="submit" color="brand" horizontalPadding loading={isSubmitting} disabled={disabled}>
+        <Button type="submit" color="brand" horizontalPadding loading={submitting} disabled={disabled}>
           Start
         </Button>
 
-        {errorMessageState ? (
+        {errorMessage ? (
           <p id="error-message" className="font-semibold text-rose-900 select-none" role="alert" aria-live="assertive">
-            {errorMessageState}
+            {errorMessage}
           </p>
         ) : null}
       </form>

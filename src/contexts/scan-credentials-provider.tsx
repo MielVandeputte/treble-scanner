@@ -7,7 +7,7 @@ import { ScanCredentials } from '../types/scan-credentials.ts';
 const SCAN_CREDENTIALS_STORE_KEY = 'SCAN_CREDENTIALS';
 
 export function ScanCredentialsProvider({ children }: { children: ReactNode }): JSX.Element {
-  const [scanCredentialsState, setScanCredentialsState] = useState<ScanCredentials | null>(
+  const [scanCredentials, setScanCredentials] = useState<ScanCredentials | null>(
     store.get(SCAN_CREDENTIALS_STORE_KEY) ?? null,
   );
 
@@ -16,14 +16,14 @@ export function ScanCredentialsProvider({ children }: { children: ReactNode }): 
       store.clearAll();
       location.reload();
     } else {
-      setScanCredentialsState(scanCredentials);
+      setScanCredentials(scanCredentials);
       store.set(SCAN_CREDENTIALS_STORE_KEY, scanCredentials);
     }
   }, []);
 
   const contextValue = useMemo(
-    () => ({ scanCredentials: scanCredentialsState, setScanCredentials: setScanCredentialsAndSaveToStore }),
-    [scanCredentialsState, setScanCredentialsAndSaveToStore],
+    () => ({ scanCredentials, setScanCredentials: setScanCredentialsAndSaveToStore }),
+    [scanCredentials, setScanCredentialsAndSaveToStore],
   );
 
   return <ScanCredentialsContext.Provider value={contextValue}>{children}</ScanCredentialsContext.Provider>;

@@ -21,12 +21,12 @@ export function Scanner(): JSX.Element {
   const scanCredentials = use(ScanCredentialsContext).scanCredentials;
   const addScanAttempt = use(ScanHistoryContext).addScanAttempt;
 
-  const [hasFlashState, setHasFlashState] = useState<boolean>(false);
-  const [isFlashOnState, setFlashEnabledState] = useState<boolean>(false);
-  const [camerasListState, setCamerasListState] = useState<QrScanner.Camera[]>([]);
+  const [hasFlash, setHasFlash] = useState<boolean>(false);
+  const [flashEnabled, setFlashEnabled] = useState<boolean>(false);
+  const [cameraList, setCameraList] = useState<QrScanner.Camera[]>([]);
 
-  const [lastScanAttemptState, setLastScanAttemptState] = useState<ScanAttempt | null>(null);
-  const [errorMessageState, setErrorMessageState] = useState<string | null>(null);
+  const [lastScanAttempt, setLastScanAttempt] = useState<ScanAttempt | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const viewFinder = useRef<HTMLVideoElement | null>(null);
   const overlay = useRef<HTMLDivElement | null>(null);
@@ -36,7 +36,7 @@ export function Scanner(): JSX.Element {
 
   const scanningActive = useRef<boolean>(false);
   const togglingFlash = useRef<boolean>(false);
-  const switchingCameras = useRef<boolean>(false);
+  const switchingCamera = useRef<boolean>(false);
   const selectedCamera = useRef<'environment' | 'user'>('environment');
 
   const handleScan = useCallback(
@@ -51,15 +51,15 @@ export function Scanner(): JSX.Element {
         const { data, error } = await scanTicket(scanResult.data, scanCredentials!);
 
         if (data) {
-          setLastScanAttemptState(data);
+          setLastScanAttempt(data);
           addScanAttempt(data);
         } else if (error) {
-          setErrorMessageState(error);
+          setErrorMessage(error);
         }
 
         timer.current = setTimeout(restartScanning, 10_000);
       } else {
-        setErrorMessageState('Geen QR-code gevonden');
+        setErrorMessage('Geen QR-code gevonden');
       }
     },
     [scanCredentials, addScanAttempt],
@@ -69,7 +69,7 @@ export function Scanner(): JSX.Element {
     if (viewFinder.current && overlay.current) {
       scanner.current = new QrScanner(viewFinder.current, handleScan, {
         preferredCamera: 'environment',
-        calculateScanRegion: calculateScanRegion,
+        calculateScanRegion,
         highlightScanRegion: true,
         overlay: overlay.current,
       });
@@ -77,28 +77,28 @@ export function Scanner(): JSX.Element {
       scanner.current.start().then(() => {
         scanningActive.current = true;
         togglingFlash.current = false;
-        switchingCameras.current = false;
+        switchingCamera.current = false;
         selectedCamera.current = 'environment';
 
         setTimeout(() => {
           scanner.current?.hasFlash().then(result => {
-            setHasFlashState(result);
+            setHasFlash(result);
           });
 
           QrScanner.listCameras().then(result => {
-            setCamerasListState(result);
+            setCameraList(result);
           });
         }, 100);
       });
     }
 
     return () => {
-      setHasFlashState(false);
-      setFlashEnabledState(false);
-      setCamerasListState([]);
+      setHasFlash(false);
+      setFlashEnabled(false);
+      setCameraList([]);
 
-      setLastScanAttemptState(null);
-      setErrorMessageState(null);
+      setLastScanAttempt(null);
+      setErrorMessage(null);
 
       scanner.current?.destroy();
       scanner.current = null;
@@ -110,7 +110,7 @@ export function Scanner(): JSX.Element {
 
       scanningActive.current = false;
       togglingFlash.current = false;
-      switchingCameras.current = false;
+      switchingCamera.current = false;
       selectedCamera.current = 'environment';
     };
   }, [handleScan]);
@@ -121,57 +121,57 @@ export function Scanner(): JSX.Element {
       timer.current = null;
     }
 
-    setLastScanAttemptState(null);
-    setErrorMessageState(null);
+    setLastScanAttempt(null);
+    setErrorMessage(null);
 
     scanningActive.current = true;
   }
 
   function toggleFlash(): void {
-    if (scanner.current && !switchingCameras.current && !togglingFlash.current) {
+    if (scanner.current && !togglingFlash.current && !switchingCamera.current) {
       togglingFlash.current = true;
 
       if (scanner.current.isFlashOn()) {
         scanner.current.turnFlashOff().then(() => {
-          setFlashEnabledState(false);
+          setFlashEnabled(false);
           togglingFlash.current = false;
         });
       } else {
         scanner.current.turnFlashOn().then(() => {
-          setFlashEnabledState(true);
+          setFlashEnabled(true);
           togglingFlash.current = false;
         });
       }
     }
   }
 
-  function toggleCamera(): void {
-    if (scanner.current && !switchingCameras.current && !togglingFlash.current) {
-      switchingCameras.current = true;
+  function switchCamera(): void {
+    if (scanner.current && !switchingCamera.current && !togglingFlash.current) {
+      switchingCamera.current = true;
 
       if (selectedCamera.current === 'environment') {
         scanner.current.setCamera('user').then(() => {
-          setHasFlashState(false);
-          setFlashEnabledState(false);
+          setHasFlash(false);
+          setFlashEnabled(false);
 
           scanner.current?.hasFlash().then(result => {
-            setHasFlashState(result);
+            setHasFlash(result);
           });
 
           selectedCamera.current = 'user';
-          switchingCameras.current = false;
+          switchingCamera.current = false;
         });
       } else if (selectedCamera.current === 'user') {
         scanner.current.setCamera('environment').then(() => {
-          setHasFlashState(false);
-          setFlashEnabledState(false);
+          setHasFlash(false);
+          setFlashEnabled(false);
 
           scanner.current?.hasFlash().then(result => {
-            setHasFlashState(result);
+            setHasFlash(result);
           });
 
           selectedCamera.current = 'environment';
-          switchingCameras.current = false;
+          switchingCamera.current = false;
         });
       }
     }
@@ -184,24 +184,24 @@ export function Scanner(): JSX.Element {
       <div
         ref={overlay}
         className={clsx(
-          lastScanAttemptState?.result === 'SUCCESS' ? 'border-emerald-900/40' : '',
-          lastScanAttemptState?.result === 'ALREADY_SCANNED' ? 'border-amber-900/40' : '',
-          lastScanAttemptState?.result === 'NOT_FOUND' ? 'border-rose-900/40' : '',
-          lastScanAttemptState?.result ? '' : 'border-zinc-200/40',
+          lastScanAttempt?.result === 'SUCCESS' ? 'border-emerald-900/40' : '',
+          lastScanAttempt?.result === 'ALREADY_SCANNED' ? 'border-amber-900/40' : '',
+          lastScanAttempt?.result === 'NOT_FOUND' ? 'border-rose-900/40' : '',
+          lastScanAttempt?.result ? '' : 'border-zinc-200/40',
           'rounded-sm border-8 border-solid transition',
         )}
         aria-hidden
       />
 
       <ScannerCard
-        hasFlashState={hasFlashState}
-        isFlashOnState={isFlashOnState}
-        camerasListState={camerasListState}
-        lastScanAttemptState={lastScanAttemptState}
-        errorMessageState={errorMessageState}
+        hasFlash={hasFlash}
+        flashEnabled={flashEnabled}
+        cameraList={cameraList}
+        lastScanAttempt={lastScanAttempt}
+        errorMessage={errorMessage}
         restartScanning={restartScanning}
         toggleFlash={toggleFlash}
-        toggleCamera={toggleCamera}
+        switchCamera={switchCamera}
       />
     </main>
   );

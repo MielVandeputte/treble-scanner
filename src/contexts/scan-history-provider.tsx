@@ -35,22 +35,19 @@ function deserialize(serializedScanHistory: SerializedScanAttempt[]): ScanAttemp
 }
 
 export function ScanHistoryProvider({ children }: { children: ReactNode }): JSX.Element {
-  const [scanHistoryState, setScanHistoryState] = useState<ScanAttempt[]>(
+  const [scanHistory, setScanHistory] = useState<ScanAttempt[]>(
     sort(deserialize(store.get(SCAN_HISTORY_STORE_KEY) ?? [])),
   );
 
   const addScanAttempt = useCallback((scanAttempt: ScanAttempt): void => {
-    setScanHistoryState(prevState => {
+    setScanHistory(prevState => {
       const newState = sort([...prevState, scanAttempt]);
       store.set(SCAN_HISTORY_STORE_KEY, serialize(newState));
       return newState;
     });
   }, []);
 
-  const contextValue = useMemo(
-    () => ({ scanHistory: scanHistoryState, addScanAttempt }),
-    [scanHistoryState, addScanAttempt],
-  );
+  const contextValue = useMemo(() => ({ scanHistory, addScanAttempt }), [scanHistory, addScanAttempt]);
 
   return <ScanHistoryContext.Provider value={contextValue}>{children}</ScanHistoryContext.Provider>;
 }
