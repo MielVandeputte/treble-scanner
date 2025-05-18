@@ -1,6 +1,6 @@
 import { forwardRef, ReactNode } from 'react';
 
-export const Footer = forwardRef<HTMLDivElement, { columns: number; children: ReactNode }>(
+export const Footer = forwardRef<HTMLDivElement, Readonly<{ columns: number; children: ReactNode }>>(
   ({ columns, children }, ref) => (
     <footer
       ref={ref}

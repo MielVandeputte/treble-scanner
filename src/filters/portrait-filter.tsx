@@ -1,6 +1,6 @@
 import { JSX, ReactNode } from 'react';
 
-import { SwitchIcon } from '../components/icons.tsx';
+import { ArrowPathIcon } from '../components/icons.tsx';
 import { useScreenOrientation } from '../hooks/use-screen-orientation.tsx';
 
 export function PortraitFilter({ children }: { children: ReactNode }): JSX.Element | ReactNode {
@@ -12,7 +12,7 @@ export function PortraitFilter({ children }: { children: ReactNode }): JSX.Eleme
       role="alert"
       aria-live="assertive"
     >
-      <SwitchIcon aria-hidden />
+      <ArrowPathIcon aria-hidden />
       <p className="text-center font-semibold">Draai je apparaat</p>
     </div>
   ) : (

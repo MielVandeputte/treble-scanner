@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { JSX } from 'react';
 import { Link } from 'react-router-dom';
 
-import { SwitchIcon, FilledInLightningIcon, LightningIcon, MenuIcon, PencilIcon } from '../../components/icons.tsx';
+import { ArrowPathIcon, FilledInBoltIcon, BoltIcon, EllipsisIcon, PencilIcon } from '../../components/icons.tsx';
 import { MANUAL_SCANNER_PATH, SCAN_HISTORY_PATH } from '../../main.tsx';
 
 export function FlashToggle({
@@ -24,7 +24,7 @@ export function FlashToggle({
       )}
       aria-label={toggled ? 'Zet flits uit' : 'Zet flits aan'}
     >
-      {toggled ? <FilledInLightningIcon aria-hidden /> : <LightningIcon aria-hidden />}
+      {toggled ? <FilledInBoltIcon aria-hidden /> : <BoltIcon aria-hidden />}
     </button>
   );
 }
@@ -46,7 +46,7 @@ export function CameraSwitchButton({
       )}
       aria-label="Wissel camera"
     >
-      <SwitchIcon aria-hidden />
+      <ArrowPathIcon aria-hidden />
     </button>
   );
 }
@@ -78,7 +78,7 @@ export function ScanHistoryLink({ appearance }: { appearance: 'normal' | 'bright
       )}
       aria-label="Scangeschiedenis"
     >
-      <MenuIcon aria-hidden />
+      <EllipsisIcon aria-hidden />
     </Link>
   );
 }

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/button.tsx';
 import { Footer } from '../components/footer.tsx';
 import { Header } from '../components/header.tsx';
-import { BackIcon } from '../components/icons.tsx';
+import { ReturnIcon } from '../components/icons.tsx';
 import { Input } from '../components/input.tsx';
 import { ScanCredentialsContext } from '../contexts/scan-credentials-context.tsx';
 import { ScanHistoryContext } from '../contexts/scan-history-context.tsx';
@@ -107,7 +107,7 @@ export function ManualScanner(): JSX.Element {
           onClick={() => navigate(SCANNER_PATH, { viewTransition: true })}
           aria-label="Terug naar scanner"
         >
-          <BackIcon aria-hidden />
+          <ReturnIcon aria-hidden />
         </Button>
       </Footer>
     </div>

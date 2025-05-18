@@ -9,7 +9,7 @@ type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'> & 
   children: ReactNode;
 };
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = forwardRef<HTMLButtonElement, Readonly<ButtonProps>>(
   ({ color = 'regular', horizontalPadding = false, loading = false, disabled = false, children, ...props }, ref) => (
     <button
       {...props}
