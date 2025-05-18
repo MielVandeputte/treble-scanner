@@ -11,7 +11,7 @@ export function FlashToggle({
   onToggle,
 }: {
   toggled: boolean;
-  appearance: 'normal' | 'bright';
+  appearance: 'regular' | 'bright';
   onToggle: () => void;
 }): JSX.Element {
   return (
@@ -33,7 +33,7 @@ export function CameraSwitchButton({
   appearance,
   onClick,
 }: {
-  appearance: 'normal' | 'bright';
+  appearance: 'regular' | 'bright';
   onClick: () => void;
 }): JSX.Element {
   return (
@@ -51,7 +51,7 @@ export function CameraSwitchButton({
   );
 }
 
-export function ManualScannerLink({ appearance }: { appearance: 'normal' | 'bright' }): JSX.Element {
+export function ManualScannerLink({ appearance }: { appearance: 'regular' | 'bright' }): JSX.Element {
   return (
     <Link
       to={MANUAL_SCANNER_PATH}
@@ -67,7 +67,7 @@ export function ManualScannerLink({ appearance }: { appearance: 'normal' | 'brig
   );
 }
 
-export function ScanHistoryLink({ appearance }: { appearance: 'normal' | 'bright' }): JSX.Element {
+export function ScanHistoryLink({ appearance }: { appearance: 'regular' | 'bright' }): JSX.Element {
   return (
     <Link
       to={SCAN_HISTORY_PATH}

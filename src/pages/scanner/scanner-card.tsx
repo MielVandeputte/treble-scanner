@@ -59,20 +59,20 @@ export function ScannerCard({
               {hasFlash ? (
                 <FlashToggle
                   toggled={flashEnabled}
-                  appearance={lastScanAttempt === null ? 'normal' : 'bright'}
+                  appearance={lastScanAttempt === null ? 'regular' : 'bright'}
                   onToggle={toggleFlash}
                 />
               ) : null}
 
               {cameraList?.length > 1 ? (
                 <CameraSwitchButton
-                  appearance={lastScanAttempt === null ? 'normal' : 'bright'}
+                  appearance={lastScanAttempt === null ? 'regular' : 'bright'}
                   onClick={switchCamera}
                 />
               ) : null}
 
-              <ManualScannerLink appearance={lastScanAttempt === null ? 'normal' : 'bright'} />
-              <ScanHistoryLink appearance={lastScanAttempt === null ? 'normal' : 'bright'} />
+              <ManualScannerLink appearance={lastScanAttempt === null ? 'regular' : 'bright'} />
+              <ScanHistoryLink appearance={lastScanAttempt === null ? 'regular' : 'bright'} />
             </motion.section>
           </AnimatePresence>
 
