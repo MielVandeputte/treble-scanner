@@ -7,5 +7,5 @@ export const ScanCredentialsContext = createContext<{
   setScanCredentials: (scanCredentials: ScanCredentials | null) => void;
 }>({
   scanCredentials: undefined,
-  setScanCredentials: (): void => {},
+  setScanCredentials: (_: ScanCredentials | null): void => {},
 });

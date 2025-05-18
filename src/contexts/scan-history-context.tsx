@@ -7,5 +7,5 @@ export const ScanHistoryContext = createContext<{
   addScanAttempt: (scanAttempt: ScanAttempt) => void;
 }>({
   scanHistory: undefined,
-  addScanAttempt: (): void => {},
+  addScanAttempt: (_: ScanAttempt): void => {},
 });
