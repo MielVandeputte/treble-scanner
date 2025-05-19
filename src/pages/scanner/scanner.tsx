@@ -28,25 +28,25 @@ export function Scanner(): JSX.Element {
   const [lastScanAttempt, setLastScanAttempt] = useState<ScanAttempt | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const viewFinder = useRef<HTMLVideoElement | null>(null);
-  const overlay = useRef<HTMLDivElement | null>(null);
-  const scanner = useRef<QrScanner | null>(null);
+  const viewFinderRef = useRef<HTMLVideoElement | null>(null);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
+  const scannerRef = useRef<QrScanner | null>(null);
 
-  const timer = useRef<NodeJS.Timeout | null>(null);
+  const restartTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const scanningActive = useRef<boolean>(false);
-  const togglingFlash = useRef<boolean>(false);
-  const switchingCamera = useRef<boolean>(false);
-  const selectedCamera = useRef<'environment' | 'user'>('environment');
+  const scanningActiveRef = useRef<boolean>(false);
+  const togglingFlashRef = useRef<boolean>(false);
+  const switchingCameraRef = useRef<boolean>(false);
+  const selectedCameraRef = useRef<'environment' | 'user'>('environment');
 
   const handleScan = useCallback(
     async (scanResult: QrScanner.ScanResult) => {
-      if (!scanningActive.current || !navigator.onLine) {
+      if (!scanningActiveRef.current || !navigator.onLine) {
         return;
       }
 
       if (scanResult.data) {
-        scanningActive.current = false;
+        scanningActiveRef.current = false;
 
         const { data, error } = await scanTicket(scanResult.data, scanCredentials!);
 
@@ -57,7 +57,7 @@ export function Scanner(): JSX.Element {
           setErrorMessage(error);
         }
 
-        timer.current = setTimeout(restartScanning, 10_000);
+        restartTimeoutRef.current = setTimeout(restartScanning, 10_000);
       } else {
         setErrorMessage('Geen QR-code gevonden');
       }
@@ -66,22 +66,22 @@ export function Scanner(): JSX.Element {
   );
 
   useEffect(() => {
-    if (viewFinder.current && overlay.current) {
-      scanner.current = new QrScanner(viewFinder.current, handleScan, {
+    if (viewFinderRef.current && overlayRef.current) {
+      scannerRef.current = new QrScanner(viewFinderRef.current, handleScan, {
         preferredCamera: 'environment',
         calculateScanRegion,
         highlightScanRegion: true,
-        overlay: overlay.current,
+        overlay: overlayRef.current,
       });
 
-      scanner.current.start().then(() => {
-        scanningActive.current = true;
-        togglingFlash.current = false;
-        switchingCamera.current = false;
-        selectedCamera.current = 'environment';
+      scannerRef.current.start().then(() => {
+        scanningActiveRef.current = true;
+        togglingFlashRef.current = false;
+        switchingCameraRef.current = false;
+        selectedCameraRef.current = 'environment';
 
         setTimeout(() => {
-          scanner.current?.hasFlash().then(result => {
+          scannerRef.current?.hasFlash().then(result => {
             setHasFlash(result);
           });
 
@@ -100,78 +100,78 @@ export function Scanner(): JSX.Element {
       setLastScanAttempt(null);
       setErrorMessage(null);
 
-      scanner.current?.destroy();
-      scanner.current = null;
+      scannerRef.current?.destroy();
+      scannerRef.current = null;
 
-      if (timer.current) {
-        clearTimeout(timer.current);
-        timer.current = null;
+      if (restartTimeoutRef.current) {
+        clearTimeout(restartTimeoutRef.current);
+        restartTimeoutRef.current = null;
       }
 
-      scanningActive.current = false;
-      togglingFlash.current = false;
-      switchingCamera.current = false;
-      selectedCamera.current = 'environment';
+      scanningActiveRef.current = false;
+      togglingFlashRef.current = false;
+      switchingCameraRef.current = false;
+      selectedCameraRef.current = 'environment';
     };
   }, [handleScan]);
 
   function restartScanning(): void {
-    if (timer.current) {
-      clearTimeout(timer.current);
-      timer.current = null;
+    if (restartTimeoutRef.current) {
+      clearTimeout(restartTimeoutRef.current);
+      restartTimeoutRef.current = null;
     }
 
     setLastScanAttempt(null);
     setErrorMessage(null);
 
-    scanningActive.current = true;
+    scanningActiveRef.current = true;
   }
 
   function toggleFlash(): void {
-    if (scanner.current && !togglingFlash.current && !switchingCamera.current) {
-      togglingFlash.current = true;
+    if (scannerRef.current && !togglingFlashRef.current && !switchingCameraRef.current) {
+      togglingFlashRef.current = true;
 
-      if (scanner.current.isFlashOn()) {
-        scanner.current.turnFlashOff().then(() => {
+      if (scannerRef.current.isFlashOn()) {
+        scannerRef.current.turnFlashOff().then(() => {
           setFlashEnabled(false);
-          togglingFlash.current = false;
+          togglingFlashRef.current = false;
         });
       } else {
-        scanner.current.turnFlashOn().then(() => {
+        scannerRef.current.turnFlashOn().then(() => {
           setFlashEnabled(true);
-          togglingFlash.current = false;
+          togglingFlashRef.current = false;
         });
       }
     }
   }
 
   function switchCamera(): void {
-    if (scanner.current && !switchingCamera.current && !togglingFlash.current) {
-      switchingCamera.current = true;
+    if (scannerRef.current && !switchingCameraRef.current && !togglingFlashRef.current) {
+      switchingCameraRef.current = true;
 
-      if (selectedCamera.current === 'environment') {
-        scanner.current.setCamera('user').then(() => {
+      if (selectedCameraRef.current === 'environment') {
+        scannerRef.current.setCamera('user').then(() => {
           setHasFlash(false);
           setFlashEnabled(false);
 
-          scanner.current?.hasFlash().then(result => {
+          scannerRef.current?.hasFlash().then(result => {
             setHasFlash(result);
           });
 
-          selectedCamera.current = 'user';
-          switchingCamera.current = false;
+          selectedCameraRef.current = 'user';
+          switchingCameraRef.current = false;
         });
-      } else if (selectedCamera.current === 'user') {
-        scanner.current.setCamera('environment').then(() => {
+      } else if (selectedCameraRef.current === 'user') {
+        scannerRef.current.setCamera('environment').then(() => {
           setHasFlash(false);
           setFlashEnabled(false);
 
-          scanner.current?.hasFlash().then(result => {
+          scannerRef.current?.hasFlash().then(result => {
             setHasFlash(result);
           });
 
-          selectedCamera.current = 'environment';
-          switchingCamera.current = false;
+          selectedCameraRef.current = 'environment';
+          switchingCameraRef.current = false;
         });
       }
     }
@@ -179,10 +179,10 @@ export function Scanner(): JSX.Element {
 
   return (
     <main className="absolute top-0 h-svh w-screen overflow-hidden bg-zinc-950 select-none">
-      <video ref={viewFinder} className="h-svh w-screen object-cover" aria-hidden />
+      <video ref={viewFinderRef} className="h-svh w-screen object-cover" aria-hidden />
 
       <div
-        ref={overlay}
+        ref={overlayRef}
         className={clsx(
           lastScanAttempt?.result === 'SUCCESS' ? 'border-emerald-900/40' : '',
           lastScanAttempt?.result === 'ALREADY_SCANNED' ? 'border-amber-900/40' : '',
