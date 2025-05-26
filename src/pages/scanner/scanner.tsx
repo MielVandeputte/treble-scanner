@@ -47,6 +47,7 @@ export function Scanner(): JSX.Element {
 
       if (scanResult.data) {
         scanningActiveRef.current = false;
+        navigator.vibrate(30);
 
         const { data, error } = await scanTicket(scanResult.data, scanCredentials!);
 

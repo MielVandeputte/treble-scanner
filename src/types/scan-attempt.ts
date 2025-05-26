@@ -1,5 +1,3 @@
-export type ScanAttemptResult = 'SUCCESS' | 'ALREADY_SCANNED' | 'NOT_FOUND';
-
 export type ScanAttempt = {
   id: string;
   timestamp: Date;
@@ -9,6 +7,8 @@ export type ScanAttempt = {
   ownerEmail: string | null;
   ticketTypeName: string | null;
 };
+
+export type ScanAttemptResult = 'SUCCESS' | 'ALREADY_SCANNED' | 'NOT_FOUND';
 
 export function mapScanAttemptResultToString(scanAttemptResult: ScanAttemptResult): string {
   switch (scanAttemptResult) {
