@@ -18,7 +18,7 @@
   "dependencies": {
     "@fontsource/proza-libre": "^5.2.5",
     "clsx": "^2.1.1",
-    "motion": "^12.12.1",
+    "motion": "^12.12.2",
     "qr-scanner": "^1.4.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
