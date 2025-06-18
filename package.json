@@ -18,11 +18,11 @@
   "dependencies": {
     "@fontsource/proza-libre": "^5.2.6",
     "clsx": "^2.1.1",
-    "motion": "^12.17.0",
+    "motion": "^12.18.1",
     "qr-scanner": "^1.4.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-hook-form": "^7.57.0",
+    "react-hook-form": "^7.58.1",
     "react-router-dom": "^7.6.2",
     "store2": "^2.14.4"
   },
