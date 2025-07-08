@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import QrScanner from 'qr-scanner';
 import { JSX, use, useCallback, useEffect, useRef, useState } from 'react';
 
