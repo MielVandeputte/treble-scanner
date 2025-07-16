@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import { AnimatePresence, motion } from 'motion/react';
 import QrScanner from 'qr-scanner';
 import { JSX } from 'react';

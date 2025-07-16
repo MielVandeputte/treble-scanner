@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import { JSX } from 'react';
 import { Link } from 'react-router-dom';
 
