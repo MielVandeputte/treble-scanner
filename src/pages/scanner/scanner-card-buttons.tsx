@@ -2,7 +2,7 @@ import { clsx } from 'clsx';
 import { JSX } from 'react';
 import { Link } from 'react-router-dom';
 
-import { ArrowPathIcon, FilledInBoltIcon, BoltIcon, EllipsisIcon, PencilIcon } from '../../components/icons.tsx';
+import { ArrowPathIcon, FilledInBoltIcon, BoltIcon, EllipsisIcon, PencilSquareIcon } from '../../components/icons.tsx';
 import { MANUAL_SCANNER_PATH, SCAN_HISTORY_PATH } from '../../main.tsx';
 
 export function FlashToggle({
@@ -62,7 +62,7 @@ export function ManualScannerLink({ appearance }: { appearance: 'regular' | 'bri
       )}
       aria-label="Manueel scannen"
     >
-      <PencilIcon aria-hidden />
+      <PencilSquareIcon aria-hidden />
     </Link>
   );
 }

@@ -71,7 +71,7 @@ export function Login(): JSX.Element {
           />
         </div>
 
-        <Button type="submit" color="brand" horizontalPadding loading={submitting} disabled={disabled}>
+        <Button type="submit" loading={submitting} disabled={disabled}>
           Start
         </Button>
 

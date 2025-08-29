@@ -1,22 +1,17 @@
 import { JSX, use, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
 import { Button } from '../components/button.tsx';
-import { Footer } from '../components/footer.tsx';
 import { Header } from '../components/header.tsx';
-import { ReturnIcon } from '../components/icons.tsx';
 import { Input } from '../components/input.tsx';
 import { ScanCredentialsContext } from '../contexts/scan-credentials-context.tsx';
 import { ScanHistoryContext } from '../contexts/scan-history-context.tsx';
-import { SCANNER_PATH } from '../main.tsx';
 import { scanTicket } from '../services/scan-ticket.ts';
 import { mapScanAttemptResultToString, ScanAttempt } from '../types/scan-attempt.ts';
 
 type FormType = { secretCode: string };
 
 export function ManualScanner(): JSX.Element {
-  const navigate = useNavigate();
   const scanCredentials = use(ScanCredentialsContext).scanCredentials;
   const addScanAttempt = use(ScanHistoryContext).addScanAttempt;
 
@@ -65,7 +60,7 @@ export function ManualScanner(): JSX.Element {
               aria-required
             />
 
-            <Button type="submit" color="brand" horizontalPadding loading={submitting} disabled={disabled}>
+            <Button type="submit" loading={submitting} disabled={disabled}>
               Scan
             </Button>
           </form>
@@ -100,16 +95,6 @@ export function ManualScanner(): JSX.Element {
           ) : null}
         </div>
       </main>
-
-      <Footer columns={1}>
-        <Button
-          type="button"
-          onClick={() => navigate(SCANNER_PATH, { viewTransition: true })}
-          aria-label="Terug naar scanner"
-        >
-          <ReturnIcon aria-hidden />
-        </Button>
-      </Footer>
     </div>
   );
 }
