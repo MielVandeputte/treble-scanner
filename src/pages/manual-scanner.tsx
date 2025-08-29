@@ -39,24 +39,24 @@ export function ManualScanner(): JSX.Element {
   }
 
   return (
-    <div className="grid h-svh grid-rows-[auto_1fr_auto]">
+    <div className="grid h-svh grid-rows-[auto_1fr]">
       <Header title="Manueel scannen" />
 
       <main className="flex justify-center">
-        <div className="flex w-full max-w-md flex-col items-center justify-center gap-5 px-10 py-5">
+        <div className="flex w-full max-w-md flex-col items-center justify-center gap-5 px-10">
           <form
             id="manual-scan-form"
             onSubmit={handleSubmit(onFormSubmit)}
             className="flex w-full flex-col items-center gap-4"
-            aria-describedby={errorMessage ? 'error-message' : undefined}
+            aria-errormessage={errorMessage ? 'error-message' : undefined}
           >
             <Input
               id="secret-code-input"
               {...register('secretCode', { required: true })}
-              placeholder="Geheime code"
+              label="Geheime code"
+              autoFocus
               autoComplete="off"
               invalid={!!errors.secretCode}
-              srLabel="Geheime code"
               aria-required
             />
 

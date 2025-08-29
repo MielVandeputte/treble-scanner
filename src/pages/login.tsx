@@ -1,5 +1,6 @@
-import { JSX, use, useState } from 'react';
+import { JSX, use, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSearchParams } from 'react-router-dom';
 
 import { Button } from '../components/button.tsx';
 import { Input } from '../components/input.tsx';
@@ -11,16 +12,28 @@ import '@fontsource/proza-libre/600.css';
 
 type FormType = ScanCredentials;
 
+const EVENT_ID_SEARCH_PARAM = 'eventId';
+
 export function Login(): JSX.Element {
+  const [searchParams, setSearchParams] = useSearchParams();
   const setScanCredentials = use(ScanCredentialsContext).setScanCredentials;
 
   const {
     register,
+    setValue,
     formState: { disabled, errors, isSubmitting: submitting },
     handleSubmit,
   } = useForm<FormType>();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (searchParams.has(EVENT_ID_SEARCH_PARAM)) {
+      setValue('eventId', searchParams.get(EVENT_ID_SEARCH_PARAM)!);
+      searchParams.delete(EVENT_ID_SEARCH_PARAM);
+      setSearchParams(searchParams, { replace: true });
+    }
+  }, [searchParams, setSearchParams, setValue]);
 
   async function onFormSubmit(formData: FormType): Promise<void> {
     setErrorMessage(null);
@@ -39,34 +52,30 @@ export function Login(): JSX.Element {
       <form
         id="login-form"
         onSubmit={handleSubmit(onFormSubmit)}
-        className="flex h-svh w-full max-w-md flex-col items-center justify-center gap-5 px-10 py-5"
-        aria-describedby={errorMessage ? 'error-message' : undefined}
+        className="flex h-svh w-full max-w-md flex-col items-center justify-center gap-5 px-10"
+        aria-errormessage={errorMessage ? 'error-message' : undefined}
       >
         <h1 className="brand-font text-center text-4xl text-zinc-200 select-none">treble</h1>
 
-        <p className="text-justify font-semibold select-none">
-          Voer het event ID en de code in om tickets te beginnen scannen. Beide zijn te vinden in het dashboard op
-          treble-events.be.
-        </p>
+        <p className="font-semibold">De inloggegevens zijn te vinden in het dashboard op treble-events.be.</p>
 
         <div className="flex w-full flex-col items-center gap-4">
           <Input
             id="event-id-input"
             {...register('eventId', { required: true })}
-            placeholder="Event ID"
+            label="Event ID"
             autoComplete="off"
+            autoFocus
             invalid={!!errors.eventId}
-            srLabel="Event ID"
             aria-required
           />
 
           <Input
             id="code-input"
             {...register('scanAuthorizationCode', { required: true })}
-            placeholder="Code"
+            label="Code"
             autoComplete="off"
             invalid={!!errors.scanAuthorizationCode}
-            srLabel="Code"
             aria-required
           />
         </div>

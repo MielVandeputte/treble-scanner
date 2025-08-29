@@ -139,7 +139,7 @@ export const ArrowLeftIcon = forwardRef<SVGSVGElement, Readonly<SVGAttributes<SV
 );
 ArrowLeftIcon.displayName = 'ArrowLeftIcon';
 
-export const XCircleIcon = forwardRef<SVGSVGElement, Readonly<SVGAttributes<SVGSVGElement>>>(
+export const PowerIcon = forwardRef<SVGSVGElement, Readonly<SVGAttributes<SVGSVGElement>>>(
   ({ className, ...props }, ref) => (
     <svg
       {...props}
@@ -151,12 +151,8 @@ export const XCircleIcon = forwardRef<SVGSVGElement, Readonly<SVGAttributes<SVGS
       stroke="currentColor"
       className={clsx(className, 'size-6 shrink-0')}
     >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-      />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" />
     </svg>
   ),
 );
-XCircleIcon.displayName = 'XCircleIcon';
+PowerIcon.displayName = 'PowerIcon';

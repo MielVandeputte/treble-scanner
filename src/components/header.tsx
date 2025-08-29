@@ -1,7 +1,7 @@
 import { forwardRef, use } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ArrowLeftIcon, XCircleIcon } from './icons.tsx';
+import { ArrowLeftIcon, PowerIcon } from './icons.tsx';
 import { ScanCredentialsContext } from '../contexts/scan-credentials-context.tsx';
 import { SCANNER_PATH } from '../main.tsx';
 
@@ -36,7 +36,7 @@ export const Header = forwardRef<HTMLDivElement, { title: string }>(({ title }, 
         className="transition active:scale-90 active:text-rose-900"
         aria-label="Uitloggen en ander event selecteren"
       >
-        <XCircleIcon aria-hidden />
+        <PowerIcon aria-hidden />
       </button>
     </header>
   );
