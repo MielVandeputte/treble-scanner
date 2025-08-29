@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import { ScanCredentialsContext } from '../contexts/scan-credentials-context.tsx';
 import { LOGIN_PATH, SCANNER_PATH } from '../main.tsx';
 
-export function CredentialsFilter({
+export function CredentialsGuard({
   assertPresent = false,
   assertNotPresent = false,
   children,

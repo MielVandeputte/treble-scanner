@@ -4,8 +4,8 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
 import { ScanCredentialsProvider } from './contexts/scan-credentials-provider.tsx';
 import { ScanHistoryProvider } from './contexts/scan-history-provider.tsx';
-import { CredentialsFilter } from './filters/credentials-filter.tsx';
-import { PortraitFilter } from './filters/portrait-filter.tsx';
+import { CredentialsGuard } from './guards/credentials-guard.tsx';
+import { PortraitGuard } from './guards/portrait-guard.tsx';
 import { Login } from './pages/login.tsx';
 import { ManualScanner } from './pages/manual-scanner.tsx';
 import { ScanHistory } from './pages/scan-history.tsx';
@@ -22,33 +22,33 @@ const router = createBrowserRouter([
   {
     path: LOGIN_PATH,
     element: (
-      <CredentialsFilter assertNotPresent>
+      <CredentialsGuard assertNotPresent>
         <Login />
-      </CredentialsFilter>
+      </CredentialsGuard>
     ),
   },
   {
     path: SCANNER_PATH,
     element: (
-      <CredentialsFilter assertPresent>
+      <CredentialsGuard assertPresent>
         <Scanner />
-      </CredentialsFilter>
+      </CredentialsGuard>
     ),
   },
   {
     path: MANUAL_SCANNER_PATH,
     element: (
-      <CredentialsFilter assertPresent>
+      <CredentialsGuard assertPresent>
         <ManualScanner />
-      </CredentialsFilter>
+      </CredentialsGuard>
     ),
   },
   {
     path: SCAN_HISTORY_PATH,
     element: (
-      <CredentialsFilter assertPresent>
+      <CredentialsGuard assertPresent>
         <ScanHistory />
-      </CredentialsFilter>
+      </CredentialsGuard>
     ),
   },
   {
@@ -61,9 +61,9 @@ createRoot(document.querySelector('#root')!).render(
   <StrictMode>
     <ScanCredentialsProvider>
       <ScanHistoryProvider>
-        <PortraitFilter>
+        <PortraitGuard>
           <RouterProvider router={router} />
-        </PortraitFilter>
+        </PortraitGuard>
       </ScanHistoryProvider>
     </ScanCredentialsProvider>
   </StrictMode>,

@@ -3,7 +3,7 @@ import { JSX, ReactNode } from 'react';
 import { ArrowPathIcon } from '../components/icons.tsx';
 import { useScreenOrientation } from '../hooks/use-screen-orientation.tsx';
 
-export function PortraitFilter({ children }: { children: ReactNode }): JSX.Element | ReactNode {
+export function PortraitGuard({ children }: { children: ReactNode }): JSX.Element | ReactNode {
   const screenOrientation = useScreenOrientation();
 
   return screenOrientation === 'LANDSCAPE' ? (
