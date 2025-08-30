@@ -20,11 +20,11 @@ export function CredentialsGuard({
   }
 
   if (assertPresent && scanCredentials === null) {
-    return <Navigate to={LOGIN_PATH} />;
+    return <Navigate to={LOGIN_PATH} replace />;
   }
 
   if (assertNotPresent && scanCredentials !== null) {
-    return <Navigate to={SCANNER_PATH} />;
+    return <Navigate to={SCANNER_PATH} replace />;
   }
 
   return children;

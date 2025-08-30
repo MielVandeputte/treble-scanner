@@ -1,12 +1,11 @@
 import { forwardRef, use } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { ArrowLeftIcon, PowerIcon } from './icons.tsx';
 import { ScanCredentialsContext } from '../contexts/scan-credentials-context.tsx';
 import { SCANNER_PATH } from '../main.tsx';
 
 export const Header = forwardRef<HTMLDivElement, { title: string }>(({ title }, ref) => {
-  const navigate = useNavigate();
   const setScanCredentials = use(ScanCredentialsContext).setScanCredentials;
 
   function logout(): void {
@@ -19,14 +18,14 @@ export const Header = forwardRef<HTMLDivElement, { title: string }>(({ title }, 
       className="flex items-center justify-between gap-5 px-5 pt-5 pb-4 shadow-md shadow-zinc-900 select-none"
     >
       <div className="flex items-center gap-4">
-        <button
-          type="button"
-          onClick={() => navigate(SCANNER_PATH, { viewTransition: true })}
+        <Link
+          to={SCANNER_PATH}
+          viewTransition
           className="text-zinc-200 transition active:scale-90 active:text-white"
           aria-label="Terug naar scanner"
         >
           <ArrowLeftIcon aria-hidden />
-        </button>
+        </Link>
         <h1 className="text-center text-xl font-semibold text-zinc-200">{title}</h1>
       </div>
 
