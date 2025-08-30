@@ -8,7 +8,7 @@ type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'className'> & {
 
 export const Input = forwardRef<HTMLInputElement, Readonly<InputProps>>(({ label, invalid = false, ...props }, ref) => (
   <div className="w-full">
-    <label htmlFor={props.id} className="block px-2 pb-1 font-semibold">
+    <label htmlFor={props.id} className="block px-2 pb-1 font-semibold select-none">
       {label}
     </label>
     <input

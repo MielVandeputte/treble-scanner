@@ -57,7 +57,9 @@ export function Login(): JSX.Element {
       >
         <h1 className="brand-font text-center text-4xl text-zinc-200 select-none">treble</h1>
 
-        <p className="font-semibold">De inloggegevens zijn te vinden in het dashboard op treble-events.be.</p>
+        <p className="font-semibold select-none">
+          De inloggegevens zijn te vinden in het dashboard op treble-events.be.
+        </p>
 
         <div className="flex w-full flex-col items-center gap-4">
           <Input
