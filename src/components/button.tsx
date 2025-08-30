@@ -18,7 +18,7 @@ export const Button = forwardRef<HTMLButtonElement, Readonly<ButtonProps>>(
         disabled
           ? 'border-zinc-900 bg-transparent'
           : 'border-transparent bg-emerald-900 text-zinc-200 active:scale-95 active:bg-emerald-800 active:text-white',
-        'flex h-12 items-center justify-center rounded-full border-2 px-12 text-center font-semibold whitespace-nowrap transition select-none',
+        'flex h-11 items-center justify-center rounded-full border-2 px-12 text-center font-semibold whitespace-nowrap transition select-none',
       )}
       aria-busy={loading}
     >
