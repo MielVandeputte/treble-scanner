@@ -40,9 +40,9 @@ export function Login(): JSX.Element {
 
     const { data, error } = await checkScanAuthorizationCode(formData);
 
-    if (data) {
+    if (error === null) {
       setScanCredentials(data);
-    } else if (error) {
+    } else {
       setErrorMessage(error);
     }
   }

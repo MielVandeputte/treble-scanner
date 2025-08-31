@@ -30,10 +30,10 @@ export function ManualScanner(): JSX.Element {
 
     const { data, error } = await scanTicket(formData.secretCode, scanCredentials!);
 
-    if (data) {
+    if (error === null) {
       setLastScanAttempt(data);
       addScanAttempt(data);
-    } else if (error) {
+    } else {
       setErrorMessage(error);
     }
   }
