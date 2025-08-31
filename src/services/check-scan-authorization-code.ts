@@ -10,7 +10,7 @@ import { ScanCredentials } from '../types/scan-credentials.ts';
 
 export async function checkScanAuthorizationCode(
   scanCredentials: ScanCredentials,
-): Promise<{ data: ScanCredentials | null; error: string | null }> {
+): Promise<{ data: ScanCredentials; error: null } | { data: null; error: string }> {
   try {
     if (!navigator.onLine) {
       return noInternetAccessErrorResponse();
@@ -31,16 +31,14 @@ export async function checkScanAuthorizationCode(
 
     const json = (await query.json()) as { data: CheckScanAuthorizationCodeResponseDto | null; error: string | null };
 
-    if (json.data === true) {
+    if (json.error) {
+      return errorResponseFor(json.error);
+    } else if (json.data === true) {
       return dataResponseFor(scanCredentials);
+    } else if (json.data === false) {
+      return errorResponseFor('Event ID of code verkeerd');
     } else {
-      if (json.data === false) {
-        return errorResponseFor('Event ID of code verkeerd');
-      } else if (json.error) {
-        return errorResponseFor(json.error);
-      } else {
-        return fallbackErrorResponse();
-      }
+      return fallbackErrorResponse();
     }
   } catch {
     return fallbackErrorResponse();

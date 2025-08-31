@@ -12,7 +12,7 @@ import { ScanCredentials } from '../types/scan-credentials.ts';
 export async function scanTicket(
   secretCode: string,
   scanCredentials: ScanCredentials,
-): Promise<{ data: ScanAttempt | null; error: string | null }> {
+): Promise<{ data: ScanAttempt; error: null } | { data: null; error: string }> {
   try {
     if (!navigator.onLine) {
       return noInternetAccessErrorResponse();
@@ -33,7 +33,9 @@ export async function scanTicket(
 
     const json = (await query.json()) as { data: ScanTicketResponseDto | null; error: string | null };
 
-    if (json.data) {
+    if (json.error) {
+      return errorResponseFor(json.error);
+    } else if (json.data) {
       return dataResponseFor({
         id: crypto.randomUUID(),
         timestamp: new Date(),
@@ -44,7 +46,7 @@ export async function scanTicket(
         ticketTypeName: json.data.ticketTypeName,
       });
     } else {
-      return json.error ? errorResponseFor(json.error) : fallbackErrorResponse();
+      return fallbackErrorResponse();
     }
   } catch {
     return fallbackErrorResponse();
