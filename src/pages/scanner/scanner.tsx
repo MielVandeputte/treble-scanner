@@ -49,12 +49,15 @@ export function Scanner(): JSX.Element {
         scanningActiveRef.current = false;
         navigator.vibrate(30);
 
+        setLastScanAttempt(null);
+        setErrorMessage(null);
+
         const { data, error } = await scanTicket(scanResult.data, scanCredentials!);
 
-        if (data) {
+        if (error === null) {
           setLastScanAttempt(data);
           addScanAttempt(data);
-        } else if (error) {
+        } else {
           setErrorMessage(error);
         }
 
