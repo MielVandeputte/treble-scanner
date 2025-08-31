@@ -36,7 +36,6 @@ export function Login(): JSX.Element {
   }, [searchParams, setSearchParams, setValue]);
 
   async function onFormSubmit(formData: FormType): Promise<void> {
-    setScanCredentials(null);
     setErrorMessage(null);
 
     const { data, error } = await checkScanAuthorizationCode(formData);
