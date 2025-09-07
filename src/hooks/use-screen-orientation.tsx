@@ -21,6 +21,5 @@ export function useScreenOrientation(): ScreenOrientation {
   return useSyncExternalStore<ScreenOrientation>(
     subscribe,
     () => orientationTypeToScreenOrientationMap[globalThis.screen.orientation.type],
-    () => 'PORTRAIT',
   );
 }

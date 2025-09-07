@@ -1,4 +1,4 @@
-name: Lint
+name: Test
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
       - 'staging'
 
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
 
     permissions:
@@ -31,5 +31,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Run formatter
+        run: npm run format:check
+
       - name: Run linter
         run: npm run lint:check
+
+      - name: Run tests
+        run: npm run test

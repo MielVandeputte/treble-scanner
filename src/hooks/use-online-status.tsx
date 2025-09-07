@@ -11,9 +11,5 @@ function subscribe(callback: () => void) {
 }
 
 export function useOnlineStatus(): boolean {
-  return useSyncExternalStore<boolean>(
-    subscribe,
-    () => navigator.onLine,
-    () => true,
-  );
+  return useSyncExternalStore<boolean>(subscribe, () => navigator.onLine);
 }
