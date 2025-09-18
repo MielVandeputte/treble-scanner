@@ -10,7 +10,7 @@ import prettierConfig from 'eslint-config-prettier';
 import unicornPlugin from 'eslint-plugin-unicorn';
 
 export default defineConfig([
-  globalIgnores(['**/dist', './vite.config.ts']),
+  globalIgnores(['**/dist', './vite.config.ts', './playwright.config.ts']),
   {
     files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {

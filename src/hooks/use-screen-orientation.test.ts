@@ -36,18 +36,6 @@ describe('useScreenOrientation', () => {
     },
   );
 
-  test('should update to LANDSCAPE when change event dispatched', () => {
-    mockScreenOrientation.type = 'portrait-primary';
-    const { result } = renderHook(() => useScreenOrientation());
-
-    act(() => {
-      mockScreenOrientation.type = 'landscape-primary';
-      mockScreenOrientation.addEventListener.mock.calls[0][1]();
-    });
-
-    expect(result.current).toBe('LANDSCAPE');
-  });
-
   test('should update to PORTRAIT when change event dispatched', () => {
     mockScreenOrientation.type = 'landscape-primary';
     const { result } = renderHook(() => useScreenOrientation());
@@ -58,5 +46,17 @@ describe('useScreenOrientation', () => {
     });
 
     expect(result.current).toBe('PORTRAIT');
+  });
+
+  test('should update to LANDSCAPE when change event dispatched', () => {
+    mockScreenOrientation.type = 'portrait-primary';
+    const { result } = renderHook(() => useScreenOrientation());
+
+    act(() => {
+      mockScreenOrientation.type = 'landscape-primary';
+      mockScreenOrientation.addEventListener.mock.calls[0][1]();
+    });
+
+    expect(result.current).toBe('LANDSCAPE');
   });
 });

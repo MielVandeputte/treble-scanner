@@ -1,9 +1,9 @@
 ## 📦 Project Status
 
-| Branch   | Lint Status |
-|----------|-------------|
-| `main`   | [![Lint](https://github.com/MielVandeputte/treble-scanner/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/MielVandeputte/treble-scanner/actions/workflows/lint.yml) |
-| `staging`| [![Lint](https://github.com/MielVandeputte/treble-scanner/actions/workflows/lint.yml/badge.svg?branch=staging)](https://github.com/MielVandeputte/treble-scanner/actions/workflows/lint.yml) |
+| Branch    | Validation Status                                                                                                                                                                                              |
+| --------- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `main`    | [![Validation](https://github.com/MielVandeputte/treble-scanner/actions/workflows/validation.yml/badge.svg?branch=main)](https://github.com/MielVandeputte/treble-scanner/actions/workflows/validation.yml)    |
+| `staging` | [![Validation](https://github.com/MielVandeputte/treble-scanner/actions/workflows/validation.yml/badge.svg?branch=staging)](https://github.com/MielVandeputte/treble-scanner/actions/workflows/validation.yml) |
 
 ---
 
@@ -31,3 +31,4 @@ Use fast-forward only for merging `staging` into `main`:
 
 ```bash
 git merge --ff-only origin/staging
+```

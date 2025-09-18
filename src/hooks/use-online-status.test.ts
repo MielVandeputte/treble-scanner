@@ -21,18 +21,6 @@ describe('useOnlineStatus', () => {
     expect(result.current).toBe(initialOnlineStatus);
   });
 
-  test('should update to offline when offline event dispatched', () => {
-    setNavigatorOnline(true);
-    const { result } = renderHook(() => useOnlineStatus());
-
-    act(() => {
-      setNavigatorOnline(false);
-      dispatchEvent('offline');
-    });
-
-    expect(result.current).toBe(false);
-  });
-
   test('should update to online when online event dispatched', () => {
     setNavigatorOnline(false);
     const { result } = renderHook(() => useOnlineStatus());
@@ -43,5 +31,17 @@ describe('useOnlineStatus', () => {
     });
 
     expect(result.current).toBe(true);
+  });
+
+  test('should update to offline when offline event dispatched', () => {
+    setNavigatorOnline(true);
+    const { result } = renderHook(() => useOnlineStatus());
+
+    act(() => {
+      setNavigatorOnline(false);
+      dispatchEvent('offline');
+    });
+
+    expect(result.current).toBe(false);
   });
 });
