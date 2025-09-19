@@ -32,7 +32,7 @@ export function Scanner(): JSX.Element {
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const scannerRef = useRef<QrScanner | null>(null);
 
-  const restartTimeoutRef = useRef<number | null>(null);
+  const restartTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const scanningActiveRef = useRef<boolean>(false);
   const togglingFlashRef = useRef<boolean>(false);
