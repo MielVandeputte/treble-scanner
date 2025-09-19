@@ -58,15 +58,21 @@ export function ManualScanner(): JSX.Element {
               autoComplete="off"
               invalid={!!errors.secretCode}
               aria-required
+              data-testid="secret-code-input"
             />
 
-            <Button type="submit" loading={submitting} disabled={disabled}>
+            <Button type="submit" loading={submitting} disabled={disabled} data-testid="scan-button">
               Scan
             </Button>
           </form>
 
           {lastScanAttempt ? (
-            <div className="flex flex-col gap-2 text-center font-semibold" role="status" aria-live="polite">
+            <div
+              className="flex flex-col gap-2 text-center font-semibold"
+              role="status"
+              aria-live="polite"
+              data-testid="last-scan-attempt"
+            >
               <p>
                 {mapScanAttemptResultToString(lastScanAttempt.result)}
                 {lastScanAttempt.ticketTypeName ? <br /> : null}

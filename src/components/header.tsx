@@ -23,6 +23,7 @@ export const Header = forwardRef<HTMLDivElement, { title: string }>(({ title }, 
           viewTransition
           className="text-zinc-200 transition active:scale-90 active:text-white"
           aria-label="Terug naar scanner"
+          data-testid="back-button"
         >
           <ArrowLeftIcon aria-hidden />
         </Link>

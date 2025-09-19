@@ -2,13 +2,13 @@ import { expect, type Locator, type Page } from '@playwright/test';
 
 export class ScanHistoryPage {
   readonly page: Page;
-  readonly logoutButton: Locator;
   readonly scanHistoryList: Locator;
+  readonly logoutButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.logoutButton = page.getByTestId('logout-button');
     this.scanHistoryList = page.getByTestId('scan-history-list');
+    this.logoutButton = page.getByTestId('logout-button');
   }
 
   async logout(): Promise<void> {
