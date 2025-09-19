@@ -70,6 +70,7 @@ export function Login(): JSX.Element {
             autoFocus
             invalid={!!errors.eventId}
             aria-required
+            data-testid="event-id-input"
           />
 
           <Input
@@ -79,10 +80,11 @@ export function Login(): JSX.Element {
             autoComplete="off"
             invalid={!!errors.scanAuthorizationCode}
             aria-required
+            data-testid="code-input"
           />
         </div>
 
-        <Button type="submit" loading={submitting} disabled={disabled}>
+        <Button type="submit" loading={submitting} disabled={disabled} data-testid="start-button">
           Start
         </Button>
 

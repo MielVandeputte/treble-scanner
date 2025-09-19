@@ -61,6 +61,7 @@ export function ManualScannerLink({ appearance }: { appearance: 'regular' | 'bri
         appearance === 'bright' ? 'text-zinc-200 active:text-white' : 'active:text-zinc-200',
       )}
       aria-label="Manueel scannen"
+      data-testid="manual-scanner-button"
     >
       <PencilSquareIcon aria-hidden />
     </Link>
@@ -77,6 +78,7 @@ export function ScanHistoryLink({ appearance }: { appearance: 'regular' | 'brigh
         appearance === 'bright' ? 'text-zinc-200 active:text-white' : 'active:text-zinc-200',
       )}
       aria-label="Scangeschiedenis"
+      data-testid="scan-history-button"
     >
       <EllipsisIcon aria-hidden />
     </Link>

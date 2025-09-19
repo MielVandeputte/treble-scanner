@@ -44,6 +44,7 @@ export function ScannerCard({
         lastScanAttempt?.result ? '' : 'bg-zinc-950/95',
         'absolute bottom-0 z-50 h-1/3 w-full overflow-hidden rounded-t-md p-5 transition',
       )}
+      data-testid="scanner-card"
     >
       {onlineStatus ? (
         <>

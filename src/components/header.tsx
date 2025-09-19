@@ -34,6 +34,7 @@ export const Header = forwardRef<HTMLDivElement, { title: string }>(({ title }, 
         onClick={logout}
         className="transition active:scale-90 active:text-rose-900"
         aria-label="Uitloggen en ander event selecteren"
+        data-testid="logout-button"
       >
         <PowerIcon aria-hidden />
       </button>
