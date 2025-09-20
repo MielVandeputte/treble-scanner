@@ -9,11 +9,12 @@ import { scanTicket } from '../../services/scan-ticket.ts';
 import { ScanAttempt } from '../../types/scan-attempt.ts';
 
 function calculateScanRegion(htmlVideoElement: HTMLVideoElement): QrScanner.ScanRegion {
+  const scanRegionSize = htmlVideoElement.clientWidth;
   return {
-    width: 400,
-    height: 400,
-    x: htmlVideoElement.videoWidth / 2 - 200,
-    y: (htmlVideoElement.videoHeight * 2) / 6 - 200,
+    width: scanRegionSize,
+    height: scanRegionSize,
+    x: htmlVideoElement.videoWidth / 2 - scanRegionSize / 2,
+    y: htmlVideoElement.videoHeight / 3 - scanRegionSize / 2,
   };
 }
 
