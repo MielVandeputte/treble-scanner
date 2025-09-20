@@ -15,8 +15,8 @@ export const Input = forwardRef<HTMLInputElement, Readonly<InputProps>>(({ label
       {...props}
       ref={ref}
       className={clsx(
-        invalid ? 'border-rose-900' : 'border-transparent',
-        'w-full rounded-full border-2 bg-zinc-800 px-5 py-2 font-semibold text-zinc-200',
+        invalid ? 'outline-rose-900 focus:outline-rose-800' : 'outline-transparent focus:outline-zinc-400',
+        'w-full rounded-full bg-zinc-800 px-5 py-2 font-semibold text-zinc-200 outline-2 transition',
       )}
       aria-invalid={invalid}
     />

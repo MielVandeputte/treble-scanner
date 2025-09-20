@@ -17,7 +17,7 @@ export function ManualScanner(): JSX.Element {
 
   const {
     register,
-    formState: { disabled, errors, isSubmitting: submitting },
+    formState: { errors, isSubmitting: submitting },
     handleSubmit,
   } = useForm<FormType>();
 
@@ -61,7 +61,7 @@ export function ManualScanner(): JSX.Element {
               data-testid="secret-code-input"
             />
 
-            <Button type="submit" loading={submitting} disabled={disabled} data-testid="scan-button">
+            <Button type="submit" loading={submitting} data-testid="scan-button">
               Scan
             </Button>
           </form>

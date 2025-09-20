@@ -3,22 +3,18 @@ import { ButtonHTMLAttributes, forwardRef, ReactNode } from 'react';
 
 type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'> & {
   loading?: boolean;
-  disabled?: boolean;
   children: ReactNode;
 };
 
 export const Button = forwardRef<HTMLButtonElement, Readonly<ButtonProps>>(
-  ({ loading = false, disabled = false, children, ...props }, ref) => (
+  ({ loading = false, children, ...props }, ref) => (
     <button
       {...props}
       ref={ref}
-      disabled={loading || disabled}
+      disabled={loading}
       className={clsx(
-        loading && !disabled ? 'animate-pulse' : '',
-        disabled
-          ? 'border-zinc-900 bg-transparent'
-          : 'border-transparent bg-emerald-900 text-zinc-200 active:scale-95 active:bg-emerald-800 active:text-white',
-        'flex h-11 items-center justify-center rounded-full border-2 px-12 text-center font-semibold whitespace-nowrap transition select-none',
+        loading ? 'animate-pulse' : '',
+        'flex h-11 items-center justify-center rounded-full bg-emerald-900 px-12 text-center font-semibold whitespace-nowrap text-zinc-200 outline-2 outline-transparent transition select-none focus:outline-zinc-400 active:scale-95 active:bg-emerald-800 active:text-white',
       )}
       aria-busy={loading}
     >

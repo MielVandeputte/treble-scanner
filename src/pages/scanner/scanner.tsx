@@ -13,7 +13,7 @@ function calculateScanRegion(htmlVideoElement: HTMLVideoElement): QrScanner.Scan
     width: 400,
     height: 400,
     x: htmlVideoElement.videoWidth / 2 - 200,
-    y: (htmlVideoElement.videoHeight * 2) / 6 - 200,
+    y: htmlVideoElement.videoHeight / 3 - 200,
   };
 }
 

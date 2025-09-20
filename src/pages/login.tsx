@@ -21,7 +21,7 @@ export function Login(): JSX.Element {
   const {
     register,
     setValue,
-    formState: { disabled, errors, isSubmitting: submitting },
+    formState: { errors, isSubmitting: submitting },
     handleSubmit,
   } = useForm<FormType>();
 
@@ -84,7 +84,7 @@ export function Login(): JSX.Element {
           />
         </div>
 
-        <Button type="submit" loading={submitting} disabled={disabled} data-testid="start-button">
+        <Button type="submit" loading={submitting} data-testid="start-button">
           Start
         </Button>
 
