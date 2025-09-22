@@ -18,13 +18,13 @@
     "build": "tsc && vite build"
   },
   "dependencies": {
-    "@fontsource/proza-libre": "^5.2.6",
+    "@fontsource/proza-libre": "^5.2.7",
     "clsx": "^2.1.1",
-    "motion": "^12.23.12",
+    "motion": "^12.23.16",
     "qr-scanner": "^1.4.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-hook-form": "^7.62.0",
+    "react-hook-form": "^7.63.0",
     "react-router-dom": "^7.9.1",
     "store2": "^2.14.4"
   },
