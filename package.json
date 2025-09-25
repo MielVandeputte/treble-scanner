@@ -12,7 +12,8 @@
     "fix:lint": "eslint . --fix",
     "fix": "npm run fix:format && npm run fix:lint",
     "test:vitest": "vitest",
-    "test:playwright": "npx playwright test",
+    "test:playwright": "playwright test",
+    "test:playwright-ct": "playwright test -c playwright-ct.config.ts",
     "test": "npm run test:vitest && npm run test:playwright",
     "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/logo.svg",
     "build": "tsc && vite build"
@@ -29,6 +30,7 @@
     "store2": "2.14.4"
   },
   "devDependencies": {
+    "@playwright/experimental-ct-react": "1.55.1",
     "@playwright/test": "1.55.1",
     "@tailwindcss/vite": "4.1.13",
     "@testing-library/react": "16.3.0",
