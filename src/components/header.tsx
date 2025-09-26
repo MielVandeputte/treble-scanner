@@ -21,7 +21,7 @@ export const Header = forwardRef<HTMLDivElement, { title: string }>(({ title }, 
         <Link
           to={SCANNER_PATH}
           viewTransition
-          className="text-zinc-200 transition active:scale-90 active:text-white"
+          className="text-zinc-200 transition focus:scale-90 focus:text-white active:scale-90 active:text-white"
           aria-label="Terug naar scanner"
           data-testid="back-button"
         >
@@ -33,7 +33,7 @@ export const Header = forwardRef<HTMLDivElement, { title: string }>(({ title }, 
       <button
         type="button"
         onClick={logout}
-        className="transition active:scale-90 active:text-rose-900"
+        className="transition focus:scale-90 focus:text-rose-900 active:scale-90 active:text-rose-900"
         aria-label="Uitloggen en ander event selecteren"
         data-testid="logout-button"
       >

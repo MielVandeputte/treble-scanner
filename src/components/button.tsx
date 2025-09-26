@@ -14,7 +14,7 @@ export const Button = forwardRef<HTMLButtonElement, Readonly<ButtonProps>>(
       disabled={loading}
       className={clsx(
         loading ? 'animate-pulse' : '',
-        'flex h-11 items-center justify-center rounded-full bg-emerald-900 px-12 text-center font-semibold whitespace-nowrap text-zinc-200 outline-2 outline-transparent transition select-none focus:outline-zinc-400 active:scale-95 active:bg-emerald-800 active:text-white',
+        'flex h-11 items-center justify-center rounded-full bg-emerald-900 px-12 text-center font-semibold whitespace-nowrap text-zinc-200 outline-0 outline-transparent transition select-none focus:scale-95 focus:bg-emerald-800 active:scale-95 active:bg-emerald-800 active:text-white',
       )}
       aria-busy={loading}
     >
