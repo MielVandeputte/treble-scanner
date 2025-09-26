@@ -6,7 +6,7 @@ import { Button } from '../components/button.tsx';
 import { Input } from '../components/input.tsx';
 import { ScanCredentialsContext } from '../contexts/scan-credentials-context.tsx';
 import { checkScanAuthorizationCode } from '../services/check-scan-authorization-code.ts';
-import { ScanCredentials } from '../types/scan-credentials.ts';
+import { ScanCredentials } from '../types/scan-credentials.type.ts';
 
 import '@fontsource/proza-libre/600.css';
 

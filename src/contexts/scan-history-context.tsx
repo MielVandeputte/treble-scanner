@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { ScanAttempt } from '../types/scan-attempt.ts';
+import { ScanAttempt } from '../types/scan-attempt.type.ts';
 
 export const ScanHistoryContext = createContext<{
   scanHistory: ScanAttempt[] | undefined;

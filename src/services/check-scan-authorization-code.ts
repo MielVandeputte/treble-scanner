@@ -5,8 +5,13 @@ import {
   getBaseBackendUrl,
   noInternetAccessErrorResponse,
 } from './helper.ts';
-import { CheckScanAuthorizationCodeRequestDto, CheckScanAuthorizationCodeResponseDto } from '../types/dtos.ts';
-import { ScanCredentials } from '../types/scan-credentials.ts';
+import { ScanCredentials } from '../types/scan-credentials.type.ts';
+
+type CheckScanAuthorizationCodeRequestDto = {
+  scanAuthorizationCode: string;
+};
+
+type CheckScanAuthorizationCodeResponseDto = boolean;
 
 export async function checkScanAuthorizationCode(
   scanCredentials: ScanCredentials,

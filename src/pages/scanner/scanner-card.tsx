@@ -6,7 +6,7 @@ import { JSX } from 'react';
 import { CameraSwitchButton, FlashToggle, ManualScannerLink, ScanHistoryLink } from './scanner-card-buttons.tsx';
 import { WifiIcon } from '../../components/icons.tsx';
 import { useOnlineStatus } from '../../hooks/use-online-status.tsx';
-import { mapScanAttemptResultToString, ScanAttempt } from '../../types/scan-attempt.ts';
+import { mapScanAttemptResultToString, ScanAttempt } from '../../types/scan-attempt.type.ts';
 
 import '@fontsource/proza-libre/600.css';
 

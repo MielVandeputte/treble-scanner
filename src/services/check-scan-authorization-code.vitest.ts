@@ -2,7 +2,7 @@ import { test, describe, vi, expect, beforeEach } from 'vitest';
 
 import { checkScanAuthorizationCode } from './check-scan-authorization-code.ts';
 import { dataResponseFor, errorResponseFor, fallbackErrorResponse, noInternetAccessErrorResponse } from './helper.ts';
-import { ScanCredentials } from '../types/scan-credentials.ts';
+import { ScanCredentials } from '../types/scan-credentials.type.ts';
 
 const scanCredentialsTestData: ScanCredentials = {
   eventId: 'eventId',

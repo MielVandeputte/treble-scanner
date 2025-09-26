@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react';
 
-import { ScreenOrientation } from '../types/screen-orientation.ts';
+import { ScreenOrientation } from '../types/screen-orientation.type.ts';
 
 const orientationTypeToScreenOrientationMap: Record<OrientationType, ScreenOrientation> = {
   'portrait-primary': 'PORTRAIT',

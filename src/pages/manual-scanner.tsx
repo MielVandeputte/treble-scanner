@@ -7,7 +7,7 @@ import { Input } from '../components/input.tsx';
 import { ScanCredentialsContext } from '../contexts/scan-credentials-context.tsx';
 import { ScanHistoryContext } from '../contexts/scan-history-context.tsx';
 import { scanTicket } from '../services/scan-ticket.ts';
-import { mapScanAttemptResultToString, ScanAttempt } from '../types/scan-attempt.ts';
+import { mapScanAttemptResultToString, ScanAttempt } from '../types/scan-attempt.type.ts';
 
 type FormType = { secretCode: string };
 

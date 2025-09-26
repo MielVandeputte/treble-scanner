@@ -6,7 +6,7 @@ import { ScannerCard } from './scanner-card.tsx';
 import { ScanCredentialsContext } from '../../contexts/scan-credentials-context.tsx';
 import { ScanHistoryContext } from '../../contexts/scan-history-context.tsx';
 import { scanTicket } from '../../services/scan-ticket.ts';
-import { ScanAttempt } from '../../types/scan-attempt.ts';
+import { ScanAttempt } from '../../types/scan-attempt.type.ts';
 
 function calculateScanRegion(htmlVideoElement: HTMLVideoElement): QrScanner.ScanRegion {
   return {

@@ -2,7 +2,7 @@ import { JSX, ReactNode, useCallback, useMemo, useState } from 'react';
 import store from 'store2';
 
 import { ScanCredentialsContext } from './scan-credentials-context.tsx';
-import { ScanCredentials } from '../types/scan-credentials.ts';
+import { ScanCredentials } from '../types/scan-credentials.type.ts';
 
 const SCAN_CREDENTIALS_STORE_KEY = 'SCAN_CREDENTIALS';
 

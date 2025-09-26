@@ -5,9 +5,20 @@ import {
   getBaseBackendUrl,
   noInternetAccessErrorResponse,
 } from './helper.ts';
-import { ScanTicketRequestDto, ScanTicketResponseDto } from '../types/dtos.ts';
-import { ScanAttempt } from '../types/scan-attempt.ts';
-import { ScanCredentials } from '../types/scan-credentials.ts';
+import { ScanAttempt } from '../types/scan-attempt.type.ts';
+import { ScanCredentials } from '../types/scan-credentials.type.ts';
+
+type ScanTicketRequestDto = {
+  secretCode: string;
+  scanAuthorizationCode: string;
+};
+
+type ScanTicketResponseDto = {
+  result: 'SUCCESS' | 'ALREADY_SCANNED' | 'NOT_FOUND';
+  ownerName: string | null;
+  ownerEmail: string | null;
+  ticketTypeName: string | null;
+};
 
 export async function scanTicket(
   secretCode: string,

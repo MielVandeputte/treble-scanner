@@ -2,7 +2,7 @@ import { JSX, ReactNode, useCallback, useMemo, useState } from 'react';
 import store from 'store2';
 
 import { ScanHistoryContext } from './scan-history-context.tsx';
-import { ScanAttempt } from '../types/scan-attempt.ts';
+import { ScanAttempt } from '../types/scan-attempt.type.ts';
 
 type SerializedScanAttempt = ScanAttempt & {
   timestamp: string;

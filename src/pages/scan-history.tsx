@@ -2,7 +2,7 @@ import { JSX, use } from 'react';
 
 import { Header } from '../components/header.tsx';
 import { ScanHistoryContext } from '../contexts/scan-history-context.tsx';
-import { mapScanAttemptResultToString, ScanAttempt } from '../types/scan-attempt.ts';
+import { mapScanAttemptResultToString, ScanAttempt } from '../types/scan-attempt.type.ts';
 
 export function ScanHistory(): JSX.Element {
   const scanHistory = use(ScanHistoryContext).scanHistory;
