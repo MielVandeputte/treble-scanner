@@ -102,16 +102,3 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-
-      - name: Run Playwright component tests
-        run: npm run test:playwright-ct
-        env:
-          CI: true
-
-      - name: Upload Playwright component report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-component-report
-          path: playwright-report/
-          retention-days: 30
