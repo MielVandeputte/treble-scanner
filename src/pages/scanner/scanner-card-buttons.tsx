@@ -19,10 +19,8 @@ export function FlashToggle({
       type="button"
       onClick={onToggle}
       className={clsx(
-        'flex size-12 items-center justify-center transition focus:scale-90 active:scale-90',
-        appearance === 'bright'
-          ? 'text-zinc-200 focus:text-white active:text-white'
-          : 'focus: text-zinc-200 active:text-zinc-200',
+        'flex size-12 items-center justify-center transition active:scale-90',
+        appearance === 'bright' ? 'text-zinc-200 active:text-white' : 'active:text-zinc-200',
       )}
       aria-label={toggled ? 'Zet flits uit' : 'Zet flits aan'}
     >
@@ -43,10 +41,8 @@ export function CameraSwitchButton({
       type="button"
       onClick={onClick}
       className={clsx(
-        'flex size-12 items-center justify-center transition focus:scale-90 active:scale-90',
-        appearance === 'bright'
-          ? 'text-zinc-200 focus:text-white active:text-white'
-          : 'focus:text-zinc-200 active:text-zinc-200',
+        'flex size-12 items-center justify-center transition active:scale-90',
+        appearance === 'bright' ? 'text-zinc-200 active:text-white' : 'active:text-zinc-200',
       )}
       aria-label="Wissel camera"
     >
@@ -61,10 +57,8 @@ export function ManualScannerLink({ appearance }: { appearance: 'regular' | 'bri
       to={MANUAL_SCANNER_PATH}
       viewTransition
       className={clsx(
-        'flex size-12 items-center justify-center transition focus:scale-90 active:scale-90',
-        appearance === 'bright'
-          ? 'text-zinc-200 focus:text-white active:text-white'
-          : 'focus:text-zinc-200 active:text-zinc-200',
+        'flex size-12 items-center justify-center transition active:scale-90',
+        appearance === 'bright' ? 'text-zinc-200 active:text-white' : 'active:text-zinc-200',
       )}
       aria-label="Manueel scannen"
       data-testid="manual-scanner-button"
@@ -80,10 +74,8 @@ export function ScanHistoryLink({ appearance }: { appearance: 'regular' | 'brigh
       to={SCAN_HISTORY_PATH}
       viewTransition
       className={clsx(
-        'flex size-12 items-center justify-center transition focus:scale-90 active:scale-90',
-        appearance === 'bright'
-          ? 'text-zinc-200 focus:text-white active:text-white'
-          : 'focus:text-zinc-200 active:text-zinc-200',
+        'flex size-12 items-center justify-center transition active:scale-90',
+        appearance === 'bright' ? 'text-zinc-200 active:text-white' : 'active:text-zinc-200',
       )}
       aria-label="Scangeschiedenis"
       data-testid="scan-history-button"
