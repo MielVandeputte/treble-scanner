@@ -62,8 +62,6 @@ export function Scanner(): JSX.Element {
         }
 
         restartTimeoutRef.current = setTimeout(restartScanning, 10_000);
-      } else {
-        setErrorMessage('Geen QR-code gevonden');
       }
     },
     [scanCredentials, addScanAttempt],

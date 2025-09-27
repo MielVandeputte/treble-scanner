@@ -1,4 +1,4 @@
-import { JSX, use, useEffect, useState } from 'react';
+import { JSX, use, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 
@@ -15,7 +15,6 @@ type FormType = ScanCredentials;
 const EVENT_ID_SEARCH_PARAM = 'eventId';
 
 export function Login(): JSX.Element {
-  const [searchParams, setSearchParams] = useSearchParams();
   const setScanCredentials = use(ScanCredentialsContext).setScanCredentials;
 
   const {
@@ -25,15 +24,8 @@ export function Login(): JSX.Element {
     handleSubmit,
   } = useForm<FormType>();
 
+  const [searchParams, setSearchParams] = useSearchParams();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (searchParams.has(EVENT_ID_SEARCH_PARAM)) {
-      setValue('eventId', searchParams.get(EVENT_ID_SEARCH_PARAM)!);
-      searchParams.delete(EVENT_ID_SEARCH_PARAM);
-      setSearchParams(searchParams, { replace: true });
-    }
-  }, [searchParams, setSearchParams, setValue]);
 
   async function onFormSubmit(formData: FormType): Promise<void> {
     setErrorMessage(null);
@@ -45,6 +37,12 @@ export function Login(): JSX.Element {
     } else {
       setErrorMessage(error);
     }
+  }
+
+  if (searchParams.has(EVENT_ID_SEARCH_PARAM)) {
+    setValue('eventId', searchParams.get(EVENT_ID_SEARCH_PARAM)!);
+    searchParams.delete(EVENT_ID_SEARCH_PARAM);
+    setSearchParams(searchParams, { replace: true });
   }
 
   return (
