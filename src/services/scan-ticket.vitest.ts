@@ -16,8 +16,9 @@ function setNavigatorOnline(value: boolean): void {
   });
 }
 
-function makeFetchReturn(toReturn: { data: any; error: any }): void {
+function makeFetchReturn(toReturn: { data: any; error: any }, ok: boolean = true): void {
   const mockFetch = vi.fn().mockResolvedValue({
+    ok,
     json: () => Promise.resolve(toReturn),
   });
   vi.stubGlobal('fetch', mockFetch);
@@ -28,6 +29,7 @@ describe('scanTicket', () => {
 
   test('should return data response when server responds correctly', async () => {
     const mockFetch = vi.fn().mockResolvedValue({
+      ok: true,
       json: () =>
         Promise.resolve({
           data: {
@@ -96,9 +98,24 @@ describe('scanTicket', () => {
 
   test('should return error response when no internet access', async () => {
     setNavigatorOnline(false);
-    makeFetchReturn({ data: true, error: null });
+    makeFetchReturn({ data: 'abc', error: null });
 
     const result = await scanTicket('someSecretCode', scanCredentialsTestData);
     expect(result).toEqual(noInternetAccessErrorResponse());
+  });
+
+  test('should return error response when http status not ok but json indicates success', async () => {
+    makeFetchReturn({ data: 'abc', error: null }, false);
+
+    const result = await scanTicket('someSecretCode', scanCredentialsTestData);
+    expect(result).toEqual(fallbackErrorResponse());
+  });
+
+  test('should return error response when response not JSON', async () => {
+    const mockFetch = vi.fn().mockResolvedValue('Not JSON');
+    vi.stubGlobal('fetch', mockFetch);
+
+    const result = await scanTicket('someSecretCode', scanCredentialsTestData);
+    expect(result).toEqual(fallbackErrorResponse());
   });
 });

@@ -34,7 +34,7 @@ export async function scanTicket(
       scanAuthorizationCode: scanCredentials.scanAuthorizationCode,
     };
 
-    const query = await fetch(
+    const response = await fetch(
       getBaseBackendUrl() + `/events/${scanCredentials.eventId}/modules/basic-ticket-store/scan-ticket`,
       {
         method: 'POST',
@@ -42,10 +42,12 @@ export async function scanTicket(
       },
     );
 
-    const json = (await query.json()) as { data: ScanTicketResponseDto | null; error: string | null };
+    const json: { data: ScanTicketResponseDto | null; error: string | null } = await response.json();
 
     if (json.error) {
       return errorResponseFor(json.error);
+    } else if (!response.ok) {
+      return fallbackErrorResponse();
     } else if (json.data) {
       return dataResponseFor({
         id: crypto.randomUUID(),

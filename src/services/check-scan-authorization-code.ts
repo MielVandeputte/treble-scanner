@@ -25,7 +25,7 @@ export async function checkScanAuthorizationCode(
       scanAuthorizationCode: scanCredentials.scanAuthorizationCode,
     };
 
-    const query = await fetch(
+    const response = await fetch(
       getBaseBackendUrl() +
         `/events/${scanCredentials.eventId}/modules/basic-ticket-store/check-scan-authorization-code`,
       {
@@ -34,10 +34,15 @@ export async function checkScanAuthorizationCode(
       },
     );
 
-    const json = (await query.json()) as { data: CheckScanAuthorizationCodeResponseDto | null; error: string | null };
+    const json: {
+      data: CheckScanAuthorizationCodeResponseDto | null;
+      error: string | null;
+    } = await response.json();
 
     if (json.error) {
       return errorResponseFor(json.error);
+    } else if (!response.ok) {
+      return fallbackErrorResponse();
     } else if (json.data === true) {
       return dataResponseFor(scanCredentials);
     } else if (json.data === false) {
