@@ -1,11 +1,13 @@
-import { forwardRef, use } from 'react';
+import { forwardRef, HtmlHTMLAttributes, use } from 'react';
 import { Link } from 'react-router-dom';
 
 import { ArrowLeftIcon, PowerIcon } from './icons.tsx';
 import { ScanCredentialsContext } from '../contexts/scan-credentials-context.tsx';
 import { SCANNER_PATH } from '../main.tsx';
 
-export const Header = forwardRef<HTMLDivElement, { title: string }>(({ title }, ref) => {
+type HeaderProps = Omit<HtmlHTMLAttributes<HTMLDivElement>, 'className'> & { title: string };
+
+export const Header = forwardRef<HTMLDivElement, HeaderProps>(({ title, ...props }, ref) => {
   const setScanCredentials = use(ScanCredentialsContext).setScanCredentials;
 
   function logout(): void {
@@ -14,6 +16,7 @@ export const Header = forwardRef<HTMLDivElement, { title: string }>(({ title }, 
 
   return (
     <header
+      {...props}
       ref={ref}
       className="flex items-center justify-between gap-5 px-5 pt-5 pb-4 shadow-md shadow-zinc-900 select-none"
     >
