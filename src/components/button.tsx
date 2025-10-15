@@ -13,7 +13,7 @@ export const Button = forwardRef<HTMLButtonElement, Readonly<ButtonProps>>(
       ref={ref}
       disabled={loading}
       className={clsx(
-        loading ? 'animate-pulse' : '',
+        loading ? 'pointer-events-none animate-pulse' : '',
         'flex h-11 items-center justify-center rounded-full bg-emerald-900 px-12 text-center font-semibold whitespace-nowrap text-zinc-200 outline-0 outline-transparent transition select-none active:scale-95 active:bg-emerald-800 active:text-white',
       )}
       aria-busy={loading}
