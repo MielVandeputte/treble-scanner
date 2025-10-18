@@ -47,7 +47,7 @@ export function Scanner(): JSX.Element {
 
       if (scanResult.data) {
         scanningActiveRef.current = false;
-        // navigator.vibrate(30);
+        navigator.vibrate?.(30);
 
         setLastScanAttempt(null);
         setErrorMessage(null);
