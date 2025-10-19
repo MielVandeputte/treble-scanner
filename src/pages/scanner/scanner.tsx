@@ -39,6 +39,18 @@ export function Scanner(): JSX.Element {
   const switchingCameraRef = useRef<boolean>(false);
   const selectedCameraRef = useRef<'environment' | 'user'>('environment');
 
+  function restartScanning(): void {
+    if (restartTimeoutRef.current) {
+      clearTimeout(restartTimeoutRef.current);
+      restartTimeoutRef.current = null;
+    }
+
+    setLastScanAttempt(null);
+    setErrorMessage(null);
+
+    scanningActiveRef.current = true;
+  }
+
   const handleScan = useCallback(
     async (scanResult: QrScanner.ScanResult) => {
       if (!scanningActiveRef.current || !navigator.onLine) {
@@ -116,18 +128,6 @@ export function Scanner(): JSX.Element {
       selectedCameraRef.current = 'environment';
     };
   }, [handleScan]);
-
-  function restartScanning(): void {
-    if (restartTimeoutRef.current) {
-      clearTimeout(restartTimeoutRef.current);
-      restartTimeoutRef.current = null;
-    }
-
-    setLastScanAttempt(null);
-    setErrorMessage(null);
-
-    scanningActiveRef.current = true;
-  }
 
   function toggleFlash(): void {
     if (scannerRef.current && !togglingFlashRef.current && !switchingCameraRef.current) {
