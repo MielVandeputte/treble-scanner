@@ -10,13 +10,8 @@ const mockScreenOrientation = {
 };
 
 describe('useScreenOrientation', () => {
-  beforeEach(() => {
-    vi.stubGlobal('screen', { orientation: mockScreenOrientation });
-  });
-
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
+  beforeEach(() => vi.stubGlobal('screen', { orientation: mockScreenOrientation }));
+  afterEach(() => vi.clearAllMocks());
 
   test.each(['portrait-primary', 'portrait-secondary'])(
     'should return initial screen orientation PORTRAIT',
