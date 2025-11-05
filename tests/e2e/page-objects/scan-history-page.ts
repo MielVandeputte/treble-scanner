@@ -1,9 +1,9 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
 export class ScanHistoryPage {
-  readonly page: Page;
-  readonly scanHistoryList: Locator;
-  readonly logoutButton: Locator;
+  private readonly page: Page;
+  private readonly scanHistoryList: Locator;
+  private readonly logoutButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -20,7 +20,7 @@ export class ScanHistoryPage {
   }
 
   async verifyHistoryContainsAlreadyScannedTicketWithSecretCode(secretCode: string): Promise<void> {
-    await expect(this.scanHistoryList).toHaveText(new RegExp('Al gescand'));
-    await expect(this.scanHistoryList).toContainText(new RegExp(secretCode));
+    await expect(this.scanHistoryList).toContainText('Al gescand');
+    await expect(this.scanHistoryList).toContainText(secretCode);
   }
 }

@@ -1,11 +1,11 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
 export class ManualScannerPage {
-  readonly page: Page;
-  readonly lastScanAttempt: Locator;
-  readonly secretCodeInput: Locator;
-  readonly backButton: Locator;
-  readonly scanButton: Locator;
+  private readonly page: Page;
+  private readonly lastScanAttempt: Locator;
+  private readonly secretCodeInput: Locator;
+  private readonly backButton: Locator;
+  private readonly scanButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -29,6 +29,6 @@ export class ManualScannerPage {
   }
 
   async verifyScanResultIsAlreadyScanned(): Promise<void> {
-    await expect(this.lastScanAttempt).toContainText(new RegExp('Al gescand'));
+    await expect(this.lastScanAttempt).toContainText('Al gescand');
   }
 }
