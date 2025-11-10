@@ -4,7 +4,7 @@ export type ScanAttempt = {
   secretCode: string;
   result: ScanAttemptResult;
   ownerName: string | null;
-  ownerEmail: string | null;
+  ownerEmailAddress: string | null;
   ticketTypeName: string | null;
 };
 

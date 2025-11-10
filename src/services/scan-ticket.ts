@@ -55,7 +55,7 @@ export async function scanTicket(
         secretCode,
         result: json.data.result,
         ownerName: json.data.ownerName,
-        ownerEmail: json.data.ownerEmail,
+        ownerEmailAddress: json.data.ownerEmail,
         ticketTypeName: json.data.ticketTypeName,
       });
     } else {

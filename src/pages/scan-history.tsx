@@ -29,11 +29,11 @@ export function ScanHistory(): JSX.Element {
                   {scanAttempt.ticketTypeName ?? null}
                 </p>
 
-                {scanAttempt.ownerName || scanAttempt.ownerEmail ? (
+                {scanAttempt.ownerName || scanAttempt.ownerEmailAddress ? (
                   <p>
                     {scanAttempt.ownerName ?? null}
-                    {scanAttempt.ownerName && scanAttempt.ownerEmail ? <br /> : null}
-                    {scanAttempt.ownerEmail ?? null}
+                    {scanAttempt.ownerName && scanAttempt.ownerEmailAddress ? <br /> : null}
+                    {scanAttempt.ownerEmailAddress ?? null}
                   </p>
                 ) : null}
 

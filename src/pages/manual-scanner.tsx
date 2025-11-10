@@ -79,11 +79,11 @@ export function ManualScanner(): JSX.Element {
                 {lastScanAttempt.ticketTypeName ?? null}
               </p>
 
-              {lastScanAttempt.ownerName || lastScanAttempt.ownerEmail ? (
+              {lastScanAttempt.ownerName || lastScanAttempt.ownerEmailAddress ? (
                 <p>
                   {lastScanAttempt.ownerName ?? null}
-                  {lastScanAttempt.ownerName && lastScanAttempt.ownerEmail ? <br /> : null}
-                  {lastScanAttempt.ownerEmail ?? null}
+                  {lastScanAttempt.ownerName && lastScanAttempt.ownerEmailAddress ? <br /> : null}
+                  {lastScanAttempt.ownerEmailAddress ?? null}
                 </p>
               ) : null}
             </div>

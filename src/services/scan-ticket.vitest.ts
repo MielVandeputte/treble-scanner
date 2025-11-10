@@ -35,7 +35,7 @@ describe('scanTicket', () => {
           data: {
             result: 'SUCCESS',
             ownerName: 'ownerName',
-            ownerEmail: 'ownerEmail',
+            ownerEmail: 'ownerEmailAddress',
             ticketTypeName: 'ticketTypeName',
           },
           error: null,
@@ -65,7 +65,7 @@ describe('scanTicket', () => {
         secretCode: 'secretCode',
         result: 'SUCCESS',
         ownerName: 'ownerName',
-        ownerEmail: 'ownerEmail',
+        ownerEmailAddress: 'ownerEmailAddress',
         ticketTypeName: 'ticketTypeName',
       }),
     );
