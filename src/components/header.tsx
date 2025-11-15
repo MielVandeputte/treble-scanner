@@ -5,7 +5,11 @@ import { ArrowLeftIcon, PowerIcon } from './icons.tsx';
 import { ScanCredentialsContext } from '../contexts/scan-credentials-context.tsx';
 import { SCANNER_PATH } from '../main.tsx';
 
-export const Header = forwardRef<HTMLDivElement, { title: string }>(({ title }, ref) => {
+type HeaderProps = {
+  title: string;
+};
+
+export const Header = forwardRef<HTMLDivElement, HeaderProps>(({ title }, ref) => {
   const setScanCredentials = use(ScanCredentialsContext).setScanCredentials;
 
   function logout(): void {
