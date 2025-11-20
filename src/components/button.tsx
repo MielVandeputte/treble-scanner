@@ -1,9 +1,8 @@
 import { clsx } from 'clsx';
-import { ButtonHTMLAttributes, forwardRef, ReactNode } from 'react';
+import { ButtonHTMLAttributes, forwardRef } from 'react';
 
 type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'> & {
   loading?: boolean;
-  children: ReactNode;
 };
 
 export const Button = forwardRef<HTMLButtonElement, Readonly<ButtonProps>>(
