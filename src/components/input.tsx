@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { InputHTMLAttributes, forwardRef } from 'react';
 
-type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'className'> & {
+type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'ref' | 'className' | 'aria-invalid'> & {
   label: string;
   invalid?: boolean;
 };

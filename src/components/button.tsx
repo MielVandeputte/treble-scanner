@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { ButtonHTMLAttributes, forwardRef } from 'react';
 
-type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'> & {
+type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'ref' | 'disabled' | 'className' | 'aria-busy'> & {
   loading?: boolean;
 };
 

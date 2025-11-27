@@ -9,7 +9,7 @@ type HeaderProps = {
   title: string;
 };
 
-export const Header = forwardRef<HTMLDivElement, HeaderProps>(({ title }, ref) => {
+export const Header = forwardRef<HTMLDivElement, Readonly<HeaderProps>>(({ title }, ref) => {
   const setScanCredentials = use(ScanCredentialsContext).setScanCredentials;
 
   function logout(): void {

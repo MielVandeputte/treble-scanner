@@ -1,9 +1,9 @@
 import { clsx } from 'clsx';
 import { forwardRef, SVGAttributes } from 'react';
 
-type IconProps = SVGAttributes<SVGSVGElement>;
+type IconProps = Omit<SVGAttributes<SVGSVGElement>, 'ref' | 'xmlns' | 'viewBox' | 'fill'>;
 
-export const BoltIcon = forwardRef<SVGSVGElement, IconProps>(({ className, ...props }, ref) => (
+export const BoltIcon = forwardRef<SVGSVGElement, Readonly<IconProps>>(({ className, ...props }, ref) => (
   <svg
     {...props}
     ref={ref}
