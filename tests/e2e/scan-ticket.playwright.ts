@@ -14,7 +14,7 @@ test.use({
   },
 });
 
-test.skip(({ browserName }) => browserName === 'webkit', 'relies on chromium specific launch options');
+test.skip(({ browserName }) => browserName !== 'chromium', 'relies on chromium specific launch options');
 
 test('should successfully log in and scan a QR code', async ({ page }) => {
   const loginPage = new LoginPage(page);

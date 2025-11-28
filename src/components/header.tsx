@@ -1,4 +1,4 @@
-import { forwardRef, use } from 'react';
+import { JSX, use } from 'react';
 import { Link } from 'react-router-dom';
 
 import { ArrowLeftIcon, PowerIcon } from './icons.tsx';
@@ -9,7 +9,7 @@ type HeaderProps = {
   title: string;
 };
 
-export const Header = forwardRef<HTMLDivElement, Readonly<HeaderProps>>(({ title }, ref) => {
+export function Header({ title }: Readonly<HeaderProps>): JSX.Element {
   const setScanCredentials = use(ScanCredentialsContext).setScanCredentials;
 
   function logout(): void {
@@ -17,10 +17,7 @@ export const Header = forwardRef<HTMLDivElement, Readonly<HeaderProps>>(({ title
   }
 
   return (
-    <header
-      ref={ref}
-      className="flex items-center justify-between gap-5 px-5 pt-5 pb-4 shadow-md shadow-zinc-900 select-none"
-    >
+    <header className="flex items-center justify-between gap-5 px-5 pt-5 pb-4 shadow-md shadow-zinc-900 select-none">
       <div className="flex items-center gap-4">
         <Link
           to={SCANNER_PATH}
@@ -45,5 +42,4 @@ export const Header = forwardRef<HTMLDivElement, Readonly<HeaderProps>>(({ title
       </button>
     </header>
   );
-});
-Header.displayName = 'Header';
+}
