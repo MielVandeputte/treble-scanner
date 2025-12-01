@@ -13,7 +13,7 @@
     "fix": "npm run fix:format && npm run fix:lint",
     "test:vitest": "vitest",
     "test:playwright": "npx playwright test",
-    "test": "npm run test:vitest && npm run test:playwright",
+    "test": "vitest run && npm run test:playwright",
     "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/logo.svg",
     "build": "tsc && vite build"
   },
