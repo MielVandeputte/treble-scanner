@@ -4,18 +4,19 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "vite",
+    "dev": "vite dev",
+    "build": "tsc && vite build",
+    "start": "vite preview",
     "check:format": "prettier --check \"**/*.{js,tsx,ts,css,jsx,json}\"",
-    "check:lint": "eslint .",
+    "check:lint": "eslint",
     "check": "npm run check:format && npm run check:lint",
     "fix:format": "prettier --write \"**/*.{js,tsx,ts,css,jsx,json}\"",
-    "fix:lint": "eslint . --fix",
+    "fix:lint": "eslint --fix",
     "fix": "npm run fix:format && npm run fix:lint",
-    "test:vitest": "vitest",
+    "test:vitest": "vitest run",
     "test:playwright": "npx playwright test",
-    "test": "vitest run && npm run test:playwright",
-    "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/logo.svg",
-    "build": "tsc && vite build"
+    "test": "npm run test:vitest && npm run test:playwright",
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/logo.svg"
   },
   "dependencies": {
     "@fontsource/proza-libre": "5.2.7",
