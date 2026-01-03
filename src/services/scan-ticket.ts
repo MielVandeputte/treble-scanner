@@ -1,9 +1,9 @@
 import {
+  BASE_BACKEND_URL,
   dataResponseFor,
   errorResponseFor,
-  fallbackErrorResponse,
-  getBaseBackendUrl,
-  noInternetAccessErrorResponse,
+  FALLBACK_ERROR_RESPONSE,
+  NO_INTERNET_ACCESS_ERROR_RESPONSE,
 } from './helper.ts';
 import { ScanAttempt } from '../types/scan-attempt.type.ts';
 import { ScanCredentials } from '../types/scan-credentials.type.ts';
@@ -26,7 +26,7 @@ export async function scanTicket(
 ): Promise<{ data: ScanAttempt; error: null } | { data: null; error: string }> {
   try {
     if (!navigator.onLine) {
-      return noInternetAccessErrorResponse();
+      return NO_INTERNET_ACCESS_ERROR_RESPONSE;
     }
 
     const requestDto: ScanTicketRequestDto = {
@@ -35,7 +35,7 @@ export async function scanTicket(
     };
 
     const response = await fetch(
-      getBaseBackendUrl() + `/events/${scanCredentials.eventId}/modules/basic-ticket-store/scan-ticket`,
+      BASE_BACKEND_URL + `/events/${scanCredentials.eventId}/modules/basic-ticket-store/scan-ticket`,
       {
         method: 'POST',
         body: JSON.stringify(requestDto),
@@ -47,7 +47,7 @@ export async function scanTicket(
     if (json.error) {
       return errorResponseFor(json.error);
     } else if (!response.ok) {
-      return fallbackErrorResponse();
+      return FALLBACK_ERROR_RESPONSE;
     } else if (json.data) {
       return dataResponseFor({
         id: crypto.randomUUID(),
@@ -59,9 +59,9 @@ export async function scanTicket(
         ticketTypeName: json.data.ticketTypeName,
       });
     } else {
-      return fallbackErrorResponse();
+      return FALLBACK_ERROR_RESPONSE;
     }
   } catch {
-    return fallbackErrorResponse();
+    return FALLBACK_ERROR_RESPONSE;
   }
 }

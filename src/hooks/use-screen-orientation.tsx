@@ -2,7 +2,7 @@ import { useSyncExternalStore } from 'react';
 
 import { ScreenOrientation } from '../types/screen-orientation.type.ts';
 
-const orientationTypeToScreenOrientationMap: Record<OrientationType, ScreenOrientation> = {
+const ORIENTATION_TYPE_TO_SCREEN_ORIENTATION_MAP: Record<OrientationType, ScreenOrientation> = {
   'portrait-primary': 'PORTRAIT',
   'portrait-secondary': 'PORTRAIT',
   'landscape-primary': 'LANDSCAPE',
@@ -20,6 +20,6 @@ function subscribe(callback: () => void) {
 export function useScreenOrientation(): ScreenOrientation {
   return useSyncExternalStore<ScreenOrientation>(
     subscribe,
-    () => orientationTypeToScreenOrientationMap[globalThis.screen.orientation.type],
+    () => ORIENTATION_TYPE_TO_SCREEN_ORIENTATION_MAP[globalThis.screen.orientation.type],
   );
 }

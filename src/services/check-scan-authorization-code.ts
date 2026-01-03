@@ -1,9 +1,9 @@
 import {
   dataResponseFor,
   errorResponseFor,
-  fallbackErrorResponse,
-  getBaseBackendUrl,
-  noInternetAccessErrorResponse,
+  FALLBACK_ERROR_RESPONSE,
+  BASE_BACKEND_URL,
+  NO_INTERNET_ACCESS_ERROR_RESPONSE,
 } from './helper.ts';
 import { ScanCredentials } from '../types/scan-credentials.type.ts';
 
@@ -18,7 +18,7 @@ export async function checkScanAuthorizationCode(
 ): Promise<{ data: ScanCredentials; error: null } | { data: null; error: string }> {
   try {
     if (!navigator.onLine) {
-      return noInternetAccessErrorResponse();
+      return NO_INTERNET_ACCESS_ERROR_RESPONSE;
     }
 
     const requestDto: CheckScanAuthorizationCodeRequestDto = {
@@ -26,8 +26,7 @@ export async function checkScanAuthorizationCode(
     };
 
     const response = await fetch(
-      getBaseBackendUrl() +
-        `/events/${scanCredentials.eventId}/modules/basic-ticket-store/check-scan-authorization-code`,
+      BASE_BACKEND_URL + `/events/${scanCredentials.eventId}/modules/basic-ticket-store/check-scan-authorization-code`,
       {
         method: 'POST',
         body: JSON.stringify(requestDto),
@@ -42,15 +41,15 @@ export async function checkScanAuthorizationCode(
     if (json.error) {
       return errorResponseFor(json.error);
     } else if (!response.ok) {
-      return fallbackErrorResponse();
+      return FALLBACK_ERROR_RESPONSE;
     } else if (json.data === true) {
       return dataResponseFor(scanCredentials);
     } else if (json.data === false) {
       return errorResponseFor('Event ID of code verkeerd');
     } else {
-      return fallbackErrorResponse();
+      return FALLBACK_ERROR_RESPONSE;
     }
   } catch {
-    return fallbackErrorResponse();
+    return FALLBACK_ERROR_RESPONSE;
   }
 }

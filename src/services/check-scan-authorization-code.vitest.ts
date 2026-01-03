@@ -1,13 +1,13 @@
-import { test, describe, vi, expect, beforeEach } from 'vitest';
+import { test, vi, expect, beforeEach } from 'vitest';
 
 import { checkScanAuthorizationCode } from './check-scan-authorization-code.ts';
-import { dataResponseFor, errorResponseFor, fallbackErrorResponse, noInternetAccessErrorResponse } from './helper.ts';
-import { ScanCredentials } from '../types/scan-credentials.type.ts';
-
-const scanCredentialsTestData: ScanCredentials = {
-  eventId: 'eventId',
-  scanAuthorizationCode: 'scanAuthorizationCode',
-};
+import {
+  dataResponseFor,
+  errorResponseFor,
+  FALLBACK_ERROR_RESPONSE,
+  NO_INTERNET_ACCESS_ERROR_RESPONSE,
+} from './helper.ts';
+import { scanCredentialsTestData } from '../../test-data/scan-credentials.ts';
 
 function setNavigatorOnline(value: boolean): void {
   Object.defineProperty(navigator, 'onLine', {
@@ -24,84 +24,82 @@ function makeFetchReturn(toReturn: { data: any; error: any }, ok: boolean = true
   vi.stubGlobal('fetch', mockFetch);
 }
 
-describe('checkScanAuthorizationCode', () => {
-  beforeEach(() => setNavigatorOnline(true));
+beforeEach(() => setNavigatorOnline(true));
 
-  test('should return data response when authorization code valid', async () => {
-    const mockFetch = vi.fn().mockResolvedValue({
-      ok: true,
-      json: () => Promise.resolve({ data: true, error: null }),
-    });
-    vi.stubGlobal('fetch', mockFetch);
-
-    const scanCredentials = {
-      eventId: 'eventId',
-      scanAuthorizationCode: 'scanAuthorizationCode',
-    };
-    const result = await checkScanAuthorizationCode(scanCredentials);
-
-    expect(mockFetch).toHaveBeenCalledWith(
-      expect.stringMatching(
-        '^https://www.staging.treble-events.be/api/events/eventId/modules/basic-ticket-store/check-scan-authorization-code$',
-      ),
-      {
-        method: 'POST',
-        body: JSON.stringify({ scanAuthorizationCode: 'scanAuthorizationCode' }),
-      },
-    );
-
-    expect(result).toEqual(dataResponseFor(scanCredentials));
+test('should return data response when authorization code valid', async () => {
+  const mockFetch = vi.fn().mockResolvedValue({
+    ok: true,
+    json: () => Promise.resolve({ data: true, error: null }),
   });
+  vi.stubGlobal('fetch', mockFetch);
 
-  test('should return error response when authorization code invalid', async () => {
-    makeFetchReturn({ data: false, error: null });
+  const scanCredentials = {
+    eventId: 'eventId',
+    scanAuthorizationCode: 'scanAuthorizationCode',
+  };
+  const result = await checkScanAuthorizationCode(scanCredentials);
 
-    const result = await checkScanAuthorizationCode(scanCredentialsTestData);
-    expect(result).toEqual(errorResponseFor('Event ID of code verkeerd'));
-  });
+  expect(mockFetch).toHaveBeenCalledWith(
+    expect.stringMatching(
+      '^https://www.staging.treble-events.be/api/events/eventId/modules/basic-ticket-store/check-scan-authorization-code$',
+    ),
+    {
+      method: 'POST',
+      body: JSON.stringify({ scanAuthorizationCode: 'scanAuthorizationCode' }),
+    },
+  );
 
-  test('should return error response when server returns error', async () => {
-    makeFetchReturn({ data: true, error: 'Some random error' });
+  expect(result).toEqual(dataResponseFor(scanCredentials));
+});
 
-    const result = await checkScanAuthorizationCode(scanCredentialsTestData);
-    expect(result).toEqual(errorResponseFor('Some random error'));
-  });
+test('should return error response when authorization code invalid', async () => {
+  makeFetchReturn({ data: false, error: null });
 
-  test('should return error response when server response invalid', async () => {
-    makeFetchReturn({ data: null, error: null });
+  const result = await checkScanAuthorizationCode(scanCredentialsTestData());
+  expect(result).toEqual(errorResponseFor('Event ID of code verkeerd'));
+});
 
-    const result = await checkScanAuthorizationCode(scanCredentialsTestData);
-    expect(result).toEqual(fallbackErrorResponse());
-  });
+test('should return error response when server returns error', async () => {
+  makeFetchReturn({ data: true, error: 'Some random error' });
 
-  test('should return error response when fetch errors', async () => {
-    const mockFetch = vi.fn().mockRejectedValue(new Error('Some random failure'));
-    vi.stubGlobal('fetch', mockFetch);
+  const result = await checkScanAuthorizationCode(scanCredentialsTestData());
+  expect(result).toEqual(errorResponseFor('Some random error'));
+});
 
-    const result = await checkScanAuthorizationCode(scanCredentialsTestData);
-    expect(result).toEqual(fallbackErrorResponse());
-  });
+test('should return error response when server response invalid', async () => {
+  makeFetchReturn({ data: null, error: null });
 
-  test('should return error response when no internet access', async () => {
-    setNavigatorOnline(false);
-    makeFetchReturn({ data: true, error: null });
+  const result = await checkScanAuthorizationCode(scanCredentialsTestData());
+  expect(result).toEqual(FALLBACK_ERROR_RESPONSE);
+});
 
-    const result = await checkScanAuthorizationCode(scanCredentialsTestData);
-    expect(result).toEqual(noInternetAccessErrorResponse());
-  });
+test('should return error response when fetch errors', async () => {
+  const mockFetch = vi.fn().mockRejectedValue(new Error('some random failure'));
+  vi.stubGlobal('fetch', mockFetch);
 
-  test('should return error response when http status not ok but json indicates success', async () => {
-    makeFetchReturn({ data: true, error: null }, false);
+  const result = await checkScanAuthorizationCode(scanCredentialsTestData());
+  expect(result).toEqual(FALLBACK_ERROR_RESPONSE);
+});
 
-    const result = await checkScanAuthorizationCode(scanCredentialsTestData);
-    expect(result).toEqual(fallbackErrorResponse());
-  });
+test('should return error response when no internet access', async () => {
+  setNavigatorOnline(false);
+  makeFetchReturn({ data: true, error: null });
 
-  test('should return error response when response not JSON', async () => {
-    const mockFetch = vi.fn().mockResolvedValue('Not JSON');
-    vi.stubGlobal('fetch', mockFetch);
+  const result = await checkScanAuthorizationCode(scanCredentialsTestData());
+  expect(result).toEqual(NO_INTERNET_ACCESS_ERROR_RESPONSE);
+});
 
-    const result = await checkScanAuthorizationCode(scanCredentialsTestData);
-    expect(result).toEqual(fallbackErrorResponse());
-  });
+test('should return error response when http status not ok but json indicates success', async () => {
+  makeFetchReturn({ data: true, error: null }, false);
+
+  const result = await checkScanAuthorizationCode(scanCredentialsTestData());
+  expect(result).toEqual(FALLBACK_ERROR_RESPONSE);
+});
+
+test('should return error response when response not JSON', async () => {
+  const mockFetch = vi.fn().mockResolvedValue('not JSON');
+  vi.stubGlobal('fetch', mockFetch);
+
+  const result = await checkScanAuthorizationCode(scanCredentialsTestData());
+  expect(result).toEqual(FALLBACK_ERROR_RESPONSE);
 });
