@@ -9,7 +9,7 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 import prettierConfig from 'eslint-config-prettier';
 import unicornPlugin from 'eslint-plugin-unicorn';
 
-export default defineConfig([
+const eslintConfig = defineConfig([
   globalIgnores(['**/dist', './vite.config.ts', './playwright.config.ts']),
   {
     files: ['**/*.ts', '**/*.tsx'],
@@ -82,3 +82,5 @@ export default defineConfig([
     },
   },
 ]);
+
+export default eslintConfig;
