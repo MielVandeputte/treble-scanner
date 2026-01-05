@@ -25,7 +25,7 @@
     "qr-scanner": "1.4.2",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "react-hook-form": "7.69.0",
+    "react-hook-form": "7.70.0",
     "react-router-dom": "7.11.0",
     "store2": "2.14.4"
   },
@@ -49,7 +49,7 @@
     "eslint-plugin-react-hooks": "7.0.1",
     "eslint-plugin-react-refresh": "0.4.26",
     "eslint-plugin-unicorn": "62.0.0",
-    "@faker-js/faker": "10.1.0",
+    "@faker-js/faker": "10.2.0",
     "jsdom": "27.4.0",
     "postcss": "8.5.6",
     "prettier": "3.7.4",
