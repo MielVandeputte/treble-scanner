@@ -7,7 +7,7 @@ import {
   FALLBACK_ERROR_RESPONSE,
   NO_INTERNET_ACCESS_ERROR_RESPONSE,
 } from './helper.ts';
-import { scanCredentialsTestData } from '../../test-data/scan-credentials.ts';
+import { scanCredentialsTestData } from '../../tests/test-data/scan-credentials.ts';
 
 function setNavigatorOnline(value: boolean): void {
   Object.defineProperty(navigator, 'onLine', {

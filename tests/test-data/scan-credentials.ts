@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { ScanCredentials } from '../src/types/scan-credentials.type.ts';
+import { ScanCredentials } from '../../src/types/scan-credentials.type.ts';
 
 export function scanCredentialsTestData(scanCredentialsCustomizations?: Partial<ScanCredentials>): ScanCredentials {
   return {

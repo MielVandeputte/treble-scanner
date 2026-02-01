@@ -9,7 +9,7 @@ test.use({
     args: [
       '--use-fake-device-for-media-stream',
       '--use-fake-ui-for-media-stream',
-      '--use-file-for-fake-video-capture=./test-data/ticket.y4m',
+      '--use-file-for-fake-video-capture=./tests/test-data/ticket.y4m',
     ],
   },
 });
