@@ -53,14 +53,14 @@ const eslintConfig = defineConfig([
       eqeqeq: 'error',
       'no-param-reassign': 'error',
 
+      'typescript/explicit-function-return-type': ['warn', { allowExpressions: true }],
+      'typescript/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+
       'react/no-array-index-key': 'warn',
       'react/jsx-boolean-value': 'warn',
       'react/jsx-no-useless-fragment': 'warn',
       'react/jsx-no-constructed-context-values': 'warn',
       'react/react-in-jsx-scope': 'off',
-
-      'typescript/explicit-function-return-type': ['warn', { allowExpressions: true }],
-      'typescript/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
 
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'prettier/prettier': 'warn',

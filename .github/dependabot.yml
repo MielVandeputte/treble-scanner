@@ -22,3 +22,14 @@ updates:
       all-dependencies:
         patterns:
           - "*"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    target-branch: "staging"
+    commit-message:
+      prefix: "build(actions)"
+    groups:
+      all-actions:
+        patterns:
+          - "*"

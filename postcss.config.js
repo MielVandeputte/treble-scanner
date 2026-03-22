@@ -1,5 +1,7 @@
-export default {
+const postCssConfig = {
   plugins: {
     autoprefixer: {},
   },
 };
+
+export default postCssConfig;
