@@ -39,7 +39,7 @@ export function ManualScanner(): JSX.Element {
   }
 
   return (
-    <div className="grid h-svh grid-rows-[auto_1fr]">
+    <div className="grid h-svh grid-rows-[auto_1fr]" style={{ viewTransitionName: 'card' }}>
       <Header title="Manueel scannen" />
 
       <main className="flex justify-center">

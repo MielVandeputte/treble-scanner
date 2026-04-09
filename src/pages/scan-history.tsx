@@ -8,7 +8,7 @@ export function ScanHistory(): JSX.Element {
   const scanHistory = use(ScanHistoryContext).scanHistory;
 
   return (
-    <div className="grid h-svh grid-rows-[auto_1fr]">
+    <div className="grid h-svh grid-rows-[auto_1fr]" style={{ viewTransitionName: 'card' }}>
       <Header title="Scangeschiedenis" />
 
       {scanHistory?.length ? (
