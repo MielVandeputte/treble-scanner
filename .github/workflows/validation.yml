@@ -13,6 +13,7 @@ on:
 jobs:
   format-and-lint:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     permissions:
       contents: read
@@ -39,6 +40,7 @@ jobs:
 
   vitest:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     permissions:
       contents: read
@@ -62,6 +64,7 @@ jobs:
 
   playwright:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     permissions:
       contents: read
